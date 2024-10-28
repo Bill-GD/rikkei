@@ -2,7 +2,7 @@ function getBMI() {
   const weight = parseFloat(prompt('Enter weight:')),
     height = parseFloat(prompt('Enter height:'));
 
-  const bmi = (weight / (height ^ 2)).toFixed(2);
+  const bmi = (weight / (height ** 2)).toFixed(2);
   if (bmi <= 0) {
     alert(`Invalid values`);
   } else if (bmi < 18.5) {
