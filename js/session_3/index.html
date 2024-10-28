@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>JavaScript: Session 3 - Rikkei</title>
+  </head>
+  <body>
+    <p>Open console to see the results</p>
+    <button onclick="findDuplicates()">Find duplicates</button>
+    <br>
+    <button onclick="findMissingInt()">Find smallest missing integer</button>
+    <br>
+  </body>
+  <script>
+    function findDuplicates() {
+      const list = randomNumArray(15);
+      console.log(`Orginal: ${list} => Duplicates: ${findDuplicateElements(list)}`);
+    }
+
+    function findMissingInt() {
+      const list = randomNumArray(4, 10);
+      console.log(`Orginal: ${list} => Duplicates: ${getSmallestMissingInteger(list)}`);
+    }
+  </script>
+</html>
