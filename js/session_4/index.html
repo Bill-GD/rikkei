@@ -70,41 +70,23 @@
 
     function maxSubArraySum() {
       const list = randomNumArray(5, 10, -5, 5);
-      let max = 0, sum = 0, maxIndex = -1, startIndex = -1;
+      let maxList = [], currentList = [], maxNeg = -100;
+
       for (let i = 0; i < list.length; i++) {
         if (list[i] >= 0) {
-          if (startIndex < 0) {
-            startIndex = i;
-          }
-          sum += list[i];
+          currentList.push(list[i]);
         }
-        if (startIndex < 0) continue;
-        if (sum > max) {
-          max = sum;
-          maxIndex = startIndex;
+        if (currentList.length < 1) continue;
+        if (maxList.length < 1 || currentList.reduce((p, c) => p + c) > maxList.reduce((p, c) => p + c)) {
+          maxList = currentList;
         }
         if (list[i] < 0) {
-          sum = 0;
-          startIndex = -1;
+          if (list[i] > maxNeg) maxNeg = list[i];
+          currentList = [];
         }
       }
-
-      if (max > 0) {
-        const res = [];
-        for (let i = maxIndex; i < list.length; i++) {
-          if (list[i] < 0) break;
-          res.push(list[i]);
-        }
-        console.log(`List: ${list} => max=${max}, res=${res}`);
-        // return;
-      } else {
-        // if no positive
-        max = list[0];
-        for (let e of list) {
-          if (e > max) max = e;
-        }
-        console.log(`List: ${list} => max=${max}, res=${[max]}`);
-      }
+      if (maxList.length > 0) console.log(`List: ${list} => max=${maxList.reduce((p, c) => p + c)}, res=${maxList}`);
+      else console.log(`List: ${list} => max=${maxNeg}, res=${maxNeg}`);
     }
 
     function isSymmetricArray() {
