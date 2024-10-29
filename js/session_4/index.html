@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript: Session 4 - Rikkei</title>
+  </head>
+  <body>
+    <p>Open console to see the results</p>
+    <!--<button onclick="duplicates()">Find duplicates</button>-->
+    <!--<br>-->
+    <button onclick="findTwoNumsWithSum()">Find two numbers in array with specified sum</button>
+    <br>
+    <button onclick="canFormString()">Check if one string can form another</button>
+    <br>
+    <button onclick="maxSubArraySum()">Find subarray with max sum</button>
+    <br>
+    <button onclick="isSymmetricArray()">Check if array is symmetric</button>
+    <br>
+    <button onclick="smallerOddsWithOddSum()">Find smaller odds with odd sum</button>
+    <br>
+    <button onclick="categorizeString()">Categorize chars</button>
+    <br>
+    <button onclick="getAllPrimes()">Get all primes in array</button>
+    <br>
+    <button onclick="countPossibleTriangles()">Count possible triangles</button>
+    <br>
+    <button onclick="smallestSubArrayWithSum()">Find smallest subarray with sum greater than number</button>
+    <br>
+    <button onclick="capitalizeLastChar()">Capitalize last character of words</button>
+    <br>
+  </body>
+  <script>
+    // array, num => 2 nums (sum = num)
+    // 2 str => if chars of str2 can make str1
+    // array => sub array with max sum
+    // symmetric array
+    // input num -> as many smaller odds with sum is odd as possible
+    // str => <letters> <num> <special>
+    // array => get all primes
+    // array => number of possible triangles
+    // array, num => smallest sub array with sum > num
+    // str => capitalize last char of words
+    function findTwoNumsWithSum() {
+      const num = parseInt(prompt('Enter a number')),
+          list = randomNumArray();
+
+      const res = (function (list, num) {
+        for (let i = 0; i < list.length; i++) {
+          // unless includes' loop is counted
+          if (list.includes(num - list[i])) return [list[i], num - list[i]];
+        }
+        return [];
+      })(list, num);
+
+      console.log(`${list} => ${res.length < 1 ? 'None' : res}`);
+    }
+
+    function canFormString() {
+
+    }
+
+    function maxSubArraySum() {
+
+    }
+
+    function isSymmetricArray() {
+
+    }
+
+    function smallerOddsWithOddSum() {
+
+    }
+
+    function categorizeString() {
+
+    }
+
+    function getAllPrimes() {
+
+    }
+
+    function countPossibleTriangles() {
+
+    }
+
+    function smallestSubArrayWithSum() {
+
+    }
+
+    function capitalizeLastChar() {
+
+    }
+
+    function randomNumArray(minLength = 5, maxLength = 10, minValue = 0, maxValue = 10) {
+      const len = Math.floor(Math.random() * (maxLength - minLength + 1) + minLength);
+      const list = [];
+      for (let i = 0; i < len; i++) {
+        const ranVal = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+        list.push(ranVal);
+      }
+      return list;
+    }
+  </script>
+</html>
