@@ -1,0 +1,7 @@
+- Một hệ thống quản lý thư viện bao gồm các thực thể: Book, Author, và Publisher. Mối quan hệ giữa các thực thể như sau:
+  - Một cuốn sách (Book) có một tác giả (Author) và có một nhà xuất bản (Publisher).
+  - Một tác giả có thể viết nhiều cuốn sách.
+  - Một nhà xuất bản có thể xuất bản nhiều cuốn sách.
+- Xác định các thực thể trong hệ thống và các thuộc tính của chúng
+- Vẽ sơ đồ ER đơn giản thể hiện các thực thể Book, Author, và Publisher, cùng với các mối quan hệ giữa chúng.
+- Xác định loại mối quan hệ giữa các thực thể (một-một, một- nhiều, nhiều -nhiều)
