@@ -8,20 +8,77 @@
   </head>
   <body>
     <p>Open console to see the results</p>
-    <button onclick="findDuplicates()">Find duplicates</button>
+    <button onclick="duplicates()">Find duplicates</button>
     <br>
-    <button onclick="findMissingInt()">Find smallest missing integer</button>
+    <button onclick="missingInt()">Find smallest missing integer</button>
+    <br>
+    <button onclick="commonElements()">Find common elements in sorted lists</button>
+    <br>
+    <button onclick="specialSort()">Sort even & odd, even then odd</button>
+    <br>
+    <button onclick="allSubstrings()">Get all substrings</button>
+    <br>
+    <button onclick="uniqueElement()">Get first unique element in list</button>
+    <br>
+    <button onclick="shuffleList()">Shuffle a list</button>
+    <br>
+    <button onclick="uniqueElements()">Get all unique elements</button>
+    <br>
+    <button onclick="sublist()">Get sublist with a specified sum</button>
     <br>
   </body>
   <script>
-    function findDuplicates() {
+    function duplicates() {
       const list = randomNumArray(15);
-      console.log(`Orginal: ${list} => Duplicates: ${findDuplicateElements(list)}`);
+      console.log(`Orginal: ${list} => Duplicates: ${getDuplicateElements(list)}`);
     }
 
-    function findMissingInt() {
+    function missingInt() {
       const list = randomNumArray(4, 10);
       console.log(`Orginal: ${list} => Duplicates: ${getSmallestMissingInteger(list)}`);
+    }
+
+    function commonElements() {
+      const lists = [
+        randomNumArray(4, 5).sort(),
+        randomNumArray(5, 7).sort(),
+        randomNumArray(6, 6).sort(),
+      ];
+      console.log(`Arrays: ${lists.join('|')} => Common elements: ${getCommonElements(lists)}`);
+    }
+
+    function specialSort() {
+      const list = randomNumArray(10);
+      console.log(`Arrays: ${list} => Common elements: ${sortEvenOdd(list)}`);
+    }
+
+    function allSubstrings() {
+      const str = prompt('Enter a string:');
+      console.log(`String: ${str} => ${getAllSubtrings(str)}`);
+    }
+
+    function uniqueElement() {
+      const list = randomNumArray(10, 7);
+      const res = getFirstUnique(list);
+      console.log(`Orginal: ${list} => Unique: ${res === undefined ? 'None' : res}`);
+    }
+
+    function shuffleList() {
+      const list = randomNumArray(7, 10);
+      console.log(`Orginal: ${list} => Duplicates: ${shuffle(list)}`);
+    }
+
+    function uniqueElements() {
+      const list = randomNumArray(10, 7);
+      const res = getUniques(list);
+      console.log(`Orginal: ${list} => Unique: ${res.length === 0 ? 'None' : res}`);
+    }
+
+    function sublist() {
+      const sum = parseInt(prompt('Enter a number:'));
+      const list = randomNumArray(10, 10);
+      const res = getSubListWithSum(list, sum);
+      console.log(`Orginal: ${list}, Sum: ${sum} => Sublist: ${res.length === 0 ? 'None' : res}`);
     }
   </script>
 </html>
