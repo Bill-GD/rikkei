@@ -7,8 +7,6 @@
   </head>
   <body>
     <p>Open console to see the results</p>
-    <!--<button onclick="duplicates()">Find duplicates</button>-->
-    <!--<br>-->
     <button onclick="findTwoNumsWithSum()">Find two numbers in array with specified sum</button>
     <br>
     <button onclick="canFormString()">Check if one string can form another</button>
@@ -53,15 +51,60 @@
         return [];
       })(list, num);
 
-      console.log(`${list} => ${res.length < 1 ? 'None' : res}`);
+      console.log(`List: ${list} => ${res.length < 1 ? 'None' : res}}`);
     }
 
     function canFormString() {
+      const fullString = prompt('Enter a string'),
+          chars = prompt('Enter some chars');
 
+      let can = true;
+      for (let c of fullString.replaceAll(' ', '')) {
+        if (!chars.includes(c)) {
+          can = false;
+          break;
+        }
+      }
+      console.log(`Make '${fullString}' out of '${chars}': ${can ? 'Possible' : 'Impossible'}`);
     }
 
     function maxSubArraySum() {
+      const list = randomNumArray(5, 10, -5, 5);
+      let max = 0, sum = 0, maxIndex = -1, startIndex = -1;
+      for (let i = 0; i < list.length; i++) {
+        if (list[i] >= 0) {
+          if (startIndex < 0) {
+            startIndex = i;
+          }
+          sum += list[i];
+        }
+        if (startIndex < 0) continue;
+        if (sum > max) {
+          max = sum;
+          maxIndex = startIndex;
+        }
+        if (list[i] < 0) {
+          sum = 0;
+          startIndex = -1;
+        }
+      }
 
+      if (max > 0) {
+        const res = [];
+        for (let i = maxIndex; i < list.length; i++) {
+          if (list[i] < 0) break;
+          res.push(list[i]);
+        }
+        console.log(`List: ${list} => max=${max}, res=${res}`);
+        // return;
+      } else {
+        // if no positive
+        max = list[0];
+        for (let e of list) {
+          if (e > max) max = e;
+        }
+        console.log(`List: ${list} => max=${max}, res=${[max]}`);
+      }
     }
 
     function isSymmetricArray() {
