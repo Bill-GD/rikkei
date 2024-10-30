@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript: Session 4 - Rikkei</title>
+  </head>
+  <body>
+    <button onclick="searchObject()">Find two numbers in array with specified sum</button>
+    <br>
+    <p>Result printed down here</p>
+    <section id="print-canvas"></section>
+  </body>
+  <script>
+    // find obj in array by member/property
+    // sort products by price
+    // get user data -> validate -> re-enter if needed
+    // signup & signin (with objects), can end
+    const chars = String.fromCharCode(
+        ...Array.from({ length: 26 }, (_, i) => i + 65)
+        .concat(Array.from({ length: 26 }, (_, i) => i + 97))
+        .concat(Array.from({ length: 10 }, (_, i) => i + 48)),
+    );
+
+    function searchObject() {
+      let i = 0;
+      const books = [];
+      while (i < 4) {
+        books.push(new Book(randomWord(3), randomWord(3)));
+        i++;
+      }
+      printToHTML(books.map(e => e.toString()).join('\n'));
+      setTimeout(() => {
+        const author = prompt('Search book by author:');
+        printToHTML(books.filter(e => e.author.includes(author)).join('\n'));
+      }, 300);
+    }
+
+    function printToHTML(obj) {
+      document.getElementById('print-canvas').innerText = obj;
+    }
+
+    function randomWord(length = 1) {
+      let str = '', i = 0;
+      while (i < length) {
+        str += chars[Math.floor(Math.random() * 52)];
+        i++;
+      }
+      return str;
+    }
+
+    function randomNumStr() {
+      return chars[Math.floor(Math.random() * 10) + 52];
+    }
+
+    class Book {
+      name;
+      author;
+
+      constructor(name, author) {
+        this.name = name;
+        this.author = author;
+      }
+
+      toString() {
+        return `name: ${this.name}, author: ${this.author}`;
+      }
+    }
+  </script>
+</html>
