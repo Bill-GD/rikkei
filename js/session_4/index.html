@@ -90,31 +90,111 @@
     }
 
     function isSymmetricArray() {
-
+      const res = (function (list) {
+        let i = 0, j = list.length - 1;
+        while (i < j) {
+          if (list[i] !== list[j]) {
+            return [list, false];
+          }
+          i++;
+          j--;
+        }
+        return [list, true];
+      })(randomNumArray());
+      console.log(`List: ${res[0]} => symmetric: ${res[1]}`);
     }
 
     function smallerOddsWithOddSum() {
+      const num = parseInt(prompt('Enter a number'));
 
+      let sum = 0, res = [];
+      for (let i = 1; i <= num; i += 2) {
+        sum += i;
+        res.push(i);
+      }
+      if (sum % 2 === 0) sum -= res.pop();
+      console.log(`Num: ${num} => ${res} -> ${sum}`);
     }
 
     function categorizeString() {
+      const str = prompt('Enter a string of any char');
 
+      let char = '', num = '', other = '';
+      for (let c of str) {
+        if (c.match(/[a-zA-Z]/)) char += c;
+        else if (c.match(/[0-9]/)) num += c;
+        else other += c;
+      }
+      console.log(`${str} => ${char + num + other}`);
     }
 
     function getAllPrimes() {
+      const list = randomNumArray();
+      (function (list) {
+        function isPrime(num) {
+          if (num < 2) return false;
+          for (let i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) return false;
+          }
+          return true;
+        }
 
+        console.log(`List: ${list} => primes: ${list.filter(e => isPrime(e))}`);
+      })(list);
     }
 
     function countPossibleTriangles() {
-
+      const list = [4, 6, 3, 7];//randomNumArray();
+      let count = 0;
+      // ...
+      console.log(`List: ${list} => ${count}`);
     }
 
     function smallestSubArrayWithSum() {
+      const list = randomNumArray(),
+          num = parseInt(prompt('Enter a number'));
+      const res = (function (list) {
+        const maxOne = Array.from(list).sort((a, b) => b - a)[0];
+        if (maxOne > num) return [maxOne];
 
+        function getSubList(list, start, end) {
+          const r = [];
+          for (let i = start; i <= end; i++) r.push(list[i]);
+          return r;
+        }
+
+        const maxIndex = list.indexOf(maxOne);
+        let i = Math.max(0, maxIndex - 1), j = Math.min(list.length - 1, maxIndex + 1), sub = [];
+        while (true) {
+          sub = getSubList(list, i, maxIndex);
+          if (sumList(sub) > num) return sub;
+          sub = getSubList(list, maxIndex, j);
+          if (sumList(sub) > num) return sub;
+          sub = getSubList(list, i, j);
+          if (sumList(sub) > num) return sub;
+          if (i <= 0 && j >= list.length - 1) return sumList(list) > num ? list : 'None';
+          if (i > 0) i--;
+          if (j < list.length - 1) j++;
+        }
+      })(list);
+      console.log(`List: ${list}, num=${num} => ${res}`);
     }
 
     function capitalizeLastChar() {
-
+      const str = prompt('Enter any sentence');
+      let words = str.split(' ');
+      words = words.map(e => {
+        if (e.charAt(e.length - 1).match(/[,.\])}"'!?]/)) {
+          let i = e.length - 1;
+          while (e.charAt(i).toUpperCase() === e.charAt(i)) {
+            i--;
+          }
+          console.log(e.substring(0, i) + e.charAt(i).toUpperCase() + e.substring(i + 1));
+          return e.substring(0, i) + e.charAt(i).toUpperCase() + e.substring(i + 1);
+        }
+        return e.substring(0, e.length - 1) + e.charAt(e.length - 1).toUpperCase();
+      });
+      console.log(`${str} => ${words.join(' ')}`);
     }
 
     function randomNumArray(minLength = 5, maxLength = 10, minValue = 0, maxValue = 10) {
@@ -125,6 +205,10 @@
         list.push(ranVal);
       }
       return list;
+    }
+
+    function sumList(list) {
+      return list.reduce((p, c) => p + c);
     }
   </script>
 </html>
