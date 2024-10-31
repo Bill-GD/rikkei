@@ -1,6 +1,3 @@
-create database if not exists library;
-use library;
-
 create table if not exists author (
 	author_id int primary key auto_increment,
     `name` nvarchar(100) not null

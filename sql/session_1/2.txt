@@ -1,0 +1,5 @@
+- Xác định và vẽ sơ đồ quan hệ thực thể với các thực thể Student, Course, và Enrollment
+- Hệ thống quản lý sinh viên và khóa học với các thực thể như sau:
+  - Student (Mã sinh viên, Tên, Ngày sinh)
+  - Course (Mã khóa học, Tên khóa học, Giá)
+  - Enrollment (Mã sinh viên, Mã khóa học, Ngày đăng ký)
