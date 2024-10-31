@@ -3,12 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript: Session 4 - Rikkei</title>
+    <title>JavaScript: Session 5 - Rikkei</title>
   </head>
   <body>
-    <button onclick="searchObject()">Find two numbers in array with specified sum</button>
+    <button onclick="searchObject()">Search object by property</button>
     <br>
-    <p>Result printed down here</p>
+    <button onclick="sortByCost()">Sort objects by property</button>
+    <br>
+    <p>
+      <span>Result printed down here</span>
+      <button onclick="clearCanvas()">Clear</button>
+    </p>
     <section id="print-canvas"></section>
   </body>
   <script>
@@ -36,8 +41,28 @@
       }, 300);
     }
 
+    function sortByCost(sort = false) {
+      const list = [
+        { id: 1, name: 'iPhone 12', price: 10000000 },
+        { id: 2, name: 'Samsung Galaxy S21', price: 9000000 },
+        { id: 3, name: 'Google Pixel 5', price: 8000000 },
+        { id: 4, name: 'OnePlus 9', price: 7500000 },
+        { id: 5, name: 'Sony Xperia 1', price: 8500000 },
+      ];
+      printToHTML(
+          `
+          <button onclick="sortByCost(true)">Sort</button>
+          ${list.join('\n')}
+          `
+      );
+    }
+
     function printToHTML(obj) {
       document.getElementById('print-canvas').innerText = obj;
+    }
+
+    function clearCanvas() {
+      document.getElementById('print-canvas').innerText = '';
     }
 
     function randomWord(length = 1) {

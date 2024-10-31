@@ -16,7 +16,7 @@ create table if not exists `order` (
   customer_id int not null,
   `date` datetime not null,
   cost int not null,
-  constraint foreign key (customer_id) references customer (customer_id) on delete cascade
+  foreign key (customer_id) references customer (customer_id) on delete cascade
 );
 
 create table if not exists ordered_product (
