@@ -49,20 +49,24 @@
         { id: 4, name: 'OnePlus 9', price: 7500000 },
         { id: 5, name: 'Sony Xperia 1', price: 8500000 },
       ];
+
+      if (sort) {
+        list.sort((a, b) => a.price - b.price);
+      }
       printToHTML(
           `
-          <button onclick="sortByCost(true)">Sort</button>
-          ${list.join('\n')}
-          `
+          <button onclick="sortByCost(true)">Sort</button><br>
+          ${list.map(e => `{id: ${e.id}, name: ${e.name}, price: ${e.price}}`).join('<br>')}
+          `,
       );
     }
 
     function printToHTML(obj) {
-      document.getElementById('print-canvas').innerText = obj;
+      document.getElementById('print-canvas').innerHTML = obj;
     }
 
     function clearCanvas() {
-      document.getElementById('print-canvas').innerText = '';
+      document.getElementById('print-canvas').innerHTML = '';
     }
 
     function randomWord(length = 1) {
