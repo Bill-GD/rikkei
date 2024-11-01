@@ -10,6 +10,10 @@
     <br>
     <button onclick="sortByCost()">Sort objects by property</button>
     <br>
+    <button onclick="validateObject()">Add users</button>
+    <br>
+    <button onclick="signupAndSignin()">Sign up and sign in</button>
+    <br>
     <p>
       <span>Result printed down here</span>
       <button onclick="clearCanvas()">Clear</button>
@@ -34,10 +38,10 @@
         books.push(new Book(randomWord(3), randomWord(3)));
         i++;
       }
-      printToHTML(books.map(e => e.toString()).join('\n'));
+      printToHTML(books.map(e => e.toString()).join('<br>'));
       setTimeout(() => {
         const author = prompt('Search book by author:');
-        printToHTML(books.filter(e => e.author.includes(author)).join('\n'));
+        printToHTML(books.filter(e => e.author.includes(author)).join('<br>'));
       }, 300);
     }
 
@@ -59,6 +63,82 @@
           ${list.map(e => `{id: ${e.id}, name: ${e.name}, price: ${e.price}}`).join('<br>')}
           `,
       );
+    }
+
+    const users = [];
+
+    function validateObject() {
+      printToHTML(users.map(e => e.toString()).join('<br>'));
+      setTimeout(() => {
+        let email = '';
+        do {
+          email = prompt('Add new user.\nEnter email:') ?? '';
+        } while (email.length <= 0 || !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/));
+
+        let username = '';
+        do {
+          username = prompt('Add new user.\nEnter username:') ?? '';
+        } while (username.length < 3);
+
+        let password = '';
+        do {
+          password = prompt('Add new user.\nEnter password:') ?? '';
+        } while (password.length < 7);
+
+        users.push(new User(
+            users.length < 1 ? 0 : users[users.length - 1].id + 1,
+            username,
+            email,
+            password,
+        ));
+        printToHTML(users.map(e => e.toString()).join('<br>'));
+      }, 300);
+    }
+
+    function signupAndSignin(signup = false, signin = false) {
+      // printToHTML(users.map(e => e.toString()).join('<br>'));
+      printToHTML(`
+        <button onclick="signupAndSignin(true, false)">Sign up</button>
+        <button onclick="signupAndSignin(false, true)">Sign in</button>
+      `);
+      if (signup) {
+        let email = '';
+        do {
+          email = prompt('Add new user.\nEnter email:') ?? '';
+        } while (email.length <= 0 || !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/));
+
+        let username = '';
+        do {
+          username = prompt('Add new user.\nEnter username:') ?? '';
+        } while (username.length < 3);
+
+        let password = '';
+        do {
+          password = prompt('Add new user.\nEnter password:') ?? '';
+        } while (password.length < 7);
+
+        users.push(new User(
+            users.length < 1 ? 0 : users[users.length - 1].id + 1,
+            username,
+            email,
+            password,
+        ));
+      }
+
+      if (signin) {
+        let email = '';
+        do {
+          email = prompt('Signin to your account.\nEnter email:') ?? '';
+        } while (email.length <= 0 || !users.map(e => e.email).includes(email));
+
+        const user = users.find(e => e.email === email);
+
+        let password = '';
+        do {
+          password = prompt('Signin to your account.\nEnter password:') ?? '';
+        } while (password !== user.password);
+        printToHTML(`Welcome ${user.username}!`);
+      }
     }
 
     function printToHTML(obj) {
@@ -93,6 +173,24 @@
 
       toString() {
         return `name: ${this.name}, author: ${this.author}`;
+      }
+    }
+
+    class User {
+      id;
+      username;
+      email;
+      password;
+
+      constructor(id, username, email, password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+      }
+
+      toString() {
+        return `{name: ${this.username}, author: ${this.email}}`;
       }
     }
   </script>
