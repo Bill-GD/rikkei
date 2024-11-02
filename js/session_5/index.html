@@ -16,13 +16,15 @@
     <br>
     <button onclick="manageContacts()">Manage contacts</button>
     <br>
+    <button onclick="manageProducts()">Manage products</button>
+    <br>
     <p>
       <span>Result printed down here</span>
       <button onclick="clearCanvas()">Clear</button>
     </p>
     <section id="print-canvas-up"></section>
+    <section id="print-canvas-middle"></section>
     <section id="print-canvas"></section>
-    <section id="print-canvas-down"></section>
   </body>
   <script>
     // find obj in array by member/property
@@ -31,8 +33,7 @@
     // signup & signin (with objects), can end
     const chars = String.fromCharCode(
         ...Array.from({ length: 26 }, (_, i) => i + 65)
-        .concat(Array.from({ length: 26 }, (_, i) => i + 97))
-        .concat(Array.from({ length: 10 }, (_, i) => i + 48)),
+        .concat(Array.from({ length: 26 }, (_, i) => i + 97)),
     );
 
     function searchObject() {
@@ -148,7 +149,7 @@
     const contacts = [];
 
     function manageContacts(add = false, find = false, update = false, remove = false) {
-      displayButtons();
+      displayContactButtons();
 
       if (add) {
         let name = '';
@@ -167,6 +168,7 @@
         } while (phone.length < 7);
 
         addContact(name, phone, email);
+        displayContacts();
       }
 
       if (find) {
@@ -175,7 +177,7 @@
           name = prompt('Find contact.\nEnter name:') ?? '';
         } while (name.length <= 0);
         printToHTML(
-            'print-canvas-down',
+            'print-canvas',
             findContactByName(name).toString(),
         );
       }
@@ -201,11 +203,13 @@
         do {
           phone = prompt('Update contact.\nEnter new phone number:', user.phone) ?? '';
         } while (phone.length < 7);
+
         updateContactByName(user.name, {
           'name': name,
           'email': email,
           'phone': phone,
         });
+        displayContacts();
       }
 
       if (remove) {
@@ -213,11 +217,13 @@
         do {
           name = prompt('Remove contact.\nEnter name:') ?? '';
         } while (name.length <= 0);
+
         deleteContactByName(name);
+        displayContacts();
       }
     }
 
-    function displayButtons() {
+    function displayContactButtons() {
       printToHTML(
           'print-canvas-up',
           '<button onclick="displayContacts()">Display</button>' +
@@ -260,6 +266,94 @@
       contacts.splice(contacts.indexOf(findContactByName(name)), 1);
     }
 
+    let products = [];
+
+    function manageProducts(add = false, calculate = false, remove = false, clear = false) {
+      displayProductButtons();
+
+      if (add) {
+        do {
+          name = prompt('Add new product.\nEnter new name:') ?? '';
+        } while (name.length <= 0);
+
+        const p = findProduct(name);
+        if (p) {
+          p.quantity++;
+        } else {
+          let price = '';
+          do {
+            price = parseInt(prompt('Add new product.\nEnter new price:') ?? '0');
+          } while (price <= 0);
+
+          let quantity = '';
+          do {
+            quantity = parseInt(prompt('Add new product.\nEnter new quantity number:') ?? '0');
+          } while (quantity <= 0);
+          addToCart(name, price, quantity);
+        }
+        displayCart();
+      }
+
+      if (calculate) printToHTML('print-canvas-middle', calculateTotal());
+
+      if (remove) {
+        do {
+          name = prompt('Add new product.\nEnter new name:') ?? '';
+        } while (name.length <= 0);
+
+        removeFromCart(name);
+        displayCart();
+      }
+
+      if (clear) {
+        clearCart();
+        displayCart();
+      }
+    }
+
+    function displayProductButtons() {
+      printToHTML(
+          'print-canvas-up',
+          '<button onclick="displayCart()">Display</button>' +
+          '<button onclick="manageProducts(true, false, false, false)">Add</button>' +
+          '<button onclick="manageProducts(false, true, false, false)">Calculate</button>' +
+          '<button onclick="manageProducts(false, false, true, false)">Remove</button>' +
+          '<button onclick="manageProducts(false, false, false, true)">Clear</button>',
+      );
+    }
+
+    function displayCart() {
+      printToHTML(
+          'print-canvas',
+          '-------------<br>' +
+          (
+              products.length < 1
+                  ? 'No product<br>-------------'
+                  : products.map(e => `${e.toString().replaceAll('\n', '<br>')}<br>-------------`).join('<br>')
+          ),
+      );
+    }
+
+    function findProduct(name) {
+      return products.find(e => e.name === name);
+    }
+
+    function addToCart(name, price, quantity) {
+      products.push(new Product(name, price, quantity));
+    }
+
+    function calculateTotal() {
+      return products.map(e => e.price * e.quantity).reduce((p, c) => p + c);
+    }
+
+    function removeFromCart(name) {
+      products.splice(products.indexOf(findProduct(name)), 1);
+    }
+
+    function clearCart() {
+      products = [];
+    }
+
     function printToHTML(id, obj) {
       document.getElementById(id).innerHTML = obj;
     }
@@ -267,7 +361,7 @@
     function clearCanvas() {
       document.getElementById('print-canvas').innerHTML = '';
       document.getElementById('print-canvas-up').innerHTML = '';
-      document.getElementById('print-canvas-down').innerHTML = '';
+      document.getElementById('print-canvas-middle').innerHTML = '';
     }
 
     function randomWord(length = 1) {
@@ -277,10 +371,6 @@
         i++;
       }
       return str;
-    }
-
-    function randomNumStr() {
-      return chars[Math.floor(Math.random() * 10) + 52];
     }
 
     class Book {
@@ -315,6 +405,22 @@
       }
     }
 
+    class Product {
+      name;
+      price;
+      quantity;
+
+      constructor(name, price, quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+      }
+
+      toString() {
+        return `Name: ${this.name}\nPrice: ${this.price}\nQuantity: ${this.quantity}`;
+      }
+    }
+
     class Contact {
       name;
       email;
@@ -327,7 +433,7 @@
       }
 
       toString() {
-        return `Name: ${this.name}\nAuthor: ${this.email}\nPhone: ${this.phone}`;
+        return `Name: ${this.name}\nEmail: ${this.email}\nPhone: ${this.phone}`;
       }
     }
   </script>
