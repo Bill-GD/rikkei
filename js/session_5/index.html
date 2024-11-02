@@ -14,11 +14,15 @@
     <br>
     <button onclick="signupAndSignin()">Sign up and sign in</button>
     <br>
+    <button onclick="manageContacts()">Manage contacts</button>
+    <br>
     <p>
       <span>Result printed down here</span>
       <button onclick="clearCanvas()">Clear</button>
     </p>
+    <section id="print-canvas-up"></section>
     <section id="print-canvas"></section>
+    <section id="print-canvas-down"></section>
   </body>
   <script>
     // find obj in array by member/property
@@ -38,10 +42,10 @@
         books.push(new Book(randomWord(3), randomWord(3)));
         i++;
       }
-      printToHTML(books.map(e => e.toString()).join('<br>'));
+      printToHTML('print-canvas', books.map(e => e.toString()).join('<br>'));
       setTimeout(() => {
         const author = prompt('Search book by author:');
-        printToHTML(books.filter(e => e.author.includes(author)).join('<br>'));
+        printToHTML('print-canvas', books.filter(e => e.author.includes(author)).join('<br>'));
       }, 300);
     }
 
@@ -58,17 +62,16 @@
         list.sort((a, b) => a.price - b.price);
       }
       printToHTML(
-          `
-          <button onclick="sortByCost(true)">Sort</button><br>
-          ${list.map(e => `{id: ${e.id}, name: ${e.name}, price: ${e.price}}`).join('<br>')}
-          `,
+          'print-canvas',
+          `<button onclick="sortByCost(true)">Sort</button><br>
+          ${list.map(e => `{id: ${e.id}, name: ${e.name}, price: ${e.price}}`).join('<br>')}`,
       );
     }
 
     const users = [];
 
     function validateObject() {
-      printToHTML(users.map(e => e.toString()).join('<br>'));
+      printToHTML('print-canvas', users.map(e => e.toString()).join('<br>'));
       setTimeout(() => {
         let email = '';
         do {
@@ -91,16 +94,17 @@
             email,
             password,
         ));
-        printToHTML(users.map(e => e.toString()).join('<br>'));
+        printToHTML('print-canvas', users.map(e => e.toString()).join('<br>'));
       }, 300);
     }
 
     function signupAndSignin(signup = false, signin = false) {
       // printToHTML(users.map(e => e.toString()).join('<br>'));
-      printToHTML(`
-        <button onclick="signupAndSignin(true, false)">Sign up</button>
-        <button onclick="signupAndSignin(false, true)">Sign in</button>
-      `);
+      printToHTML(
+          'print-canvas',
+          `<button onclick="signupAndSignin(true, false)">Sign up</button>
+          <button onclick="signupAndSignin(false, true)">Sign in</button>`,
+      );
       if (signup) {
         let email = '';
         do {
@@ -137,16 +141,133 @@
         do {
           password = prompt('Signin to your account.\nEnter password:') ?? '';
         } while (password !== user.password);
-        printToHTML(`Welcome ${user.username}!`);
+        printToHTML('print-canvas', `Welcome ${user.username}!`);
       }
     }
 
-    function printToHTML(obj) {
-      document.getElementById('print-canvas').innerHTML = obj;
+    const contacts = [];
+
+    function manageContacts(add = false, find = false, update = false, remove = false) {
+      displayButtons();
+
+      if (add) {
+        let name = '';
+        do {
+          name = prompt('Add new contact.\nEnter name:') ?? '';
+        } while (name.length <= 0);
+
+        let email = '';
+        do {
+          email = prompt('Add new contact.\nEnter email:') ?? '';
+        } while (email.length <= 0 || !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/));
+
+        let phone = '';
+        do {
+          phone = prompt('Add new contact.\nEnter phone:') ?? '';
+        } while (phone.length < 7);
+
+        addContact(name, phone, email);
+      }
+
+      if (find) {
+        let name = '';
+        do {
+          name = prompt('Find contact.\nEnter name:') ?? '';
+        } while (name.length <= 0);
+        printToHTML(
+            'print-canvas-down',
+            findContactByName(name).toString(),
+        );
+      }
+
+      if (update) {
+        let name = '';
+        do {
+          name = prompt('Update contact.\nEnter name:') ?? '';
+        } while (name.length <= 0);
+
+        const user = findContactByName(name);
+
+        do {
+          name = prompt('Update contact.\nEnter new name:', user.name) ?? '';
+        } while (name.length <= 0);
+
+        let email = '';
+        do {
+          email = prompt('Update contact.\nEnter new email:', user.email) ?? '';
+        } while (email.length <= 0 || !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/));
+
+        let phone = '';
+        do {
+          phone = prompt('Update contact.\nEnter new phone number:', user.phone) ?? '';
+        } while (phone.length < 7);
+        updateContactByName(user.name, {
+          'name': name,
+          'email': email,
+          'phone': phone,
+        });
+      }
+
+      if (remove) {
+        let name = '';
+        do {
+          name = prompt('Remove contact.\nEnter name:') ?? '';
+        } while (name.length <= 0);
+        deleteContactByName(name);
+      }
+    }
+
+    function displayButtons() {
+      printToHTML(
+          'print-canvas-up',
+          '<button onclick="displayContacts()">Display</button>' +
+          '<button onclick="manageContacts(true, false, false, false)">Add</button>' +
+          '<button onclick="manageContacts(false, true, false, false)">Find</button>' +
+          '<button onclick="manageContacts(false, false, true, false)">Update</button>' +
+          '<button onclick="manageContacts(false, false, false, true)">Remove</button>',
+      );
+    }
+
+    function displayContacts() {
+      printToHTML(
+          'print-canvas',
+          '-------------<br>' +
+          (
+              contacts.length < 1
+                  ? 'No contact<br>-------------'
+                  : contacts.map(e => `${e.toString().replaceAll('\n', '<br>')}<br>-------------`).join('<br>')
+          ),
+      );
+    }
+
+    function addContact(name, phone, email) {
+      contacts.push(new Contact(name, email, phone));
+    }
+
+    function findContactByName(name) {
+      return contacts.find(e => e.name === name);
+    }
+
+    function updateContactByName(name, updatedInfo) {
+      const index = contacts.indexOf(findContactByName(name));
+
+      contacts[index].name = updatedInfo['name'];
+      contacts[index].email = updatedInfo['email'];
+      contacts[index].phone = updatedInfo['phone'];
+    }
+
+    function deleteContactByName(name) {
+      contacts.splice(contacts.indexOf(findContactByName(name)), 1);
+    }
+
+    function printToHTML(id, obj) {
+      document.getElementById(id).innerHTML = obj;
     }
 
     function clearCanvas() {
       document.getElementById('print-canvas').innerHTML = '';
+      document.getElementById('print-canvas-up').innerHTML = '';
+      document.getElementById('print-canvas-down').innerHTML = '';
     }
 
     function randomWord(length = 1) {
@@ -190,7 +311,23 @@
       }
 
       toString() {
-        return `{name: ${this.username}, author: ${this.email}}`;
+        return `{username: ${this.username}, email: ${this.email}}`;
+      }
+    }
+
+    class Contact {
+      name;
+      email;
+      phone;
+
+      constructor(name, email, phone) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+      }
+
+      toString() {
+        return `Name: ${this.name}\nAuthor: ${this.email}\nPhone: ${this.phone}`;
       }
     }
   </script>
