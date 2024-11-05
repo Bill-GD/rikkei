@@ -105,7 +105,7 @@ where pr.StoreID = ps.StoreID
 
 select cc.CustomerName, cc.OrderCount, sc.TotalSpending
 from (
-# customer order count
+       # customer order count
        select c.CustomerID, c.CustomerName, count(s.SaleID) as OrderCount
        from Sales as s,
             Customers as c
