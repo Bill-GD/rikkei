@@ -1,106 +1,97 @@
-create database if not exists ecommercedb2;
-use ecommercedb2;
+create database if not exists ecommercedb;
+use ecommercedb;
 
 create table if not exists `Users` (
-  `UserID`       int primary key auto_increment,
-  `Username`     varchar(50)         not null,
-  `PasswordHash` varchar(255)        not null,
-  `Email`        varchar(100) unique not null,
-  `CreatedAt`    datetime default current_timestamp
+  `ID`           int primary key auto_increment,
+  `username`     varchar(50)         not null,
+  `passwordHash` varchar(255)        not null,
+  `email`        varchar(100) unique not null
 );
 
 create table if not exists `Products` (
-  `ProductID`   int primary key auto_increment,
-  `ProductName` varchar(100)   not null,
-  `Description` text,
-  `Price`       decimal(10, 2) not null,
-  `Stock`       int            not null
+  `ID`          int primary key auto_increment,
+  `productName` varchar(100)   not null,
+  `description` text,
+  `price`       decimal(10, 2) not null,
+  `stock`       int            not null
 );
 
-create table if not exists `Orders` (
-  `OrderID`     int primary key auto_increment,
-  `UserID`      int            not null,
-  `OrderDate`   datetime default current_timestamp,
-  `TotalAmount` decimal(10, 2) not null,
-  foreign key (`UserID`) references `Users` (`UserID`)
+create table if not exists `Cart` (
+  `ID`     int primary key auto_increment,
+  `userID` int,
+  total    int not null,
+  foreign key (`userID`) references `Users` (`ID`)
 );
 
-create table if not exists `OrderDetails` (
-  `OrderDetailID` int primary key auto_increment,
-  `OrderID`       int            not null,
-  `ProductID`     int            not null,
-  `Quantity`      int            not null,
-  `PriceAtOrder`  decimal(10, 2) not null,
-  foreign key (`OrderID`) references `Orders` (`OrderID`),
-  foreign key (`ProductID`) references `Products` (`ProductID`) on delete cascade
+create table if not exists `CartItems` (
+  `ID`        int primary key auto_increment,
+  `cartID`    int,
+  `productID` int,
+  quantity    int not null,
+  foreign key (`cartID`) references `Cart` (`ID`),
+  foreign key (`productID`) references `Products` (`ID`)
 );
 
-create table if not exists `Reviews` (
-  `ReviewID`   int primary key auto_increment,
-  `ProductID`  int  not null,
-  `UserID`     int  not null,
-  `Rating`     int check (Rating between 1 and 5),
-  `ReviewText` text not null,
-  `CreatedAt`  datetime default current_timestamp,
-  foreign key (`ProductID`) references Products (ProductID) on delete cascade,
-  foreign key (`UserID`) references Users (UserID)
+
+create database if not exists `contruction_job`;
+use `contruction_job`;
+
+create table if not exists `host` (
+  `id`      int primary key auto_increment,
+  `name`    varchar(45) not null,
+  `address` varchar(45) not null
 );
 
-# insert
-insert into `Users` (UserID, Username, PasswordHash, Email)
-values (1, 'username1', 'hashedpassword', 'user1@gmail.com'),
-       (2, 'username2', 'hashedpassword', 'user2@gmail.com'),
-       (3, 'username3', 'hashedpassword', 'user3@gmail.com');
+create table if not exists `contractor` (
+  `id`            int primary key auto_increment,
+  `name`          varchar(255) not null,
+  `address`       varchar(255) not null,
+  `contractorcol` varchar(45)
+);
 
-insert into `Products` (ProductID, ProductName, Description, Price, Stock)
-values (1, 'product1', 'Description of product 1', 100000, 12),
-       (2, 'product2', 'Description of product 2', 200000, 22),
-       (3, 'product3', 'Description of product 3', 300000, 32),
-       (4, 'product4', 'Description of product 4', 400000, 42),
-       (5, 'product5', 'Description of product 5', 500000, 52);
+create table if not exists `building` (
+  `id`            int primary key auto_increment,
+  `name`          varchar(45) not null,
+  `address`       varchar(45) not null,
+  `city`          varchar(45) not null,
+  `cost`          float       not null,
+  `start`         date        not null,
+  `host_id`       int         not null,
+  `contractor_id` int         not null,
+  foreign key (`host_id`) references `host` (`id`),
+  foreign key (`contractor_id`) references `contractor` (`id`)
+);
 
-insert into `Orders` (OrderID, UserID, TotalAmount)
-values (1, 1, 1300000),
-       (2, 2, 1100000);
+create table if not exists `architect` (
+  `id`       int primary key auto_increment,
+  `name`     varchar(255) not null,
+  `sex`      tinyint(1)   not null,
+  `birthday` date         not null,
+  `place`    varchar(255) not null,
+  `address`  varchar(255) not null
+);
 
-insert into `OrderDetails` (OrderDetailID, OrderID, ProductID, Quantity, PriceAtOrder)
-values (1, 1, 4, 2, 400000),
-       (2, 1, 1, 3, 100000),
-       (3, 2, 3, 2, 300000),
-       (4, 2, 5, 1, 500000);
+create table if not exists `design` (
+  `building_id`  int,
+  `architect_id` int,
+  `benefit`      varchar(4),
+  foreign key (`building_id`) references `building` (`id`),
+  foreign key (`architect_id`) references `architect` (`id`)
+);
 
-insert into `Reviews` (ProductID, UserID, Rating, ReviewText)
-values (1, 1, 4, 'Review of product 1 of user 1'),
-       (4, 1, 3, 'Review of product 4 of user 1'),
-       (5, 2, 3, 'Review of product 5 of user 2');
+create table if not exists `worker` (
+  `id`       int primary key auto_increment,
+  `name`     varchar(45) not null,
+  `birthday` date        not null,
+  `year`     varchar(45) not null,
+  `skill`    varchar(45) not null
+);
 
-# update
-update `Products`
-set Price = 140000
-where ProductID = 2;
-
-update `Products`
-set Stock = 31
-where ProductID = 3;
-
-update `Users`
-set Email = 'new_user2@gmail.com'
-where UserID = 2;
-
-# delete
-# delete
-# from `OrderDetails`
-# where ProductID = 5;
-# delete
-# from `Reviews`
-# where ProductID = 5; -> already got 'on delete cascade'
-delete
-from `Products`
-where ProductID = 5;
-
-# delete
-# from `OrderDetails`
-# where OrderID = 2; # -> already got 'on delete cascade'
-delete
-from `Orders`
-where OrderID = 2;
+create table if not exists `work` (
+  `building_id` int,
+  `worker_id`   int,
+  `date`        date        not null,
+  `total`       varchar(45) not null,
+  foreign key (`building_id`) references `building` (`id`),
+  foreign key (`worker_id`) references `worker` (`id`)
+);

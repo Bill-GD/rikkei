@@ -111,6 +111,7 @@ from (
             Customers as c
        where s.CustomerID = c.CustomerID
        group by c.CustomerID
+       # having OrderCount > 2
        order by OrderCount desc) as cc,
      (
        # spending per customer

@@ -2,8 +2,7 @@ use construction_management;
 
 # select distinct name, birthday
 select *
-from architect
-limit 2 offset 0;
+from architect;
 select *
 from architect
 where birthday between 1956 and 1970;
