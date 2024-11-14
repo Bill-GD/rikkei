@@ -126,7 +126,7 @@ from architect a
                    having count = 2) t on t.id = a.id;
 
 # name of workers joined work at 'can tho' but not 'vinh long'
-select id, name
+explain analyze select id, name
 from worker
 where id in (select distinct w.worker_id
              from work w

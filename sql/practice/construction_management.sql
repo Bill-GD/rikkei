@@ -1,7 +1,7 @@
 use construction_management;
 
 # select distinct name, birthday
-select *
+explain analyze select *
 from architect;
 select *
 from architect
