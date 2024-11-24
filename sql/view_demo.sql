@@ -10,3 +10,11 @@ select *
 from not_retired;
 
 drop view not_retired;
+
+create view view_architect_benefit as
+select architect_id, sum(benefit)
+from design
+group by architect_id;
+
+select *
+from view_architect_benefit;
