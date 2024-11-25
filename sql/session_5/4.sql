@@ -34,7 +34,7 @@ create table if not exists OrderDetails (
 create view CustomerOrders as
 select OrderID, CustomerName, OrderDate, TotalAmount
 from Orders o
-       inner join Customers C on o.CustomerID = C.CustomerID;
+       inner join Customers c on o.CustomerID = c.CustomerID;
 
 update CustomerOrders
 set TotalAmount = 250.00
