@@ -115,3 +115,21 @@ call get_data(2, 5);
 
 select @page, @page_size; # params are local (same syntax)
 
+
+delimiter $$
+create procedure if not exists checkMaleExists(out exist varchar(20))
+begin
+  declare countMale int default 0;
+  select count(*) into countMale from architect where sex = 1;
+  if countMale > 0 then #
+    set exist = 'Exists';
+  else
+    set exist = 'Not exist';
+  end if;
+end $$
+delimiter ;
+
+call checkMaleExists(@isMaleExists);
+
+select @isMaleExists;
+

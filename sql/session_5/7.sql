@@ -43,7 +43,7 @@ create index `idx_saleDate` on sales (saleDate);
 create view CustomerMonthlySales as
 select c.CustomerID,
        concat(c.firstName, c.lastName) CustomerName,
-       date_format(orderDate, "%Y-%m") MonthYear,
+       date_format(orderDate, '%Y-%m') MonthYear,
        sum(totalAmount)                TotalSales
 from customers c
        inner join orders o on c.customerID = o.customerID
