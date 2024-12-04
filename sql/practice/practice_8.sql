@@ -236,7 +236,8 @@ create procedure if not exists addNewProduct(
   in quantityParam int
 )
 begin
-  insert into products (productName, price, description, quantity) values (productNameParam, priceParam, descriptionParam, quantityParam);
+  insert into products (productName, price, description, quantity)
+  values (productNameParam, priceParam, descriptionParam, quantityParam);
 end $$
 delimiter ;
 

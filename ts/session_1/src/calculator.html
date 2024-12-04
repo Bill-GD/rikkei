@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../dist/calculator.js"></script>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <span>
+      <label for="first">First number</label>
+      <input type="number" name="first" id="first" />
+    </span>
+    <br>
+    <span>
+      <label for="op">Operation</label>
+      <select name="op" id="op">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="^">^</option>
+        <option value="!">!</option>
+        <option value="√">√</option>
+      </select>
+    </span>
+    <br>
+    <span>
+      <label for="second">Second number</label>
+      <input type="number" name="second" id="second" />
+    </span>
+    <br>
+    <button onclick="getResult()">Result</button>
+    <span id="result"></span>
+  </body>
+  <script>
+    function getResult() {
+      let first = parseInt(document.getElementById('first').value),
+          second = parseInt(document.getElementById('second').value),
+          op = document.getElementById('op').value;
+
+      // console.log(first);
+      // console.log(second);
+      // console.log(op);
+
+      const res = document.getElementById('result');
+      if (!res) return;
+      switch (op) {
+        case '+':
+          res.innerHTML = add(first, second);
+          break;
+        case '-':
+          res.innerHTML = subtract(first, second);
+          break;
+        case '*':
+          res.innerHTML = multiply(first, second);
+          break;
+        case '/':
+          res.innerHTML = divide(first, second);
+          break;
+        case '^':
+          res.innerHTML = power(first, second);
+          break;
+        case '!':
+          res.innerHTML = factorial(first);
+          break;
+        case '√':
+          res.innerHTML = root(first, second).toString();
+          break;
+      }
+    }
+  </script>
+</html>
