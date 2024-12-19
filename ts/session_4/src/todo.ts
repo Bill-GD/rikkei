@@ -66,31 +66,23 @@ class TodoListManager {
   }
 }
 
-enum Input {
-  print = 'print',
-  add = 'add',
-  delete = 'delete',
-  edit = 'edit',
-  sort = 'sort',
-  search = 'search',
-  end = 'end',
-}
+enum Input {print = 1, add, delete, edit, sort, search, end}
 
 class Main {
   run(): void {
     const manager = new TodoListManager();
 
-    let input: string;
+    let input: number;
     do {
-      input = String(prompt(
+      input = Number(prompt(
         'Manage todo list:\n\n' +
-        `${Input.print}: Print the todo list.\n` +
-        `${Input.add}: Add a task to the end of the list.\n` +
-        `${Input.delete}: Delete a task at any position.\n` +
-        `${Input.edit}: Edit the content of a task at any position.\n` +
-        `${Input.sort}: Sort and print the task content.\n` +
-        `${Input.search}: Search for a todo.\n` +
-        `${Input.end}: Stop the program.`,
+        `${Input.print}. Print the todo list.\n` +
+        `${Input.add}. Add a task to the end of the list.\n` +
+        `${Input.delete}. Delete a task at any position.\n` +
+        `${Input.edit}. Edit the content of a task at any position.\n` +
+        `${Input.sort}. Sort and print the task content.\n` +
+        `${Input.search}. Search for a todo.\n` +
+        `${Input.end}. Stop the program.`,
       ));
       let resStr: string = '', resNum: number = -1;
 
