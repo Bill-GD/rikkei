@@ -100,9 +100,9 @@ class TaskManager {
   }
 }
 
-enum Input {addEmployee = 1, addTask, assign, complete, list, end}
+enum TaskInput {addEmployee = 1, addTask, assign, complete, list, end}
 
-class Main {
+class TaskMain {
   run(): void {
     const manager = new TaskManager();
     let input: number;
@@ -112,16 +112,16 @@ class Main {
       input = Number(prompt(
         'Task manager\n\n' +
         (errorText.length > 0 ? errorText + '\n\n' : '') +
-        `${Input.addEmployee}. Thêm nhân viên mới.\n` +
-        `${Input.addTask}. Thêm task mới.\n` +
-        `${Input.assign}. Gán task cho nhân viên.\n` +
-        `${Input.complete}. Đánh dấu task hoàn thành.\n` +
-        `${Input.list}. Hiển thị danh sách task (bao gồm thông tin nhân viên, task, hạn hoàn thành, trạng thái và quá hạn nếu có).\n` +
-        `${Input.end}. Dừng chương trình.\n`,
+        `${TaskInput.addEmployee}. Thêm nhân viên mới.\n` +
+        `${TaskInput.addTask}. Thêm task mới.\n` +
+        `${TaskInput.assign}. Gán task cho nhân viên.\n` +
+        `${TaskInput.complete}. Đánh dấu task hoàn thành.\n` +
+        `${TaskInput.list}. Hiển thị danh sách task (bao gồm thông tin nhân viên, task, hạn hoàn thành, trạng thái và quá hạn nếu có).\n` +
+        `${TaskInput.end}. Dừng chương trình.\n`,
       ));
 
       switch (input) {
-        case Input.addEmployee:
+        case TaskInput.addEmployee:
           const newName = String(prompt(`Enter new employee's name`));
           if (newName.length <= 0) {
             errorText = `Name can't be empty`;
@@ -130,7 +130,7 @@ class Main {
           manager.addEmployee(newName);
           errorText = '';
           break;
-        case Input.addTask:
+        case TaskInput.addTask:
           const title = String(prompt('Enter task title'));
           if (title.length <= 0) {
             errorText = `Title can't be empty`;
@@ -165,24 +165,24 @@ class Main {
           manager.addTask(title, deadline);
           errorText = '';
           break;
-        case Input.assign:
+        case TaskInput.assign:
           const task = Number(prompt('Enter task id'));
           const employee = Number(prompt('Enter employee id'));
           manager.assignTask(employee, task);
           break;
-        case Input.complete:
+        case TaskInput.complete:
           const taskID = Number(prompt('Enter task id'));
           manager.completeTask(taskID);
           break;
-        case Input.list:
+        case TaskInput.list:
           manager.listTasks();
           break;
-        case Input.end:
+        case TaskInput.end:
           return;
       }
     }
-    // while (input !== Input.end);
+    // while (input !== TaskInput.end);
   }
 }
 
-new Main().run();
+const taskManager = new TaskMain();
