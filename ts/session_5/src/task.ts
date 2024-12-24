@@ -1,10 +1,36 @@
-class Employee {
+class Person {
   id: number;
   name: string;
 
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
+  }
+
+  getName(): string {
+    return this.name;
+  };
+}
+
+class Employee extends Person {
+  role: string;
+
+  constructor(id: number, name: string, role: string = '') {
+    super(id, name);
+    this.role = role;
+  }
+}
+
+class Manager extends Employee {
+  department: string;
+
+  constructor(id: number, name: string, role: string, department: string) {
+    super(id, name, role);
+    this.department = department;
+  }
+
+  getDepartment(): string {
+    return this.department;
   }
 }
 
@@ -20,6 +46,14 @@ class Task {
     this.deadline = deadline;
     this.isCompleted = isCompleted;
   }
+
+  complete(): void {
+    this.isCompleted = true;
+  }
+
+  getDetails(): string {
+    return JSON.stringify({ ...this });
+  }
 }
 
 class Assignment {
@@ -30,25 +64,40 @@ class Assignment {
     this.employee = employee;
     this.task = task;
   }
+
+  getAssignmentDetails(): string {
+    return JSON.stringify({
+      employee: { ...this.employee },
+      task: this.task.getDetails(),
+    });
+  }
 }
 
 class TaskManager {
   employees: Employee[];
+  managers: Manager[];
   tasks: Task[];
   assignments: Assignment[];
 
-  constructor(employees: Employee[] = [], tasks: Task[] = [], assignments: Assignment[] = []) {
+  constructor(employees: Employee[] = [], managers: Manager[] = [], tasks: Task[] = [], assignments: Assignment[] = []) {
     this.employees = employees;
+    this.managers = managers;
     this.tasks = tasks;
     this.assignments = assignments;
   }
-
 
   // Thêm nhân viên mới vào danh sách.
   addEmployee(name: string): void {
     let ids = this.employees.map(e => e.id).sort();
     ids.length <= 0 && ids.push(0);
     this.employees.push(new Employee(ids[ids.length - 1] + 1, name));
+  }
+
+  // Thêm người quản lý mới.
+  addManager(name: string, role: string, department: string): void {
+    let ids = this.managers.map(e => e.id).sort();
+    ids.length <= 0 && ids.push(0);
+    this.managers.push(new Manager(ids[ids.length - 1] + 1, name, role, department));
   }
 
   // Thêm task mới với hạn hoàn thành.
@@ -70,7 +119,7 @@ class TaskManager {
   completeTask(taskId: number): void {
     const task = this.tasks.find(e => e.id === taskId);
     if (task === undefined) return;
-    task.isCompleted = true;
+    task.complete();
   }
 
   // Hiển thị danh sách task với trạng thái hoàn thành và quá hạn nếu có.
@@ -100,7 +149,7 @@ class TaskManager {
   }
 }
 
-enum TaskInput {addEmployee = 1, addTask, assign, complete, list, end}
+enum TaskInput {addEmployee = 1, addManager, addTask, assign, complete, list, end}
 
 class TaskMain {
   run(): void {
@@ -113,6 +162,7 @@ class TaskMain {
         'Task manager\n\n' +
         (errorText.length > 0 ? errorText + '\n\n' : '') +
         `${TaskInput.addEmployee}. Thêm nhân viên mới.\n` +
+        `${TaskInput.addManager}. Thêm quản lý.\n` +
         `${TaskInput.addTask}. Thêm task mới.\n` +
         `${TaskInput.assign}. Gán task cho nhân viên.\n` +
         `${TaskInput.complete}. Đánh dấu task hoàn thành.\n` +
@@ -128,6 +178,25 @@ class TaskMain {
             break;
           }
           manager.addEmployee(newName);
+          errorText = '';
+          break;
+        case TaskInput.addManager:
+          const newManagerName = String(prompt(`Enter new manager's name`));
+          if (newManagerName.length <= 0) {
+            errorText = `Name can't be empty`;
+            break;
+          }
+          const newManagerRole = String(prompt(`Enter new manager's role`));
+          if (newManagerRole.length <= 0) {
+            errorText = `Role name can't be empty`;
+            break;
+          }
+          const newManagerDep = String(prompt(`Enter new manager's department`));
+          if (newManagerDep.length <= 0) {
+            errorText = `Department name can't be empty`;
+            break;
+          }
+          manager.addManager(newManagerName, '', '');
           errorText = '';
           break;
         case TaskInput.addTask:
