@@ -26,5 +26,5 @@ set Quantity = 11
 where ProductID = 2;
 
 update products
-set ProductName = 'Product B'
+set ProductName = 'Store B'
 where ProductID = 2;

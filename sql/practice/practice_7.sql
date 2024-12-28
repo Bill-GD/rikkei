@@ -47,16 +47,16 @@ values ('John', 'Doe', 'john.doe@example.com'),
        ('Eve', 'Miller', 'eve.miller@example.com');
 
 insert into Products (ProductName, Price)
-values ('Product A', 10.00),
-       ('Product B', 20.00),
-       ('Product C', 30.00),
-       ('Product D', 40.00),
-       ('Product E', 50.00),
-       ('Product F', 60.00),
-       ('Product G', 70.00),
-       ('Product H', 80.00),
-       ('Product I', 90.00),
-       ('Product J', 100.00);
+values ('Store A', 10.00),
+       ('Store B', 20.00),
+       ('Store C', 30.00),
+       ('Store D', 40.00),
+       ('Store E', 50.00),
+       ('Store F', 60.00),
+       ('Store G', 70.00),
+       ('Store H', 80.00),
+       ('Store I', 90.00),
+       ('Store J', 100.00);
 
 insert into Orders (CustomerID, OrderDate, TotalAmount)
 values (1, '2024-06-01', 1500.00),

@@ -188,7 +188,7 @@ from expensive_products;
 
 update expensive_products
 set price = 600000
-where productName = 'Product A';
+where productName = 'Store A';
 
 # alter view expensive_products as
 #   select productName, price

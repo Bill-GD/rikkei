@@ -34,9 +34,9 @@ select *
 from inventoryChanges;
 
 insert into products (productName, quantity)
-values ('Product A', 10),
-       ('Product B', 20),
-       ('Product C', 30);
+values ('Store A', 10),
+       ('Store B', 20),
+       ('Store C', 30);
 
 update products
 set quantity = 18

@@ -55,9 +55,9 @@ values ('2023-01-01', 1, 1, 8200),
        ('2023-01-13', 1, 3, 17100);
 
 insert into Products (ProductName)
-values ('Product 1'),
-       ('Product 2'),
-       ('Product 3');
+values ('Store 1'),
+       ('Store 2'),
+       ('Store 3');
 
 insert into SalesDetails (SaleID, ProductID, Quantity, UnitPrice)
 values (1, 1, 2, 3300),
