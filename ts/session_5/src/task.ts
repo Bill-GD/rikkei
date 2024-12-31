@@ -109,8 +109,8 @@ class TaskManager {
 
   // Phân công task cho nhân viên.
   assignTask(employeeId: number, taskId: number): void {
-    const em = this.employees.find(e => e.id = employeeId);
-    const t = this.tasks.find(e => e.id = taskId);
+    const em = this.employees.find(e => e.id === employeeId);
+    const t = this.tasks.find(e => e.id === taskId);
     if (em === undefined || t === undefined) return;
     this.assignments.push(new Assignment(em, t));
   }
