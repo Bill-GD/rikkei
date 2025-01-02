@@ -83,7 +83,7 @@ class StandardRoom extends Room {
   }
 
   override applyDiscount(discountRate: number): number {
-    this._pricePerNight *= discountRate;
+    this._pricePerNight *= 1 - discountRate;
     return this._pricePerNight;
   }
 
@@ -109,7 +109,7 @@ class DeluxeRoom extends Room {
   }
 
   override applyDiscount(discountRate: number): number {
-    this._pricePerNight *= discountRate;
+    this._pricePerNight *= 1 - discountRate;
     return this._pricePerNight;
   }
 
@@ -135,7 +135,7 @@ class SuiteRoom extends Room {
   }
 
   override applyDiscount(discountRate: number): number {
-    this._pricePerNight *= discountRate;
+    this._pricePerNight *= 1 - discountRate;
     return this._pricePerNight;
   }
 
@@ -271,7 +271,7 @@ class HotelManager {
   // Hiển thị danh sách đặt phòng của một khách hàng (Sử dụng filter).
   listBookingsByCustomer(customerId: number): void {
     const hasCustomer = this._customers.findIndex(e => e.getDetails().id === customerId) >= 0;
-    if (hasCustomer) {
+    if (!hasCustomer) {
       return showError(`No customer of this ID (${customerId}) exists`);
     }
 
@@ -287,6 +287,7 @@ class HotelManager {
       res +=
         ` - ID: ${booking.bookingId}\n` +
         ` - Customer: ${booking.customer.name}\n` +
+        ` - Room ID: ${room.roomId}\n` +
         ` - Room type: ${room.type}\n` +
         ` - Availability: ${room.isAvailable ? 'Available' : 'Booked'}\n` +
         ` - Room price: ${room.pricePerNight}\n` +
