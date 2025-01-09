@@ -1,7 +1,7 @@
-import { showError } from './helper.js';
-import { Booking } from './models/booking.js';
-import { Person } from './models/person.js';
-import { DeluxeRoom, Room, StandardRoom, SuiteRoom } from './models/room.js';
+import { showError } from '../helper';
+import { Booking } from '../models/booking';
+import { Person } from '../models/person';
+import Room, { DeluxeRoom, StandardRoom, SuiteRoom } from '../models/room';
 
 type RoomType = 'standard' | 'deluxe' | 'suite';
 

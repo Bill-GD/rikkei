@@ -1,4 +1,4 @@
-export abstract class Room {
+export default abstract class Room {
   protected _roomId: number;
   protected _type: string;
   protected _pricePerNight: number;

@@ -1,5 +1,5 @@
 import { Person } from './person';
-import { Room } from './room';
+import Room from './room';
 
 export class Booking {
   protected _bookingId: number;

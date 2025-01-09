@@ -1,5 +1,5 @@
 import { showError } from './helper.js'; // add .js for the compiled file (using ES6 modules)
-import HotelManager from './manager.js';
+import HotelManager from './services/manager';
 
 enum Input {
   addCustomer = 1,
@@ -65,7 +65,7 @@ class Main {
           }
           manager.addRoom(roomType, 1);
           break;
-        case Input.book:
+        case Input.book: {
           const cusId = Number(prompt('Enter customer ID'));
           const roomId = Number(prompt('Enter room ID'));
           const nightCount = Number(prompt('Enter night count'));
@@ -75,6 +75,7 @@ class Main {
           }
           manager.bookRoom(cusId, roomId, nightCount);
           break;
+        }
         case Input.release:
           const relRoomId = Number(prompt('Enter room ID'));
           if (isNaN(relRoomId)) {
@@ -87,12 +88,12 @@ class Main {
           manager.listAvailableRooms();
           break;
         case Input.listBooked:
-          const cusBookedId = Number(prompt('Enter customer ID'));
-          if (isNaN(cusBookedId) || cusBookedId < 0) {
+          const cusId = Number(prompt('Enter customer ID'));
+          if (isNaN(cusId) || cusId < 0) {
             showError('Invalid customer ID');
             break;
           }
-          manager.listBookingsByCustomer(cusBookedId);
+          manager.listBookingsByCustomer(cusId);
           break;
         case Input.totalRev:
           console.log(`Total revenue: ${manager.calculateTotalRevenue()}`);
@@ -138,4 +139,5 @@ class Main {
 }
 
 const app = new Main();
-app.run();
+// app.run();
+(window as any).app = app; // expose app to global scope (can be used in dom)
