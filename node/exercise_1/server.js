@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const host = '127.0.0.1', port = 3000;
 
 const server = createServer((req, res) => {
-  // res.statusCode = 200;
+  res.statusCode = 200;
   // res.setHeader('Content-Type', 'text/plain; charset=utf8');
   // res.end(fs.readFileSync(
   //   './txt/final.txt',
@@ -50,6 +50,7 @@ const server = createServer((req, res) => {
     }
     case '/product': {
       if (!reqUrlParts[1]) {
+        res.statusCode = 404;
         response = '<h1>PAGE NOT FOUND</h1>';
         break;
       }
@@ -70,9 +71,11 @@ const server = createServer((req, res) => {
           prodTemplate = prodTemplate.replaceAll(`{{${key}}}`, data[key]);
         });
       } else {
+        res.statusCode = 404;
         response = '<h1>PRODUCT NOT FOUND</h1>';
         break;
       }
+
       response = prodTemplate;
       break;
     }
@@ -90,6 +93,8 @@ const server = createServer((req, res) => {
       const json = JSON.parse(data);
       const id = parseInt(reqUrlParts[1]);
       if (isNaN(id) || id < 0 || id >= json.length) {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', 'text/html; charset=utf8');
         response = '<h1>PAGE NOT FOUND</h1>';
         break;
       }
@@ -98,6 +103,7 @@ const server = createServer((req, res) => {
       break;
     }
     default: {
+      res.statusCode = 404;
       response = '<h1>PAGE NOT FOUND</h1>';
       break;
     }
