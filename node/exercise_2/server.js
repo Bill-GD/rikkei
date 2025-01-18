@@ -1,6 +1,6 @@
-const { readFileSync } = require('node:fs');
-const { createServer } = require('node:http');
-const URL = require('node:url');
+import { readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import URL from 'node:url';
 
 const host = '127.0.0.1', port = 3000;
 
@@ -11,12 +11,13 @@ const server = createServer((req, res) => {
   let response;
   const parsedUrl = URL.parse(req.url);
   const urlParts = parsedUrl.pathname.split('/').filter(e => e.length > 0).map(String);
+  const dataPath = './dev-data/backup-data.json';
   // console.log(parsedUrl);
 
   switch (`/${urlParts[0] ?? ''}`) {
     case '/':
     case '/overview': {
-      const json = JSON.parse(readFileSync('./dev-data/data.json', 'utf8'));
+      const json = JSON.parse(readFileSync(dataPath, 'utf8'));
       let overview = readFileSync('./templates/overview.html', 'utf8');
 
       const cards = [];
@@ -36,7 +37,7 @@ const server = createServer((req, res) => {
         response = '<h1>PRODUCT NOT FOUND</h1>';
         break;
       }
-      const item = JSON.parse(readFileSync('./dev-data/data.json', 'utf8')).find(e => `${e.id}` === urlParts[1]);
+      const item = JSON.parse(readFileSync(dataPath, 'utf8')).find(e => `${e.id}` === urlParts[1]);
       item['organic'] = item['organic'] ? 'organic' : 'inorganic';
       if (!item) {
         res.statusCode = 404;
@@ -60,16 +61,12 @@ const server = createServer((req, res) => {
 
       if (queries.size > 0) {
         console.log(queries);
-        const item = JSON.parse(readFileSync('./dev-data/data.json', 'utf8')).find(e => e.productName === queries.get('p').trim());
+        const item = JSON.parse(readFileSync(dataPath, 'utf8')).find(e => e.productName === queries.get('p').trim());
         if (!item) {
           search = search.replaceAll('{{message}}', 'NOT FOUND');
           response = search;
           break;
         }
-
-        // item['organic'] = item['organic'] ? 'organic' : 'inorganic';
-        // let product = readFileSync('./templates/product.html', 'utf8');
-        // Object.keys(item).forEach(key => product = product.replaceAll(`{{${key}}}`, item[key]));
 
         res.writeHead(302, { 'Location': `/product/${item.id}` });
         break;
@@ -79,9 +76,15 @@ const server = createServer((req, res) => {
       response = search;
       break;
     }
+    case '/create': {
+      let create = readFileSync('./templates/create.html', 'utf8');
+      // Object.keys(item).forEach(key => create = create.replaceAll(`{{${key}}}`, item[key]));
+      response = create;
+      break;
+    }
     case '/api': {
       res.setHeader('Content-Type', 'application/json; charset=utf8');
-      const dataStr = readFileSync('./dev-data/data.json', 'utf8');
+      const dataStr = readFileSync(dataPath, 'utf8');
 
       if (urlParts[1]) {
         const item = JSON.parse(dataStr).find(e => `${e.id}` === urlParts[1]);
