@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css?family=Megrim|Nunito+Sans:400,900"
+        rel="stylesheet"
+    />
+    <link
+        rel="icon"
+        href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/155/ear-of-maize_1f33d.png"
+    />
     <title>Create new product</title>
 
     <style>
@@ -64,16 +72,16 @@
       }
 
       .card {
-        padding: 2rem;
+        /*padding: 2rem;*/
         background: white;
         box-shadow: 0 2rem 6rem 1rem rgba(0, 0, 0, 0.15);
         margin: 2rem auto;
         /* transform: skewX(-20deg); */
         display: flex;
         transition: all 0.5s;
-        border-radius: 20px;
-        width: 40rem;
-
+        /*border-radius: 20px;*/
+        /*width: 40rem;*/
+        /*width: 60%;*/
       }
 
       .card .search-form {
@@ -81,42 +89,50 @@
         display: flex;
       }
 
+      form {
+        padding-top: 1.5rem;
+        width: 100%;
+      }
+
       input {
-        padding: .5rem 1rem;
-        margin: .5rem 2rem;
+        padding: 1.5rem 2.5rem;
+        margin: .5rem 0;
         outline: none;
         /* border-bottom: 1px solid #CA1E1E; */
+        /*border-bottom: 1px solid gray;*/
+        font-weight: bold;
         border: none;
-        border-bottom: 1px solid gray;
         font-size: 2rem;
         width: 100%;
       }
 
       .checkbox {
+        padding: 1.75rem 2.5rem;
         display: flex;
       }
 
       #box {
-        width: 1.5rem;
+        width: 2rem;
+        margin-left: 2rem;
       }
 
       .box-label {
         display: flex;
         align-items: center;
         font-size: 2rem;
+        font-weight: 600;
       }
 
       .card form button {
-        height: 5rem;
-        padding: .5rem 1rem;
-        margin-left: 8rem;
-        margin-top: 1.5rem;
+        padding: 2.5rem 1rem;
         background-color: #e55a5a;
         border: none;
         color: white;
         font-size: 1.5rem;
         cursor: pointer;
-        border-radius: 20px;
+        font-weight: 800;
+        text-transform: uppercase;
+        width: 100%;
       }
 
       .card form button:hover {
@@ -233,8 +249,10 @@
   <body>
     <div class="container">
       <h1>🥦 Create your fruits 🌽</h1>
+      <br>
+      <br>
       <figure class="card">
-        <form method="POST" class="create-form">
+        <form action="/create" method="POST" class="create-form" id="form">
           <div class="input-wrapper">
             <input type="text" name="productName" placeholder="Product Name">
           </div>
@@ -254,19 +272,40 @@
             <input type="text" name="price" placeholder="Price">
           </div>
           <div class="input-wrapper">
-            <input type="text" name="description" placeholder="Product Name">
+            <input type="text" name="description" placeholder="Description">
           </div>
           <div class="input-wrapper checkbox">
-            <input id="box" name="organic" type="checkbox" checked="true" />
-            <label class="box-label" for="box">
-              Organic
-            </label>
+            <label class="box-label" for="box">Organic</label>
+            <input id="box" name="organic" type="checkbox" checked />
           </div>
-          <button type="submit">
+          <button type="submit" id="form-submit">
             🥭🥭BOOM! Add fruit🥦🥦
           </button>
         </form>
       </figure>
     </div>
   </body>
+  <script>
+    const form = document.getElementById('form');
+    form?.addEventListener('submit', ev => {
+      ev.preventDefault();
+
+      const formData = {};
+      for (let element of form.elements) {
+        if (element.tagName.toLowerCase() === 'button') continue;
+        formData[element.name] = element.value;
+      }
+
+      if (Object.values(formData).some(v => v.length <= 0) ||
+          isNaN(parseFloat(formData['price'])) ||
+          isNaN(parseInt(formData['quantity'])) ||
+          parseFloat(formData['price']) <= 0 ||
+          parseInt(formData['quantity']) <= 0) {
+        alert('Invalid input');
+        console.error('Invalid input');
+        return;
+      }
+      form.submit();
+    });
+  </script>
 </html>

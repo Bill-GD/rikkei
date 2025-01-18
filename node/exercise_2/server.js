@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import URL from 'node:url';
 
@@ -11,7 +11,7 @@ const server = createServer((req, res) => {
   let response;
   const parsedUrl = URL.parse(req.url);
   const urlParts = parsedUrl.pathname.split('/').filter(e => e.length > 0).map(String);
-  const dataPath = './dev-data/backup-data.json';
+  const dataPath = './dev-data/data.json';
   // console.log(parsedUrl);
 
   switch (`/${urlParts[0] ?? ''}`) {
@@ -22,7 +22,7 @@ const server = createServer((req, res) => {
 
       const cards = [];
       for (const item of json) {
-        item['organic'] = item['organic'] === true ? 'organic!' : '';
+        item['organic'] = item['organic'] === true || item['organic'] === 'on' ? 'organic!' : '';
         let card = readFileSync('./templates/card-template.html', 'utf8');
         Object.keys(item).forEach(key => card = card.replaceAll(`{{${key}}}`, item[key]));
         cards.push(card);
@@ -77,9 +77,31 @@ const server = createServer((req, res) => {
       break;
     }
     case '/create': {
-      let create = readFileSync('./templates/create.html', 'utf8');
-      // Object.keys(item).forEach(key => create = create.replaceAll(`{{${key}}}`, item[key]));
-      response = create;
+      if (req.method === 'POST') {
+        let data = '';
+        req.on('error', err => {
+          console.error(err);
+        }).on('data', chunk => {
+          data += `${chunk}`;
+        }).on('end', () => {
+          const queries = {};
+          new URLSearchParams(data).forEach((value, key) => queries[key] = value);
+          queries['organic'] = queries['organic'] === 'on';
+
+          const json = JSON.parse(readFileSync(dataPath, 'utf8'));
+
+          const numIds = json.map(e => parseInt(e.id)).filter(e => !isNaN(e)).sort((a, b) => b - a);
+          json.push({
+            id: numIds[0] + 1,
+            ...queries,
+          });
+          writeFileSync(dataPath, JSON.stringify(json), 'utf8');
+        });
+        res.writeHead(302, { 'Location': '/' });
+        break;
+      }
+
+      response = readFileSync('./templates/create.html', 'utf8');
       break;
     }
     case '/api': {
