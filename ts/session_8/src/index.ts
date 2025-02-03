@@ -98,4 +98,4 @@ console.log(numStorage.getData());
 
 
 import * as homework from './homework.js';
-(window as any).homework = homework;
+(window as any).hw = homework;

@@ -7,11 +7,44 @@
     <title>TypeScript Session 8</title>
   </head>
   <body>
-    <button onclick="console.log(homework.swap([1, 2]))">Swap</button>
-    <button onclick="console.log(homework.getFirstElement([1, 2, 4, 5]))">Swap</button>
-    <button onclick="console.log(homework.mergeObj(
-  { name: 'Name' },
-  { email: 'email@gmail.com' },))">Swap
+    <button onclick="console.log(hw.swap([1, 2]))">Swap</button>
+    <button onclick="console.log(hw.getFirstElement([1, 2, 4, 5]))">Get first</button>
+    <button onclick="console.log(hw.mergeObj(
+      { name: 'Name' },
+      { email: 'email@gmail.com' },
+    ))">
+      Merge
+    </button>
+    <button onclick="console.log(hw.pluck(
+      [
+          { id: 1, name: 'Laptop' },
+          { id: 2, name: 'Phone' },
+          { id: 3, name: 'Shoes' },
+      ],
+      'name',
+    ))">
+      Get objects by property
+    </button>
+    <button onclick="console.log(hw.filterByProperty(
+      [
+          { id: 1, name: 'Laptop', category: 'Electronics' },
+          { id: 2, name: 'Phone', category: 'Electronics' },
+          { id: 3, name: 'Shoes', category: 'Fashion' },
+      ],
+      'category',
+      'Electronics',
+    ))">
+      Filter by property
+    </button>
+    <button onclick="console.log(hw.sumByProperty(
+      [
+          { id: 1, total: 150 },
+          { id: 2, total: 200 },
+          { id: 3, total: 300 },
+      ],
+      'total',
+    ))">
+      Sum by property
     </button>
   </body>
 </html>
