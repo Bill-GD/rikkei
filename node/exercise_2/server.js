@@ -2,9 +2,9 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import URL from 'node:url';
 
-const host = '127.0.0.1', port = 3000;
+const host = '0.0.0.0', port = process.env.PORT || 3000;
 
-const server = createServer((req, res) => {
+createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html; charset=utf8');
 
@@ -128,8 +128,6 @@ const server = createServer((req, res) => {
   }
 
   res.end(response);
-});
-
-server.listen(port, host, () => {
-  console.log(`Server started: http://${host}:${port}`);
+}).listen(port, host, () => {
+  console.log(`Server started: http://localhost:${port}`);
 });
