@@ -11,6 +11,10 @@ abstract class Product {
 
   abstract getDetails(): string;
 
+  displayBaseInfo(): void {
+    console.log(`id=${this.id}|name=${this.name}`);
+  }
+
   calculateDiscountPrice(discountRate: number): number {
     return this.price * (1 - discountRate);
   }
