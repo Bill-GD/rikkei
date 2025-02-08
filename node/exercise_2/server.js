@@ -38,12 +38,12 @@ createServer((req, res) => {
         break;
       }
       const item = JSON.parse(readFileSync(dataPath, 'utf8')).find(e => `${e.id}` === urlParts[1]);
-      item['organic'] = item['organic'] ? 'organic' : 'inorganic';
       if (!item) {
         res.statusCode = 404;
         response = '<h1>PRODUCT NOT FOUND</h1>';
         break;
       }
+      item['organic'] = item['organic'] ? 'organic' : 'inorganic';
 
       let product = readFileSync('./templates/product.html', 'utf8');
       Object.keys(item).forEach(key => product = product.replaceAll(`{{${key}}}`, item[key]));
