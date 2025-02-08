@@ -1,4 +1,4 @@
-FROM node:22
+FROM node:20.18.0
 
 # Sets the current working app directory
 WORKDIR /app
@@ -12,9 +12,9 @@ RUN npm install
 COPY . .
 
 # Set environment
-ENV PORT=3000
+ENV PORT=5000
 
-EXPOSE 8080
+# EXPOSE 3000
 
 # CMD is executed as a normal cli command, after building the container
 # ONLY 1 CMD can be specified for a Dockerfile
