@@ -1,6 +1,6 @@
 class ProductController {
   static index(req, res) {
-    res.send('This is product page');
+    res.send('<h1>This is product page</h1>');
   }
 }
 

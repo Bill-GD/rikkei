@@ -1,6 +1,6 @@
 class OverviewController {
   static index(req, res) {
-    res.send('This is overview page');
+    res.send('<h1>This is overview page</h1>');
   }
 }
 
