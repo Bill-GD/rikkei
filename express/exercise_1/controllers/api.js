@@ -8,20 +8,15 @@ class APIv1Controller {
   }
 
   static getAllUsers(req, res) {
-    if (!existsSync(APIv1Controller.dataPath)) res.status(404).json({ message: 'Data not found' }); else res.status(200).json(JSON.parse(readFileSync(APIv1Controller.dataPath, 'utf8')));
+    res.status(200).json(JSON.parse(readFileSync(APIv1Controller.dataPath, 'utf8')));
   }
 
   static getUserById(req, res) {
     const reqId = req.params.id;
-
-    if (!existsSync(APIv1Controller.dataPath)) {
-      res.status(404).json({ message: 'Data not found' });
-      return;
-    }
-
     const users = JSON.parse(readFileSync(APIv1Controller.dataPath, 'utf8'));
+
     const reqUserIdx = users.findIndex(e => e._id === reqId);
-    if (reqUserIdx < 0) res.status(404).json({ message: 'User not found' }); else res.status(200).json(users[reqUserIdx]);
+    res.status(200).json(users[reqUserIdx]);
   }
 
   static addNewUser(req, res) {
@@ -47,11 +42,6 @@ class APIv1Controller {
     const users = JSON.parse(readFileSync(APIv1Controller.dataPath, 'utf8'));
     const reqUserIdx = users.findIndex(e => e._id === req.params.id);
 
-    if (reqUserIdx < 0) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
-
     users[reqUserIdx] = {
       _id: users[reqUserIdx]._id,
       ...req.body,
@@ -68,11 +58,6 @@ class APIv1Controller {
   static deleteUserById(req, res) {
     const users = JSON.parse(readFileSync(APIv1Controller.dataPath, 'utf8'));
     const reqUserId = users.findIndex(e => e._id === req.params.id);
-
-    if (reqUserId < 0) {
-      res.status(404).json({ message: 'User not found' });
-      return;
-    }
 
     users.splice(reqUserId, 1);
     writeFileSync(
