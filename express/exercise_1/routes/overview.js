@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const OverviewController = require('../controllers/overview.js');
+import express from 'express';
 
+import OverviewController from '../controllers/overview.js';
+
+const router = express.Router();
 router.get('/overview', OverviewController.index);
 
-module.exports = router;
+export default router;

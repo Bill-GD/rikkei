@@ -1,6 +1,6 @@
-const { readFileSync, writeFileSync, existsSync } = require('node:fs');
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-class APIv1Controller {
+export class APIv1Controller {
   static dataPath = './dev-data/users.json';
 
   static index(req, res) {
@@ -29,7 +29,7 @@ class APIv1Controller {
     }
 
     const newUser = {
-      _id: `${Math.random()}`.split('.')[1],
+      _id: `${Math.random()}`.replaceAll('.', ''),
       ...req.body,
     };
     users.push(newUser);
@@ -69,7 +69,3 @@ class APIv1Controller {
     res.status(200).json({ message: 'User deleted successfully' });
   }
 }
-
-module.exports = {
-  APIv1Controller,
-};

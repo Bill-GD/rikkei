@@ -1,5 +1,5 @@
-const { app } = require('./app.js');
-require('./routes/routes.js');
+import app from './app.js';
+import './routes/all_routes.js';
 
 const port = 3000;
 

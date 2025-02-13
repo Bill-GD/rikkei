@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const { APIv1Controller } = require('../controllers/api.js');
-const userExists = require('../middlewares/user_exists.js');
+import express from 'express';
 
+import { APIv1Controller } from '../controllers/api.js';
+import userExists from '../middlewares/user_exists.js';
+
+const router = express.Router();
 router.get('/', APIv1Controller.index);
 
 // users
@@ -12,4 +13,4 @@ router.post('/users', userExists, APIv1Controller.addNewUser);
 router.put('/users/:id', userExists, APIv1Controller.updateUserById);
 router.delete('/users/:id', userExists, APIv1Controller.deleteUserById);
 
-module.exports = router;
+export default router;
