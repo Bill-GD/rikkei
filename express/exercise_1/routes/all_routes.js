@@ -1,6 +1,6 @@
 import app from '../app.js';
 import homeRoutes from '../routes/home.js';
-import apiV1Routes from '../routes/api_v1.js';
+import apiV1Routes from './api_v1.routes.js';
 import overviewRoutes from '../routes/overview.js';
 import productRoutes from '../routes/product.js';
 

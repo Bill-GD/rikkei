@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "content": "Hit the gym",
+    "status": false
+  },
+  {
+    "id": 2,
+    "content": "Do homework",
+    "status": false
+  },
+  {
+    "id": 3,
+    "content": "Sleep",
+    "status": false
+  }
+]

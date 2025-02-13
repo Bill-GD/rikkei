@@ -1,9 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import logger from 'morgan';
+import morgan from 'morgan';
 
 const app = express();
 app.use(bodyParser.json());
-app.use(logger('default'));
+app.use(morgan('dev'));
 
 export default app;
