@@ -3,6 +3,6 @@ import express from 'express';
 import OverviewController from '../controllers/overview.js';
 
 const router = express.Router();
-router.get('/overview', OverviewController.index);
+router.get('/', OverviewController.index);
 
 export default router;

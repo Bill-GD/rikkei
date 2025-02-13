@@ -6,8 +6,8 @@ import productRoutes from '../routes/product.js';
 
 app.use(homeRoutes);
 app.use('/api/v1', apiV1Routes);
-app.use(overviewRoutes);
-app.use(productRoutes);
+app.use('/overview', overviewRoutes);
+app.use('/product', productRoutes);
 
 // routes are matched in order, leftovers are caught here
 app.use((req, res) => {
