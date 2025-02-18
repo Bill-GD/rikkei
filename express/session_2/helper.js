@@ -1,1 +1,1 @@
-export const __dirname = process.cwd();
+export const __root = process.cwd();

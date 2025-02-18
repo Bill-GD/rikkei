@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import todoRoutes from './routes/todo.routes.js';
-import { __dirname } from './helper.js';
+import { __root } from './helper.js';
 
 const app = express();
 const port = 3000;
@@ -36,14 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  console.log(`Dirname: ${__dirname}`);
-  res.sendFile('public/todo_list_layout.html', { root: __dirname });
+  // console.log(`Dirname: ${__dirname()}`);
+  res.sendFile('public/todo_list_layout.html', { root: __root });
 });
 
 app.use('/todos', todoRoutes);
 
 app.get('/api/todos', (req, res) => {
-  res.sendFile('data/todos.json', { root: __dirname });
+  res.sendFile('data/todos.json', { root: __root });
 });
 
 app.get('/test-middleware', checkRole, checkStatus, (req, res) => {
