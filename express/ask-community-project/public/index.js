@@ -1,7 +1,7 @@
 fetch('/api/v1/questions')
   .then(e => e.json())
   .then(data => {
-    const question = data[Math.round(Math.random() * data.length)];
+    const question = data[Math.floor(Math.random() * data.length)];
 
     document.querySelector('.question-content').innerText = question.content;
     document.querySelector('.question-content').id = question.id;
