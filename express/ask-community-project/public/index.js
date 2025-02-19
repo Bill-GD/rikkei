@@ -5,27 +5,33 @@ fetch('/api/v1/questions')
 
     document.querySelector('.question-content').innerText = question.content;
     document.querySelector('.question-content').id = question.id;
+    document.querySelector('#dislike').onclick = () => dislikeQuestion(question.id);
+    document.querySelector('#like').onclick = () => likeQuestion(question.id);
   })
   .catch(err => console.error(err));
 
-async function dislikeQuestion() {
-  const questionId = document.querySelector('.question-content').id;
+async function dislikeQuestion(questionId) {
   const question = await getQuestion(questionId);
   updateQuestion(questionId, {
     content: question.content,
     dislike: ++question.dislike,
     like: question.like,
   });
+  redirectToDetail(questionId);
 }
 
-async function likeQuestion() {
-  const questionId = document.querySelector('.question-content').id;
+async function likeQuestion(questionId) {
   const question = await getQuestion(questionId);
   updateQuestion(questionId, {
     content: question.content,
     dislike: question.dislike,
     like: ++question.like,
   });
+  redirectToDetail(questionId);
+}
+
+function redirectToDetail(questionId) {
+  window.location.href = `/question-detail/${questionId}`;
 }
 
 async function getQuestion(id) {
@@ -37,5 +43,5 @@ function updateQuestion(questionId, updatedQuestion) {
     method: 'put',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedQuestion),
-  });
+  }).then(e => e.json()).then(console.log);
 }
