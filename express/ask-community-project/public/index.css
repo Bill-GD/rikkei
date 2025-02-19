@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background-color: black;
+  padding: 1px 0;
+}
+
+nav ul {
+  list-style-type: none;
+  gap: 5rem;
+  display: flex;
+  justify-content: start;
+}
+
+a {
+  text-decoration: none;
+  color: lightgrey;
+  font-weight: lighter;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+}
+
+.logo a {
+  color: white;
+  font-weight: bold;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.question-content {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.btn-group {
+  margin: 5rem 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+#dislike, #like {
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+  font-weight: bold;
+}
+
+#dislike {
+  background-color: red;
+}
+
+#like {
+  background-color: royalblue;
+}
