@@ -1,9 +1,10 @@
 import express from 'express';
+import { __root } from '../helpers.js';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('<h1>This is ask page</h1>');
+  res.sendFile(`${__root}/public/ask.html`);
 });
 
 export default router;

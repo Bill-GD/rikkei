@@ -32,7 +32,12 @@ router.post('/questions', checkHasQuestion, (req, res) => {
 router.put('/questions/:id', checkNoQuestion, (req, res) => {
   const questions = JSON.parse(readFileSync(`${__root}/dev-data/questions.json`, 'utf8'));
   const reqQuestionIdx = questions.findIndex(e => e.id === +req.params.id);
-  questions[reqQuestionIdx].content = req.body.content;
+  questions[reqQuestionIdx] = {
+    id: questions[reqQuestionIdx].id,
+    content: req.body.content || questions[reqQuestionIdx].content,
+    like: req.body.like || questions[reqQuestionIdx].like,
+    dislike: req.body.dislike || questions[reqQuestionIdx].dislike,
+  };
   updateQuestions(questions);
   res.status(200).json({ message: 'Question updated successfully' });
 });

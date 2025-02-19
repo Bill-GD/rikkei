@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="index.css">
-    <title>Ask Community</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/index.css">
+    <script src="/index.js"></script>
+    <title>Ask the Community</title>
   </head>
   <body>
     <nav>
@@ -15,12 +17,10 @@
       </ul>
     </nav>
     <section class="main-content">
-      <div class="question-content">
-        Some questions????
-      </div>
+      <div class="question-content"></div>
       <div class="btn-group">
-        <button class="btn" id="dislike">Sai/Không/Dislike</button>
-        <button class="btn" id="like">Đúng/Có/Like</button>
+        <button class="btn btn-hover" id="dislike" onclick="dislikeQuestion()">Sai/Không/Dislike</button>
+        <button class="btn btn-hover" id="like" onclick="likeQuestion()">Đúng/Có/Like</button>
       </div>
     </section>
   </body>

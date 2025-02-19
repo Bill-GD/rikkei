@@ -1,0 +1,16 @@
+body {
+  height: 100%;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#submit-btn {
+  border: none;
+  border-radius: 6px;
+  color: white;
+  background-color: black;
+  padding: 0.5rem 1.5rem;
+}

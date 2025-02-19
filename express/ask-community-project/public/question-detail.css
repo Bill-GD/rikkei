@@ -1,0 +1,35 @@
+.question-content {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 5rem;
+}
+
+.rate-bar {
+  margin: 1.2rem 0;
+  display: flex;
+  justify-content: center;
+  color: white;
+  width: 100%;
+}
+
+.rate-bar > * {
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+.rate-bar > .like {
+  background-color: royalblue;
+  /*flex: 50%;*/
+}
+
+.rate-bar > .dislike {
+  background-color: red;
+}
+
+#btn {
+  border: none;
+  border-radius: 6px;
+  color: white;
+  background-color: limegreen;
+  padding: 0.5rem 1rem;
+}

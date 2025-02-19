@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+}
+
+nav {
+  background-color: black;
+  padding: 1px 0;
+}
+
+nav ul {
+  list-style-type: none;
+  gap: 5rem;
+  display: flex;
+  justify-content: start;
+}
+
+a {
+  text-decoration: none;
+  color: lightgrey;
+  font-weight: lighter;
+}
+
+a:hover {
+  text-decoration: none;
+  color: white;
+  font-weight: normal;
+}
+
+.logo a {
+  color: white;
+  font-weight: bold;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.btn-hover:hover {
+  box-shadow: rgba(0, 0, 0, 150) 1px 1px 8px;
+  scale: 105%;
+  transition: 150ms ease-in-out;
+  cursor: pointer !important;
+}
