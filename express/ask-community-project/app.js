@@ -1,5 +1,4 @@
 import express from 'express';
-import { __root } from './helpers.js';
 import apiRoutes from './routes/api.routes.js';
 import askRoutes from './routes/ask.routes.js';
 import homeRoutes from './routes/home.routes.js';
