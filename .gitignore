@@ -2,3 +2,6 @@
 node_modules
 dist
 .env
+
+*data.sql
+/express/exercise_3/dev-data
