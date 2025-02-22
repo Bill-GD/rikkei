@@ -29,66 +29,38 @@ export default class UserModel {
 
   static async getAll() {
     const [userData, f] = await db.execute('select * from user');
-    // const [interestData, f2] = await db.execute('select * from user_interest where user_id = ?', [id]);
+
     const users = [];
     for (const e of userData) {
-      users.push(new UserModel(
-        e.id,
-        e.name,
-        e.username,
-        e.email,
-        await AddressModel.get(e.address_id),
-        e.phone,
-        e.website,
-        await CompanyModel.get(e.company_id),
-        await InterestModel.getByUser(e.id),
-      ));
+      users.push(await UserModel.fromTable(e));
     }
     return users;
   }
 
   static async getAllByPage(page, limit) {
-    console.log(`page: ${page}, limit: ${limit}`);
-
-    if (page === undefined || limit === undefined) {
-      throw new Error('page and limit must be defined');
-    }
-
     // maybe calling procedure specifically receives extra headers ?
     const [[userData, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['user', page, limit]);
-    // const [interestData, f2] = await db.execute('select * from user_interest where user_id = ?', [id]);
+
     const users = [];
     for (const e of userData) {
-      users.push(new UserModel(
-        e.id,
-        e.name,
-        e.username,
-        e.email,
-        await AddressModel.get(e.address_id),
-        e.phone,
-        e.website,
-        await CompanyModel.get(e.company_id),
-        await InterestModel.getByUser(e.id),
-      ));
+      users.push(await UserModel.fromTable(e));
+    }
+    return users;
+  }
+
+  static async getSorted(field, order = 'asc') {
+    const [userData, f] = await db.execute(`select * from user order by ${field} ${order}`);
+
+    const users = [];
+    for (const e of userData) {
+      users.push(await UserModel.fromTable(e));
     }
     return users;
   }
 
   static async get(id) {
     const [userData, f] = await db.execute('select * from user where id = ?', [id]);
-    // const [interestData, f2] = await db.execute('select * from user_interest where user_id = ?', [id]);
-    const user = userData[0];
-    return new UserModel(
-      user.id,
-      user.name,
-      user.username,
-      user.email,
-      await AddressModel.get(user.address_id),
-      user.phone,
-      user.website,
-      await CompanyModel.get(user.company_id),
-      await InterestModel.getByUser(user.id),
-    );
+    return await UserModel.fromTable(userData[0]);
   }
 
   async update() {
@@ -109,5 +81,24 @@ export default class UserModel {
       company: company,
       interests: this.interests.map(e => e.name),
     };
+  }
+
+  /**
+   * Parse the raw data from the `user` table in the database to `UserModel` object.
+   * @param json {Object}
+   * @returns {Promise<UserModel>}
+   */
+  static async fromTable(json) {
+    return new UserModel(
+      json.id,
+      json.name,
+      json.username,
+      json.email,
+      await AddressModel.get(json.address_id),
+      json.phone,
+      json.website,
+      await CompanyModel.get(json.company_id),
+      await InterestModel.getByUser(json.id),
+    );
   }
 }
