@@ -1,17 +1,15 @@
 import express from 'express';
-import UserController from '../controllers/user.controller.js';
+import { UserController } from '../controllers/index.js';
 import {
-  checkInterestRequest,
-  checkPageRequest,
-  checkSortRequest,
+  convertInterestArrayRequest, checkUserPageQuery, checkUserSortQuery,
   hasUserById,
-  hasUserByEmail,
+  hasUserByEmail, zipcodeExists, companyExists, checkNewUserFields,
 } from '../middlewares/user.middleware.js';
 
 const router = express.Router();
 
-router.get('/', checkInterestRequest, checkPageRequest, checkSortRequest, UserController.getAll);
+router.get('/', convertInterestArrayRequest, checkUserPageQuery, checkUserSortQuery, UserController.getAll);
 router.get('/:id', hasUserById, UserController.getById);
-router.post('/', hasUserByEmail, UserController.addUser);
+router.post('/', convertInterestArrayRequest, hasUserByEmail, zipcodeExists, companyExists, checkNewUserFields, UserController.addUser);
 
 export default router;

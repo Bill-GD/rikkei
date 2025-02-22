@@ -27,21 +27,9 @@ create table if not exists user (
   website    varchar(20)   not null,
   company_id int           not null,
   address_id int           not null,
+  interests  text          not null,
   foreign key (company_id) references company (id),
   foreign key (address_id) references address (id)
-);
-
-create table if not exists interest (
-  id   int primary key auto_increment,
-  name nvarchar(50) not null unique
-);
-
-create table if not exists user_interest (
-  user_id     int not null,
-  interest_id int not null,
-  primary key (user_id, interest_id),
-  foreign key (user_id) references user (id),
-  foreign key (interest_id) references interest (id)
 );
 
 create table if not exists album (
@@ -70,7 +58,6 @@ begin
     when 'company'  then set valid = 1;
     when 'address'  then set valid = 1;
     when 'user'     then set valid = 1;
-    when 'interest' then set valid = 1;
     when 'album'    then set valid = 1;
     when 'photo'    then set valid = 1;
     else signal sqlstate '45000' set message_text = 'Invalid table name';
@@ -101,7 +88,6 @@ begin
     when 'company'  then set valid = 1;
     when 'address'  then set valid = 1;
     when 'user'     then set valid = 1;
-    when 'interest' then set valid = 1;
     when 'album'    then set valid = 1;
     when 'photo'    then set valid = 1;
     else signal sqlstate '45000' set message_text = 'Invalid table name';

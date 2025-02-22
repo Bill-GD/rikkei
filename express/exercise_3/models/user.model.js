@@ -1,7 +1,6 @@
 import db from '../database/database.js';
 import { AddressModel } from './address.model.js';
 import { CompanyModel } from './company.model.js';
-import { InterestModel } from './interest.model.js';
 
 export class UserModel {
   /**
@@ -13,7 +12,7 @@ export class UserModel {
    * @param phone {string}
    * @param website {string}
    * @param company {CompanyModel}
-   * @param interests {InterestModel[]}
+   * @param interests {string[]}
    */
   constructor(id, name, username, email, address, phone, website, company, interests) {
     this.id = id;
@@ -27,6 +26,9 @@ export class UserModel {
     this.interests = interests;
   }
 
+  /**
+   * @returns {Promise<UserModel[]>}
+   */
   static async getAll() {
     const [userData, f] = await db.execute('select * from user');
 
@@ -37,6 +39,9 @@ export class UserModel {
     return users;
   }
 
+  /**
+   * @returns {Promise<UserModel[]>}
+   */
   static async getAllByPage(page, limit) {
     // maybe calling procedure specifically receives extra headers ?
     const [[userData, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['user', page, limit]);
@@ -48,8 +53,16 @@ export class UserModel {
     return users;
   }
 
+  /**
+   *
+   * @param {string} field
+   * @param {'asc'|'desc'} order
+   * @returns {Promise<UserModel[]>}
+   */
   static async getSorted(field, order = 'asc') {
-    const [userData, f] = await db.execute(`select * from user order by ${field} ${order}`);
+    const [userData, f] = await db.execute(`select *
+                                            from user
+                                            order by ${field} ${order}`);
 
     const users = [];
     for (const e of userData) {
@@ -64,13 +77,28 @@ export class UserModel {
   }
 
   static async hasUserId(id) {
-    const [userData, f] = await db.execute('select count(id) as count from user where id = ?', [id]);
+    const [userData, f] = await db.execute('select count(id) count from user where id = ?', [id]);
     return userData[0].count > 0;
   }
 
   static async hasUserEmail(email) {
-    const [userData, f] = await db.execute('select count(id) as count from user where email = ?', [email]);
+    const [userData, f] = await db.execute('select count(id) count from user where email = ?', [email]);
     return userData[0].count > 0;
+  }
+
+  /**
+   * Insert new user into database.
+   * @param {Object} json Must be 1 level deep, with `non-null` fields in this order:
+   * `name`, `username`, `email`, `phone`, `website`, `companyId`, `addressId`.
+   * @return The new ID of the user.
+   */
+  static async add(json) {
+    const insertRes = await db.execute(
+      'insert into user (name, username, email, phone, website, company_id, address_id, interests) ' +
+      'values (?, ?, ?, ?, ?, ?, ?, ?)',
+      [...Object.values(json)],
+    );
+    return insertRes[0].insertId;
   }
 
   async update() {
@@ -89,7 +117,7 @@ export class UserModel {
       phone: this.phone,
       website: this.website,
       company: company,
-      interests: this.interests.map(e => e.name),
+      interests: this.interests,
     };
   }
 
@@ -108,7 +136,7 @@ export class UserModel {
       json.phone,
       json.website,
       await CompanyModel.get(json.company_id),
-      await InterestModel.getByUser(json.id),
+      json.interests === '' ? [] : json.interests.split('|'),
     );
   }
 }

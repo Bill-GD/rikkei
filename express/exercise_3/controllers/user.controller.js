@@ -1,6 +1,6 @@
-import { UserModel } from '../models/index.js';
+import { AddressModel, CompanyModel, UserModel } from '../models/index.js';
 
-export default class UserController {
+export class UserController {
   static getAll(req, res) {
     if (req.query.interests) {
       UserModel.getAll().then(users => {
@@ -39,7 +39,24 @@ export default class UserController {
     });
   }
 
-  static addUser(req, res) {
+  static async addUser(req, res) {
+    const data = { ...req.body };
+    // const fields = ['name', 'username', 'email', 'zipcode', 'phone', 'website', 'companyName', 'interests'],
+    const addressId = (await AddressModel.getByZip(data.zipcode)).id,
+      companyId = (await CompanyModel.getByName(data.companyName)).id;
 
+    const userData = {
+      name: data.name,
+      username: data.username,
+      email: data.email,
+      phone: data.phone,
+      website: data.website,
+      companyId: companyId,
+      addressId: addressId,
+      interests: data.interests.join('|'),
+    };
+
+    const newUserId = await UserModel.add(userData);
+    res.status(201).json({ message: 'User created successfully', id: newUserId });
   }
 }

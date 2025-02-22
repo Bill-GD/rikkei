@@ -22,15 +22,19 @@ export class AddressModel {
 
   static async get(id) {
     const [data, fields] = await db.execute('select * from address where id = ?', [id]);
-    return data.map(e => new AddressModel(
-      e.id,
-      e.street,
-      e.suite,
-      e.city,
-      e.zipcode,
-      e.lat,
-      e.lng,
-    ))[0];
+    const first = data[0];
+    return new AddressModel(first.id, first.street, first.suite, first.city, first.zipcode, first.lat, first.lng);
+  }
+
+  static async getByZip(zip) {
+    const [data, fields] = await db.execute('select * from address where zipcode = ?', [zip]);
+    const first = data[0];
+    return new AddressModel(first.id, first.street, first.suite, first.city, first.zipcode, first.lat, first.lng);
+  }
+
+  static async hasAddressOfZip(zip) {
+    const [data, fields] = await db.execute('select count(*) count from address where zipcode = ?', [zip]);
+    return data[0].count > 0;
   }
 
   toJson() {
