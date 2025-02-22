@@ -89,7 +89,7 @@ export class UserModel {
   /**
    * Insert new user into database.
    * @param {Object} json Must be 1 level deep, with `non-null` fields in this order:
-   * `name`, `username`, `email`, `phone`, `website`, `companyId`, `addressId`.
+   * `name`, `username`, `email`, `phone`, `website`, `companyId`, `addressId`, `interests`.
    * @return The new ID of the user.
    */
   static async add(json) {
@@ -101,8 +101,24 @@ export class UserModel {
     return insertRes[0].insertId;
   }
 
-  async update() {
+  /**
+   * Update user with the specified ID.
+   * @param {number|string} id
+   * @param {Object} json Must be 1 level deep, with `non-null` fields in this order:
+   * `name`, `username`, `email`, `phone`, `website`, `interests`.
+   */
+  static async update(id, json) {
+    await db.execute(
+      'update user ' +
+      'set name = ?, username = ?, email = ?, phone = ?, website = ?, interests = ? ' +
+      'where id = ?',
+      [...Object.values(json), id],
+    );
+  }
 
+  static async delete(id) {
+    await db.execute('delete from user where id = ?', [id]);
+    await db.query('call reset_auto_increment(?)', ['user']);
   }
 
   toJson() {

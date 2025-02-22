@@ -40,9 +40,8 @@ export class UserController {
   }
 
   static async addUser(req, res) {
-    const data = { ...req.body };
-    // const fields = ['name', 'username', 'email', 'zipcode', 'phone', 'website', 'companyName', 'interests'],
-    const addressId = (await AddressModel.getByZip(data.zipcode)).id,
+    const data = { ...req.body },
+      addressId = (await AddressModel.getByZip(data.zipcode)).id,
       companyId = (await CompanyModel.getByName(data.companyName)).id;
 
     const userData = {
@@ -58,5 +57,30 @@ export class UserController {
 
     const newUserId = await UserModel.add(userData);
     res.status(201).json({ message: 'User created successfully', id: newUserId });
+  }
+
+  static async updateUser(req, res) {
+    const user = await UserModel.get(req.params.id),
+      data = { ...req.body };
+
+    const userData = {
+      name: data.name || user.name,
+      username: data.username || user.username,
+      email: data.email || user.email,
+      phone: data.phone || user.phone,
+      website: data.website || user.website,
+      // companyId: companyId || user.company.id,
+      // addressId: addressId || user.address.id,
+      interests: data.interests ? data.interests.join('|') : user.interests.join('|'),
+    };
+
+    await UserModel.update(req.params.id, userData);
+    res.json({ message: 'User updated successfully' });
+  }
+
+  static deleteUser(req, res) {
+    UserModel.delete(req.params.id).then(() => {
+      res.json({ message: 'User deleted successfully' });
+    });
   }
 }

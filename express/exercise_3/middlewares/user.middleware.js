@@ -28,7 +28,7 @@ export async function hasUserByEmail(req, res, next) {
  * @param {Response<any, Record<string, any>>} res
  * @param {NextFunction} next
  */
-export function convertInterestArrayRequest(req, res, next) {
+export function singleInterestToArray(req, res, next) {
   if (req.query.interests) {
     if (typeof req.query.interests === 'string') req.query.interests = [req.query.interests];
   }
@@ -113,7 +113,7 @@ export function companyExists(req, res, next) {
 
 export function checkNewUserFields(req, res, next) {
   const fields = ['name', 'username', 'email', 'zipcode', 'phone', 'website', 'companyName', 'interests'],
-    providedKeys = Object.keys(req.body),
+    providedKeys = Object.keys(req.body).filter(e => fields.includes(e)),
     missing = [];
 
   for (const field of fields) {
@@ -129,4 +129,15 @@ export function checkNewUserFields(req, res, next) {
       missing: missing,
     })
     : next();
+}
+
+export function checkUpdateUserFields(req, res, next) {
+  const fields = ['name', 'username', 'email', 'phone', 'website', 'interests'],
+    newData = {};
+
+  for (const field of fields) {
+    newData[field] = req.body[field];
+  }
+  req.body = newData;
+  return next();
 }
