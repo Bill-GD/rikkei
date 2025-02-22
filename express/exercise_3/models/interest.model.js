@@ -1,6 +1,6 @@
 import db from '../database/database.js';
 
-export default class InterestModel {
+export class InterestModel {
   /**
    * @param id {number}
    * @param name {string}

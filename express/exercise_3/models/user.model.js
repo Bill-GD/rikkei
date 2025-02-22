@@ -1,9 +1,9 @@
 import db from '../database/database.js';
-import AddressModel from './address.model.js';
-import CompanyModel from './company.model.js';
-import InterestModel from './interest.model.js';
+import { AddressModel } from './address.model.js';
+import { CompanyModel } from './company.model.js';
+import { InterestModel } from './interest.model.js';
 
-export default class UserModel {
+export class UserModel {
   /**
    * @param id {number}
    * @param name {string}
@@ -61,6 +61,16 @@ export default class UserModel {
   static async get(id) {
     const [userData, f] = await db.execute('select * from user where id = ?', [id]);
     return await UserModel.fromTable(userData[0]);
+  }
+
+  static async hasUserId(id) {
+    const [userData, f] = await db.execute('select count(id) as count from user where id = ?', [id]);
+    return userData[0].count > 0;
+  }
+
+  static async hasUserEmail(email) {
+    const [userData, f] = await db.execute('select count(id) as count from user where email = ?', [email]);
+    return userData[0].count > 0;
   }
 
   async update() {

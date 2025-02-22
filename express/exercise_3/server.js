@@ -2,7 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import 'dotenv/config';
 
-import usersRouter from './routes/users.routes.js';
+import { usersRouter } from './routes/index.js';
 
 const app = express();
 

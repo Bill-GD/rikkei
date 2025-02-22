@@ -1,7 +1,6 @@
 import db from '../database/database.js';
-import UserModel from './user.model.js';
 
-export default class AddressModel {
+export class AddressModel {
   /**
    * @param id {number}
    * @param street {string}

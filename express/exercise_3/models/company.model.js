@@ -1,7 +1,6 @@
 import db from '../database/database.js';
-import UserModel from './user.model.js';
 
-export default class CompanyModel {
+export class CompanyModel {
   /**
    * @param id {number}
    * @param name {string}

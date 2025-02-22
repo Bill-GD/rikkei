@@ -1,9 +1,20 @@
-export function hasUserByEmail(req, res) {
+import { UserModel } from '../models/index.js';
 
+export async function hasUserById(req, res, next) {
+  const reqId = req.params.id;
+  if (await UserModel.hasUserId(reqId)) {
+    next();
+    return;
+  }
+  res.status(404).json({ message: 'User not found' });
 }
 
-export function hasUserById(req, res) {
-
+export async function hasUserByEmail(req, res, next) {
+  const reqId = req.params.id;
+  if (await UserModel.hasUserEmail(reqId)) {
+    return res.status(403).json({ message: 'User with the same email already exist' });
+  }
+  next();
 }
 
 export function checkInterestRequest(req, res, next) {
