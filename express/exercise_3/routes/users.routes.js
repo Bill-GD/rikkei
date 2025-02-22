@@ -1,9 +1,8 @@
 import express from 'express';
+import UserController from '../controllers/user.controller.js';
 
 const router = express.Router();
 
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
-});
+router.get('/', UserController.getAll);
 
 export default router;

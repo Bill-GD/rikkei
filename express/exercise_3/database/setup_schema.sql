@@ -14,8 +14,8 @@ create table if not exists address (
   suite   nvarchar(50),
   city    nvarchar(50) not null,
   zipcode nvarchar(20) not null,
-  lat     decimal(10, 7),
-  lng     decimal(10, 7)
+  lat     decimal(7, 4),
+  lng     decimal(7, 4)
 );
 
 create table if not exists user (
