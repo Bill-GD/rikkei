@@ -61,17 +61,27 @@ create table if not exists photo (
 );
 
 delimiter $$
-create procedure if not exists reset_auto_increment(in table_name enum ('company', 'address', 'user', 'interest', 'album', 'photo'))
+create procedure if not exists reset_auto_increment(in table_name varchar(30))
 begin
   declare current_max int default 1;
-  declare query_str varchar(100);
+  declare valid int default 0;
 
-  set query_str = concat('select max(id) into current_max from ', table_name);
+  case table_name
+    when 'company'  then set valid = 1;
+    when 'address'  then set valid = 1;
+    when 'user'     then set valid = 1;
+    when 'interest' then set valid = 1;
+    when 'album'    then set valid = 1;
+    when 'photo'    then set valid = 1;
+    else signal sqlstate '45000' set message_text = 'Invalid table name';
+  end case;
+
+  set @query_str = concat('select max(id) into current_max from ', table_name);
   prepare stmt from @query_str;
   execute stmt;
   deallocate prepare stmt;
 
-  set query_str = concat('alter table ', table_name, ' auto_increment = ', current_max + 1);
+  set @query_str = concat('alter table ', table_name, ' auto_increment = ', current_max + 1);
   prepare stmt from @query_str;
   execute stmt;
   deallocate prepare stmt;
@@ -80,14 +90,24 @@ delimiter ;
 
 delimiter $$
 create procedure if not exists get_page_of(
-  in table_name enum ('company', 'address', 'user', 'interest', 'album', 'photo'),
+  in table_name varchar(30),
   in page_number int,
   in page_size int)
 begin
   declare offsetValue int default page_size * (page_number - 1);
-  declare query_str varchar(100);
+  declare valid int default 0;
 
-  set query_str = concat('select * from ', table_name, ' limit ', page_size, ' offset ', offsetValue);
+  case table_name
+    when 'company'  then set valid = 1;
+    when 'address'  then set valid = 1;
+    when 'user'     then set valid = 1;
+    when 'interest' then set valid = 1;
+    when 'album'    then set valid = 1;
+    when 'photo'    then set valid = 1;
+    else signal sqlstate '45000' set message_text = 'Invalid table name';
+  end case;
+
+  set @query_str = concat('select * from ', table_name, ' limit ', page_size, ' offset ', offsetValue);
   prepare stmt from @query_str;
   execute stmt;
   deallocate prepare stmt;

@@ -47,6 +47,33 @@ export default class UserModel {
     return users;
   }
 
+  static async getAllByPage(page, limit) {
+    console.log(`page: ${page}, limit: ${limit}`);
+
+    if (page === undefined || limit === undefined) {
+      throw new Error('page and limit must be defined');
+    }
+
+    // maybe calling procedure specifically receives extra headers ?
+    const [[userData, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['user', page, limit]);
+    // const [interestData, f2] = await db.execute('select * from user_interest where user_id = ?', [id]);
+    const users = [];
+    for (const e of userData) {
+      users.push(new UserModel(
+        e.id,
+        e.name,
+        e.username,
+        e.email,
+        await AddressModel.get(e.address_id),
+        e.phone,
+        e.website,
+        await CompanyModel.get(e.company_id),
+        await InterestModel.getByUser(e.id),
+      ));
+    }
+    return users;
+  }
+
   static async get(id) {
     const [userData, f] = await db.execute('select * from user where id = ?', [id]);
     // const [interestData, f2] = await db.execute('select * from user_interest where user_id = ?', [id]);
