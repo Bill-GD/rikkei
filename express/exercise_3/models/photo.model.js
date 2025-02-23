@@ -1,5 +1,4 @@
-import { AddressModel } from './address.model.js';
-import { CompanyModel } from './company.model.js';
+import db from '../database/database.js';
 
 export class PhotoModel {
   /**
@@ -26,7 +25,7 @@ export class PhotoModel {
       albumId: this.albumId,
       title: this.title,
       url: this.url,
-      thumbnailUrl: thumbnailUrl,
+      thumbnail: this.thumbnailUrl,
     };
   }
 
@@ -34,7 +33,7 @@ export class PhotoModel {
    * Parse the raw data from the `photo` table in the database to `PhotoModel` object.
    * @param json {{ id: number, album_id: number, title: string, url: string, thumbnail: string, }}
    */
-  static async fromTable(json) {
+  static fromTable(json) {
     return new PhotoModel(
       json.id,
       json.album_id,
@@ -42,5 +41,34 @@ export class PhotoModel {
       json.url,
       json.thumbnail,
     );
+  }
+
+  /**
+   * @param {number} albumId Optional album ID, defaults to -1;
+   * @returns {Promise<PhotoModel[]>}
+   */
+  static async getAll(albumId = -1) {
+    const [data, f] = await db.execute(
+      `select *
+       from photo ${albumId < 0 ? '' : 'where album_id = ?'}`,
+      [albumId],
+    );
+    return data.map(PhotoModel.fromTable);
+  }
+
+  /**
+   * @param {number} albumId Optional album ID, defaults to -1;
+   * @param {string} field
+   * @param {'asc'|'desc'} order
+   * @returns {Promise<PhotoModel[]>}
+   */
+  static async getSorted(albumId = -1, field, order) {
+    const [data, f] = await db.execute(
+      `select *
+       from photo ${albumId < 0 ? '' : 'where album_id = ?'}
+       order by ${field} ${order}`,
+      [albumId],
+    );
+    return data.map(PhotoModel.fromTable);
   }
 }

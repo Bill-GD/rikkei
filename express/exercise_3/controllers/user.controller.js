@@ -2,6 +2,7 @@ import { AddressModel, AlbumModel, CompanyModel, UserModel } from '../models/ind
 
 export class UserController {
   static getAll(req, res) {
+    // TODO: maybe try merging the queries
     if (req.query.interests) {
       UserModel.getAll().then(users => {
         res.json(users.map(e => e.toJson()).filter(e => {

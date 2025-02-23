@@ -7,6 +7,13 @@ export function getAlbumSortFields(req, res, next) {
   next();
 }
 
+export function getAlbumPhotoSortFields(req, res, next) {
+  if (req.query.sort !== undefined && req.query.order !== undefined) {
+    req.sortableFields = ['id', 'title', 'url', 'thumbnail'];
+  }
+  next();
+}
+
 export async function hasAlbumId(req, res, next) {
   const reqId = req.params.id;
   if (await AlbumModel.hasAlbumOfId(reqId)) {

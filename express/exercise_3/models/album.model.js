@@ -34,15 +34,11 @@ export class AlbumModel {
   static async getAll(userId = -1) {
     const [data, f] = await db.execute(
       `select *
-       from album ${userId > 0 ? 'where user_id = ?' : ''}`,
+       from album ${userId < 0 ? '' : 'where user_id = ?'}`,
       [userId],
     );
 
-    const res = [];
-    for (const e of data) {
-      res.push(AlbumModel.fromTable(e));
-    }
-    return res;
+    return data.map(AlbumModel.fromTable(e));
   }
 
   /**
@@ -50,12 +46,7 @@ export class AlbumModel {
    */
   static async getAllByPage(page, limit) {
     const [[data, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['album', page, limit]);
-
-    const res = [];
-    for (const e of data) {
-      res.push(AlbumModel.fromTable(e));
-    }
-    return res;
+    return data.map(AlbumModel.fromTable(e));
   }
 
   /**
@@ -67,16 +58,11 @@ export class AlbumModel {
   static async getSorted(userId = -1, field, order = 'asc') {
     const [data, f] = await db.execute(
       `select *
-       from album ${userId > 0 ? 'where user_id = ? ' : ''}
+       from album ${userId < 0 ? '' : 'where user_id = ? '}
        order by ${field} ${order}`,
       [userId],
     );
-
-    const res = [];
-    for (const e of data) {
-      res.push(AlbumModel.fromTable(e));
-    }
-    return res;
+    return data.map(AlbumModel.fromTable(e));
   }
 
   static async get(id) {
