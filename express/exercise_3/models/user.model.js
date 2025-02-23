@@ -30,13 +30,13 @@ export class UserModel {
    * @returns {Promise<UserModel[]>}
    */
   static async getAll() {
-    const [userData, f] = await db.execute('select * from user');
+    const [data, f] = await db.execute('select * from user');
 
-    const users = [];
-    for (const e of userData) {
-      users.push(await UserModel.fromTable(e));
+    const res = [];
+    for (const e of data) {
+      res.push(await UserModel.fromTable(e));
     }
-    return users;
+    return res;
   }
 
   /**
@@ -44,13 +44,13 @@ export class UserModel {
    */
   static async getAllByPage(page, limit) {
     // maybe calling procedure specifically receives extra headers ?
-    const [[userData, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['user', page, limit]);
+    const [[data, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['user', page, limit]);
 
-    const users = [];
-    for (const e of userData) {
-      users.push(await UserModel.fromTable(e));
+    const res = [];
+    for (const e of data) {
+      res.push(await UserModel.fromTable(e));
     }
-    return users;
+    return res;
   }
 
   /**
@@ -60,30 +60,30 @@ export class UserModel {
    * @returns {Promise<UserModel[]>}
    */
   static async getSorted(field, order = 'asc') {
-    const [userData, f] = await db.execute(`select *
-                                            from user
-                                            order by ${field} ${order}`);
+    const [data, f] = await db.execute(`select *
+                                        from user
+                                        order by ${field} ${order}`);
 
-    const users = [];
-    for (const e of userData) {
-      users.push(await UserModel.fromTable(e));
+    const res = [];
+    for (const e of data) {
+      res.push(await UserModel.fromTable(e));
     }
-    return users;
+    return res;
   }
 
   static async get(id) {
-    const [userData, f] = await db.execute('select * from user where id = ?', [id]);
-    return await UserModel.fromTable(userData[0]);
+    const [data, f] = await db.execute('select * from user where id = ?', [id]);
+    return await UserModel.fromTable(data[0]);
   }
 
   static async hasUserId(id) {
-    const [userData, f] = await db.execute('select count(id) count from user where id = ?', [id]);
-    return userData[0].count > 0;
+    const [data, f] = await db.execute('select count(id) count from user where id = ?', [id]);
+    return data[0].count > 0;
   }
 
   static async hasUserEmail(email) {
-    const [userData, f] = await db.execute('select count(id) count from user where email = ?', [email]);
-    return userData[0].count > 0;
+    const [data, f] = await db.execute('select count(id) count from user where email = ?', [email]);
+    return data[0].count > 0;
   }
 
   /**
@@ -121,6 +121,9 @@ export class UserModel {
     await db.query('call reset_auto_increment(?)', ['user']);
   }
 
+  /**
+   * @returns {{website: string, address: Omit<{zipcode: *, geo: {lng: *, lat: *}, suite: *, city: *, street: *, addressId: *}, 'addressId'>, phone: string, name: string, company: Omit<{companyId: *, catchPhrase: *, business: *, name: *}, 'companyId'>, id: number, interests: string[], email: string, username: string}}
+   */
   toJson() {
     const { addressId, ...address } = this.address.toJson();
     const { companyId, ...company } = this.company.toJson();
@@ -139,8 +142,17 @@ export class UserModel {
 
   /**
    * Parse the raw data from the `user` table in the database to `UserModel` object.
-   * @param json {Object}
-   * @returns {Promise<UserModel>}
+   * @param json {{
+   *    id: number,
+   *    name: string,
+   *    username: string,
+   *    email: string,
+   *    address_id: number,
+   *    phone: string,
+   *    website: string,
+   *    company_id: number,
+   *    interests: string|string[],
+   * }}
    */
   static async fromTable(json) {
     return new UserModel(

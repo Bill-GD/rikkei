@@ -1,7 +1,7 @@
 import { AddressModel, CompanyModel, UserModel } from '../models/index.js';
 
 export async function hasUserById(req, res, next) {
-  const reqId = req.params.id;
+  const reqId = req.params.id || req.body.userId;
   if (await UserModel.hasUserId(reqId)) {
     next();
     return;
@@ -13,7 +13,7 @@ export async function hasUserByEmail(req, res, next) {
   const reqEmail = req.body.email;
 
   if (!reqEmail) {
-    return res.status(400).json({ message: 'No email specified' });
+    return res.status(400).json({ message: 'Email not provided' });
   }
 
   if (await UserModel.hasUserEmail(reqEmail)) {
@@ -38,44 +38,10 @@ export function singleInterestToArray(req, res, next) {
   next();
 }
 
-export function checkUserPageQuery(req, res, next) {
-  if (req.query.page !== undefined && req.query.limit !== undefined) {
-    const [page, limit] = [parseInt(req.query.page), parseInt(req.query.limit)];
-    if (isNaN(page) || isNaN(limit)) {
-      return res.status(400).json({ message: `'page' or 'limit' is not a number` });
-    }
-
-    req.pageQuery = { page, limit };
-    req.getPage = true;
-  }
-  next();
-}
-
-export function checkUserSortQuery(req, res, next) {
+export function getUserSortFields(req, res, next) {
   if (req.query.sort !== undefined && req.query.order !== undefined) {
-    const sortableFields = ['id', 'name', 'username', 'email', 'phone', 'website'],
-      orders = ['asc', 'desc'];
-
-    if (!sortableFields.includes(req.query.sort)) {
-      return res.status(400)
-                .json({
-                  message: `'sort' query parameter is invalid`,
-                  fields: sortableFields,
-                });
-    }
-    if (!orders.includes(req.query.order)) {
-      return res.status(400)
-                .json({
-                  message: `'order' query parameter is invalid`,
-                  types: orders,
-                });
-    }
-
-    req.sortQuery = { sort: req.query.sort, order: req.query.order };
-    req.getSorted = true;
+    req.sortableFields = ['id', 'name', 'username', 'email', 'phone', 'website'];
   }
-
-  // console.log(req.query);
   next();
 }
 

@@ -1,15 +1,14 @@
 import express from 'express';
 import { UserController } from '../controllers/index.js';
 import {
-  singleInterestToArray,
-  checkUserPageQuery, checkUserSortQuery,
+  singleInterestToArray, checkPageQuery, checkSortQuery,
   hasUserById, hasUserByEmail,
-  zipcodeExists, companyExists, checkNewUserFields, checkUpdateUserFields,
-} from '../middlewares/user.middleware.js';
+  zipcodeExists, companyExists, checkNewUserFields, checkUpdateUserFields, getUserSortFields,
+} from '../middlewares/index.js';
 
 const router = express.Router();
 
-router.get('/', singleInterestToArray, checkUserPageQuery, checkUserSortQuery, UserController.getAll);
+router.get('/', singleInterestToArray, checkPageQuery, getUserSortFields, checkSortQuery, UserController.getAll);
 router.get('/:id', hasUserById, UserController.getById);
 router.post('/', singleInterestToArray, hasUserByEmail, zipcodeExists, companyExists, checkNewUserFields, UserController.addUser);
 router.put('/:id', hasUserById, singleInterestToArray, checkUpdateUserFields, UserController.updateUser);
