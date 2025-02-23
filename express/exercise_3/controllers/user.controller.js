@@ -1,4 +1,4 @@
-import { AddressModel, CompanyModel, UserModel } from '../models/index.js';
+import { AddressModel, AlbumModel, CompanyModel, UserModel } from '../models/index.js';
 
 export class UserController {
   static getAll(req, res) {
@@ -82,5 +82,27 @@ export class UserController {
     UserModel.delete(req.params.id).then(() => {
       res.json({ message: 'User deleted successfully' });
     });
+  }
+
+  static getAllAlbums(req, res) {
+    const userId = req.params.id;
+
+    if (req.getSorted) {
+      AlbumModel.getSorted(userId, req.sortQuery.sort, req.sortQuery.order).then(albums => {
+        res.json(albums.map(e => e.toJson()));
+      });
+    } else {
+      AlbumModel.getAll(userId).then(albums => {
+        const jsonList = albums.map(e => e.toJson());
+
+        if (req.getPage) {
+          const startIdx = (req.pageQuery.page - 1) * req.pageQuery.limit,
+            endIdx = startIdx + req.pageQuery.limit;
+          return res.json(jsonList.slice(startIdx, endIdx));
+        }
+
+        res.json(jsonList);
+      });
+    }
   }
 }

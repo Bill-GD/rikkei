@@ -28,10 +28,15 @@ export class AlbumModel {
   static fromTable = json => new AlbumModel(json.id, json.user_id, json.title);
 
   /**
+   * @param {number} userId Optional user ID, defaults to -1;
    * @returns {Promise<AlbumModel[]>}
    */
-  static async getAll() {
-    const [data, f] = await db.execute('select * from album');
+  static async getAll(userId = -1) {
+    const [data, f] = await db.execute(
+      `select *
+       from album ${userId > 0 ? 'where user_id = ?' : ''}`,
+      [userId],
+    );
 
     const res = [];
     for (const e of data) {
@@ -54,15 +59,18 @@ export class AlbumModel {
   }
 
   /**
-   *
+   * @param {number} userId Optional user ID, defaults to -1;
    * @param {string} field
    * @param {'asc'|'desc'} order
    * @returns {Promise<AlbumModel[]>}
    */
-  static async getSorted(field, order = 'asc') {
-    const [data, f] = await db.execute(`select *
-                                        from album
-                                        order by ${field} ${order}`);
+  static async getSorted(userId = -1, field, order = 'asc') {
+    const [data, f] = await db.execute(
+      `select *
+       from album ${userId > 0 ? 'where user_id = ? ' : ''}
+       order by ${field} ${order}`,
+      [userId],
+    );
 
     const res = [];
     for (const e of data) {

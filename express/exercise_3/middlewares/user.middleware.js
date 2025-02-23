@@ -45,6 +45,13 @@ export function getUserSortFields(req, res, next) {
   next();
 }
 
+export function getUserAlbumSortFields(req, res, next) {
+  if (req.query.sort !== undefined && req.query.order !== undefined) {
+    req.sortableFields = ['id', 'title'];
+  }
+  next();
+}
+
 export function zipcodeExists(req, res, next) {
   const reqZip = req.body.zipcode;
 
