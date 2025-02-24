@@ -28,55 +28,37 @@ export class AlbumModel {
   static fromTable = json => new AlbumModel(json.id, json.user_id, json.title);
 
   /**
-   * @param {number} userId Optional user ID, defaults to -1;
+   * @param {number} userId Optional user ID.
+   * @param {string} field Optional sort field.
+   * @param {'asc'|'desc'} order Optional sort order.
+   * @param {number} page Optional pagination page number.
+   * @param {number} limit Optional pagination limit.
    * @returns {Promise<AlbumModel[]>}
    */
-  static async getAll(userId = -1) {
-    const [data, f] = await db.execute(
+  static async getAll(userId = -1, field = 'id', order = 'asc', page = -1, limit = -1) {
+    const [data, _] = await db.execute(
       `select *
-       from album ${userId < 0 ? '' : 'where user_id = ?'}`,
+       from album ${userId < 0 ? '' : 'where user_id = ?'}
+       order by ${field} ${order}` +
+      (page < 0 || limit < 0 ? '' : ` limit ${limit} offset ${limit * (page - 1)}`),
       [userId],
     );
 
-    return data.map(AlbumModel.fromTable(e));
-  }
-
-  /**
-   * @returns {Promise<AlbumModel[]>}
-   */
-  static async getAllByPage(page, limit) {
-    const [[data, headers], fields] = await db.query(`call get_page_of(?, ?, ?)`, ['album', page, limit]);
-    return data.map(AlbumModel.fromTable(e));
-  }
-
-  /**
-   * @param {number} userId Optional user ID, defaults to -1;
-   * @param {string} field
-   * @param {'asc'|'desc'} order
-   * @returns {Promise<AlbumModel[]>}
-   */
-  static async getSorted(userId = -1, field, order = 'asc') {
-    const [data, f] = await db.execute(
-      `select *
-       from album ${userId < 0 ? '' : 'where user_id = ? '}
-       order by ${field} ${order}`,
-      [userId],
-    );
-    return data.map(AlbumModel.fromTable(e));
+    return data.map(AlbumModel.fromTable);
   }
 
   static async get(id) {
-    const [data, f] = await db.execute('select * from album where id = ?', [id]);
+    const [data, _] = await db.execute('select * from album where id = ?', [id]);
     return AlbumModel.fromTable(data[0]);
   }
 
   static async hasAlbumOfId(reqId) {
-    const [data, f] = await db.execute('select count(*) count from album where id = ?', [reqId]);
+    const [data, _] = await db.execute('select count(*) count from album where id = ?', [reqId]);
     return data[0].count > 0;
   }
 
   static async hasAlbumOfTitle(title) {
-    const [data, f] = await db.execute('select count(*) count from album where title = ?', [title]);
+    const [data, _] = await db.execute('select count(*) count from album where title = ?', [title]);
     return data[0].count > 0;
   }
 

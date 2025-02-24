@@ -2,34 +2,13 @@ import { AddressModel, AlbumModel, CompanyModel, UserModel } from '../models/ind
 
 export class UserController {
   static getAll(req, res) {
-    // TODO: maybe try merging the queries
-    if (req.query.interests) {
-      UserModel.getAll().then(users => {
-        res.json(users.map(e => e.toJson()).filter(e => {
-          for (const interest of req.query.interests) {
-            if (e.interests.includes(interest)) return true;
-          }
-          return false;
-        }));
-      });
-      return;
-    }
-
-    if (req.getPage) {
-      UserModel.getAllByPage(req.pageQuery.page, req.pageQuery.limit).then(users => {
-        res.json(users.map(e => e.toJson()));
-      });
-      return;
-    }
-
-    if (req.getSorted) {
-      UserModel.getSorted(req.sortQuery.sort, req.sortQuery.order).then(users => {
-        res.json(users.map(e => e.toJson()));
-      });
-      return;
-    }
-
-    UserModel.getAll().then(users => {
+    UserModel.getAll(
+      req.query.interests,
+      req.query.sort || 'id',
+      req.query.order || 'asc',
+      req.query.page || -1,
+      req.query.limit || -1,
+    ).then(users => {
       res.json(users.map(e => e.toJson()));
     });
   }
@@ -86,24 +65,14 @@ export class UserController {
   }
 
   static getAllAlbums(req, res) {
-    const userId = req.params.id;
-
-    if (req.getSorted) {
-      AlbumModel.getSorted(userId, req.sortQuery.sort, req.sortQuery.order).then(albums => {
-        res.json(albums.map(e => e.toJson()));
-      });
-    } else {
-      AlbumModel.getAll(userId).then(albums => {
-        const jsonList = albums.map(e => e.toJson());
-
-        if (req.getPage) {
-          const startIdx = (req.pageQuery.page - 1) * req.pageQuery.limit,
-            endIdx = startIdx + req.pageQuery.limit;
-          return res.json(jsonList.slice(startIdx, endIdx));
-        }
-
-        res.json(jsonList);
-      });
-    }
+    AlbumModel.getAll(
+      req.params.id,
+      req.query.sort || 'id',
+      req.query.order || 'asc',
+      req.query.page || -1,
+      req.query.limit || -1,
+    ).then(albums => {
+      res.json(albums.map(e => e.toJson()));
+    });
   }
 }

@@ -4,9 +4,6 @@ export function checkPageQuery(req, res, next) {
     if (isNaN(page) || isNaN(limit)) {
       return res.status(400).json({ message: `'page' or 'limit' is not a number` });
     }
-
-    req.pageQuery = { page, limit };
-    req.getPage = true;
   }
   next();
 }
@@ -35,11 +32,6 @@ export function checkSortQuery(req, res, next) {
                   types: orders,
                 });
     }
-
-    req.sortQuery = { sort: req.query.sort, order: req.query.order };
-    req.getSorted = true;
   }
-
-  // console.log(req.query);
   next();
 }

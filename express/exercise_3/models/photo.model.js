@@ -17,7 +17,7 @@ export class PhotoModel {
   }
 
   /**
-   * @returns {{albumId: number, id: number, title: string, url: string, thumbnailUrl: string}}
+   * @returns {{id: number, albumId: number, title: string, url: string, thumbnail: string}}
    */
   toJson() {
     return {
@@ -44,29 +44,19 @@ export class PhotoModel {
   }
 
   /**
-   * @param {number} albumId Optional album ID, defaults to -1;
+   * @param {number} albumId Optional album ID.
+   * @param {string} field Optional sort field.
+   * @param {'asc'|'desc'} order Optional sort order.
+   * @param {number} page Optional pagination page number.
+   * @param {number} limit Optional pagination limit.
    * @returns {Promise<PhotoModel[]>}
    */
-  static async getAll(albumId = -1) {
-    const [data, f] = await db.execute(
-      `select *
-       from photo ${albumId < 0 ? '' : 'where album_id = ?'}`,
-      [albumId],
-    );
-    return data.map(PhotoModel.fromTable);
-  }
-
-  /**
-   * @param {number} albumId Optional album ID, defaults to -1;
-   * @param {string} field
-   * @param {'asc'|'desc'} order
-   * @returns {Promise<PhotoModel[]>}
-   */
-  static async getSorted(albumId = -1, field, order) {
-    const [data, f] = await db.execute(
+  static async getAll(albumId = -1, field = 'id', order = 'asc', page = -1, limit = -1) {
+    const [data, _] = await db.execute(
       `select *
        from photo ${albumId < 0 ? '' : 'where album_id = ?'}
-       order by ${field} ${order}`,
+       order by ${field} ${order}` +
+      (page < 0 || limit < 0 ? '' : ` limit ${limit} offset ${limit * (page - 1)}`),
       [albumId],
     );
     return data.map(PhotoModel.fromTable);
