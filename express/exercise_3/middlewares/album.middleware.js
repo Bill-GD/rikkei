@@ -34,3 +34,40 @@ export async function hasAlbumTitle(req, res, next) {
   }
   next();
 }
+
+function handleAlbumQuery(req, res, next) {
+  let { interests, sort, order, page, limit } = req.query;
+  console.log(`sort: ${sort}, order: ${order}, page: ${page}, limit: ${limit}, interests: ${interests} (${typeof interests})`);
+
+  if (page !== undefined && limit !== undefined) {
+    if (isNaN(parseInt(page)) || isNaN(parseInt(limit))) {
+      return res.status(400).json({ message: `'page' or 'limit' is not a number` });
+    }
+  }
+
+  if (sort !== undefined && order !== undefined) {
+    const sortableFields = req.sortableFields,
+      orders = ['asc', 'desc'];
+
+    if (sortableFields === undefined) {
+      return res.status(400).json({ message: `No sortable fields` });
+    }
+
+    if (!sortableFields.includes(req.query.sort)) {
+      return res.status(400)
+                .json({
+                  message: `'sort' query parameter is invalid`,
+                  fields: sortableFields,
+                });
+    }
+
+    if (!orders.includes(req.query.order)) {
+      return res.status(400)
+                .json({
+                  message: `'order' query parameter is invalid`,
+                  types: orders,
+                });
+    }
+  }
+  next();
+}

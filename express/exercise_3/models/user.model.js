@@ -39,8 +39,7 @@ export class UserModel {
       'select * from user ' +
       (interests.length <= 0
         ? ''
-        : ` where ${interests.map((e, i) => `interests like '%${e}%'` + (i === interests.length - 1 ? '' : ' or '))
-                             .join('')}`) +
+        : ` where ${interests.map(e => `interests like '%${e}%'`).join(' or ')}`) +
       `order by ${field} ${order} ` +
       (page < 0 || limit < 0 ? '' : `limit ${limit} offset ${limit * (page - 1)}`);
     const [data, _] = await db.execute(query);

@@ -100,3 +100,11 @@ begin
 end $$
 delimiter ;
 
+select *
+from address;
+
+select *
+from user
+where address_id in (select id from address where city = 'McKenziehaven' or city = 'South Elvis')
+order by username desc
+limit 2 offset 2;

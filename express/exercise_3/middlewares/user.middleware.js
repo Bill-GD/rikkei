@@ -1,4 +1,5 @@
 import { AddressModel, CompanyModel, UserModel } from '../models/index.js';
+import mysql from 'mysql2';
 
 export async function hasUserById(req, res, next) {
   const reqId = req.params.id || req.body.userId;
@@ -18,22 +19,6 @@ export async function hasUserByEmail(req, res, next) {
 
   if (await UserModel.hasUserEmail(reqEmail)) {
     return res.status(403).json({ message: 'User with the same email already exist' });
-  }
-  next();
-}
-
-/**
- * Converts interest request (body & param) into an array if single value is provided.
- * @param {Request<P, ResBody, ReqBody, ReqQuery, LocalsObj>} req
- * @param {Response<any, Record<string, any>>} res
- * @param {NextFunction} next
- */
-export function singleInterestToArray(req, res, next) {
-  if (req.query.interests) {
-    if (typeof req.query.interests === 'string') req.query.interests = [req.query.interests];
-  }
-  if (req.body.interests) {
-    if (typeof req.body.interests === 'string') req.body.interests = [req.body.interests];
   }
   next();
 }
@@ -113,4 +98,59 @@ export function checkUpdateUserFields(req, res, next) {
   }
   req.body = newData;
   return next();
+}
+
+export function handleUserQuery(req, res, next) {
+  let { cities, sort, order, page, limit } = req.query;
+  let baseQuery = 'select * from user',
+    whereQuery = '', orderQuery = 'order by id asc', pageQuery = '';
+  // SELECT > FROM > WHERE > GROUP BY > HAVING > ORDER BY > LIMIT > OFFSET
+  console.log(`sort: ${sort}, order: ${order}, page: ${page}, limit: ${limit}, cities: ${cities} (${typeof cities})`);
+
+  if (cities !== undefined && cities.length > 0) {
+    // city = 'South Elvis' or city = 'McKenziehaven'
+    const subQuery = mysql.format(
+      `select id
+       from address
+       where ${cities.map(e => `city = ?`).join(' or ')}`,
+      cities,
+    );
+    whereQuery = `where address_id in (${subQuery})`;
+  }
+
+  if (sort !== undefined && order !== undefined) {
+    const sortableFields = req.sortableFields,
+      orders = ['asc', 'desc'];
+
+    if (sortableFields === undefined) {
+      return res.status(400).json({ message: `No sortable fields` });
+    }
+
+    if (!sortableFields.includes(sort)) {
+      return res.status(400).json({
+        message: `'sort' query parameter is invalid`,
+        fields: sortableFields,
+      });
+    }
+
+    if (!orders.includes(order)) {
+      return res.status(400).json({
+        message: `'order' query parameter is invalid`,
+        types: orders,
+      });
+    }
+
+    orderQuery = `order by ${sort} ${order}`;
+  }
+
+  if (page !== undefined && limit !== undefined) {
+    if (isNaN(parseInt(page)) || isNaN(parseInt(limit))) {
+      return res.status(400).json({ message: `'page' or 'limit' is not a number` });
+    }
+    pageQuery = `limit ${limit} offset ${(page - 1) * limit}`;
+  }
+
+  req.finalQuery = `${baseQuery} ${whereQuery} ${orderQuery} ${pageQuery}`;
+  console.log(req.finalQuery);
+  next();
 }

@@ -2,6 +2,7 @@ import { AddressModel, AlbumModel, CompanyModel, UserModel } from '../models/ind
 
 export class UserController {
   static getAll(req, res) {
+    // console.log(req.finalQuery);
     UserModel.getAll(
       req.query.interests,
       req.query.sort || 'id',

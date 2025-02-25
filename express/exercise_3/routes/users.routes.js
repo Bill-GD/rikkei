@@ -1,19 +1,25 @@
 import express from 'express';
 import { UserController } from '../controllers/index.js';
 import {
-  singleInterestToArray, checkPageQuery, checkSortQuery,
-  hasUserById, hasUserByEmail,
-  zipcodeExists, companyExists, checkNewUserFields, checkUpdateUserFields, getUserSortFields, getUserAlbumSortFields,
+  hasUserById,
+  hasUserByEmail,
+  zipcodeExists,
+  companyExists,
+  checkNewUserFields,
+  checkUpdateUserFields,
+  getUserSortFields,
+  getUserAlbumSortFields,
+  handleUserQuery,
 } from '../middlewares/index.js';
 
 const router = express.Router();
 
-router.get('/', singleInterestToArray, checkPageQuery, getUserSortFields, checkSortQuery, UserController.getAll);
+router.get('/', getUserSortFields, handleUserQuery, UserController.getAll);
 router.get('/:id', hasUserById, UserController.getById);
-router.post('/', singleInterestToArray, hasUserByEmail, zipcodeExists, companyExists, checkNewUserFields, UserController.addUser);
-router.put('/:id', hasUserById, singleInterestToArray, checkUpdateUserFields, UserController.updateUser);
+router.post('/', hasUserByEmail, zipcodeExists, companyExists, checkNewUserFields, UserController.addUser);
+router.put('/:id', hasUserById, checkUpdateUserFields, UserController.updateUser);
 router.delete('/:id', hasUserById, UserController.deleteUser);
 
-router.get('/:id/albums', hasUserById, checkPageQuery, getUserAlbumSortFields, checkSortQuery, UserController.getAllAlbums);
+router.get('/:id/albums', hasUserById, getUserAlbumSortFields, UserController.getAllAlbums);
 
 export default router;
