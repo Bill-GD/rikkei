@@ -56,16 +56,16 @@ export class ProductModel {
   /**
    * @returns {Promise<ProductModel[]>}
    */
-  static async getAll(productId = -1) {
-    let baseQuery = 'select * from product',
-      whereQuery = '';
+  static async getAll(productId = -1, rangeQuery = null, orderQuery = null, pageQuery = null) {
+    // SELECT > FROM > WHERE > GROUP BY > HAVING > ORDER BY > LIMIT > OFFSET
+    let baseQuery = 'select p.* from product p inner join listing l on l.product_id = p.product_id',
+      whereQueries = [];
 
-    if (productId >= 0) {
-      whereQuery = 'where product_id = ?';
-    }
+    if (productId >= 0) whereQueries.push('product_id = ?');
+    if (rangeQuery) whereQueries.push(rangeQuery);
 
     const [data] = await db.execute(
-      `${baseQuery} ${whereQuery}`,
+      `${baseQuery} ${whereQueries.length > 0 ? `where ${whereQueries.join(' and ')}` : ''} ${orderQuery || ''} ${pageQuery || ''}`,
       [productId],
     );
 

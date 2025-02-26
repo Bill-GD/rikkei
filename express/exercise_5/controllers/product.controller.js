@@ -4,7 +4,12 @@ import { ListingModel } from '../models/listing.model.js';
 
 export class ProductController {
   static async getAll(req, res) {
-    res.json((await ProductModel.getAll()).map(e => e.toJson()));
+    res.json((await ProductModel.getAll(
+      -1,
+      req.rateRangeQuery,
+      req.orderQuery,
+      req.pageQuery,
+    )).map(e => e.toJson()));
   }
 
   static async getId(req, res) {
