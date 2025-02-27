@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 import db from '../database/database.js';
+import { ProductModel } from './product.model.js';
 
 export class TagModel {
   /**
@@ -35,7 +36,7 @@ export class TagModel {
       console.log(res);
       this.id = res.insertId;
     } else {
-       await this.updateId(this.name);
+      await this.updateId(this.name);
     }
 
     if (productId >= 0) {
@@ -72,6 +73,14 @@ export class TagModel {
     return res.count > 0;
   }
 
+  static async isInUse(id) {
+    const [[res]] = await db.execute(
+      'select count(*) count from product_tag where tag_id = ?',
+      [id],
+    );
+    return res.count > 0;
+  }
+
   async updateId(name) {
     const [res] = await db.execute(
       'select * from tag where name = ?',
@@ -83,8 +92,8 @@ export class TagModel {
   /**
    * @returns {Promise<TagModel[]>}
    */
-  static async getAll(tagId = -1, productId = -1) {
-    let baseQuery = 'select t.*, pt.product_id from tag t inner join product_tag pt on pt.tag_id = t.tag_id',
+  static async getAll(tagId = -1, productId = -1, orderQuery = null, pageQuery = null) {
+    let baseQuery = 'select * from tag',
       whereQuery = '',
       whereClauses = [], whereValues = [];
 
@@ -95,16 +104,47 @@ export class TagModel {
     if (productId >= 0) {
       whereClauses.push('product_id = ?');
       whereValues.push(productId);
+      baseQuery = 'select t.*, pt.product_id from tag t inner join product_tag pt on pt.tag_id = t.tag_id';
     }
     if (whereClauses.length > 0) {
       whereQuery = `where ${whereClauses.join(' and ')}`;
     }
 
     const [data] = await db.execute(
-      `${baseQuery} ${whereQuery}`,
+      `${baseQuery} ${whereQuery} ${orderQuery || ''} ${pageQuery || ''}`,
       whereValues,
     );
     return data.map(TagModel.fromTable);
+  }
+
+  /**
+   * @returns {Promise<ProductModel[]>}
+   */
+  static async getProducts(id) {
+    const [data] = await db.execute(
+      'select p.product_id from product p inner join product_tag pt on pt.product_id = p.product_id where pt.tag_id = ?',
+      [id],
+    );
+
+    const res = [];
+    for (const item of data) {
+      res.push(...(await ProductModel.getAll(item.product_id)));
+    }
+    return res;
+  }
+
+  static async update(id, name) {
+    await db.execute(
+      'update tag set name = ? where tag_id = ?',
+      [name, id],
+    );
+  }
+
+  static async delete(id) {
+    await db.execute(
+      'delete from tag where tag_id = ?',
+      [id],
+    );
   }
 
   static async deleteFor(productId) {

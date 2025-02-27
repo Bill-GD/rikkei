@@ -51,7 +51,6 @@ export function handleProductQuery(req, res, next) {
     // req.query.limit = limit;
     // req.query.offset = (page - 1) * limit;
   }
-
   next();
 }
 

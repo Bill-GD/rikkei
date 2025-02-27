@@ -1,6 +1,4 @@
-import db from '../database/database.js';
-import { CommentModel, ProductModel, TagModel } from '../models/index.js';
-import { ListingModel } from '../models/listing.model.js';
+import { CommentModel, ProductModel, TagModel, ListingModel } from '../models/index.js';
 
 export class ProductController {
   static async getAll(req, res) {

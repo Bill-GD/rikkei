@@ -11,10 +11,10 @@ import {
 const router = express.Router();
 
 router.get('/', getProductSortFields, handleProductQuery, ProductController.getAll);
-router.get('/:id', hasProductId, handleProductQuery, ProductController.getId);
-router.get('/:id/listing', handleProductQuery, ProductController.getListingOfId);
-router.get('/:id/tags', handleProductQuery, ProductController.getTagsOfId);
-router.get('/:id/comments', handleProductQuery, ProductController.getCommentsOfId);
+router.get('/:id', hasProductId, ProductController.getId);
+router.get('/:id/listing', ProductController.getListingOfId);
+router.get('/:id/tags', ProductController.getTagsOfId);
+router.get('/:id/comments', ProductController.getCommentsOfId);
 
 router.post('/', handleProductPost, hasProductName, ProductController.addProduct);
 router.post('/:id/comments', hasProductId, ProductController.addComment);
