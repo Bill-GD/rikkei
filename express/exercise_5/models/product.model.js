@@ -1,3 +1,4 @@
+import mysql from 'mysql2/promise';
 import db from '../database/database.js';
 import { CommentModel } from './comment.model.js';
 import { ListingModel } from './listing.model.js';
@@ -93,15 +94,19 @@ export class ProductModel {
     let baseQuery = 'select * from product',
       whereQueries = [];
 
-    if (productId >= 0) whereQueries.push('product_id = ?');
-    if (rangeQuery) whereQueries.push(rangeQuery);
+    if (productId >= 0) whereQueries.push(`product_id = ?`);
+    if (rangeQuery) {
+      baseQuery += ' p inner join listing l on l.product_id = p.product_id';
+      whereQueries.push(rangeQuery);
+    }
 
-    const [data] = await db.execute(
-      `${baseQuery} ${whereQueries.length > 0
+    let query = mysql.format(`${baseQuery} ${whereQueries.length > 0
         ? `where ${whereQueries.join(' and ')}`
         : ''} ${orderQuery || ''} ${pageQuery || ''}`,
       [productId],
     );
+    if (rangeQuery) query = query.replaceAll(' product_id ', ' p.product_id ');
+    const [data] = await db.execute(query);
 
     const result = [];
     for (const productData of data) {
@@ -112,6 +117,22 @@ export class ProductModel {
       result.push(ProductModel.fromTable(productData, listing, tags, comments));
     }
     return result;
+  }
+
+  static async update(id, json) {
+    if (json.product_name) await db.execute(
+      `update product` +
+      // set ${Object.keys(json).map(e => `${e} = ?`).join(',')}` +
+      ` set product_name = ?` +
+      ' where product_id = ?',
+      [json.product_name, id],
+    );
+    await db.execute(
+      `update listing
+       set ${Object.keys(json.listing).filter(e => json.listing[e] !== undefined).map(e => `${e} = ?`).join(',')}` +
+      ' where product_id = ?',
+      [...Object.values(json.listing).filter(e => e !== undefined), id],
+    );
   }
 
   static async delete(id) {

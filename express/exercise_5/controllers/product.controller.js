@@ -38,6 +38,24 @@ export class ProductController {
     res.status(201).json({ message: 'Added new product', id: newId });
   }
 
+  static async addComment(req, res) {
+    await new CommentModel(-1, req.body.content).add(req.params.id);
+    res.status(201).json({ message: `Added new comment for ${req.params.id}` });
+  }
+
+  static async updateProduct(req, res) {
+    let { productName, desc, price, rate } = req.body;
+    await ProductModel.update(req.params.id, {
+      product_name: productName,
+      listing: {
+        description: desc,
+        price: price ? +price : undefined,
+        rate: rate ? +rate : undefined,
+      },
+    });
+    res.json({ message: 'Updated product successfully' });
+  }
+
   static async deleteProduct(req, res) {
     await ProductModel.delete(req.params.id);
     res.json({ message: 'Deleted product' });

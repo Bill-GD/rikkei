@@ -17,6 +17,9 @@ router.get('/:id/tags', handleProductQuery, ProductController.getTagsOfId);
 router.get('/:id/comments', handleProductQuery, ProductController.getCommentsOfId);
 
 router.post('/', handleProductPost, hasProductName, ProductController.addProduct);
+router.post('/:id/comments', hasProductId, ProductController.addComment);
+
+router.put('/:id', hasProductId, ProductController.updateProduct);
 
 router.delete('/:id', hasProductId, ProductController.deleteProduct);
 
