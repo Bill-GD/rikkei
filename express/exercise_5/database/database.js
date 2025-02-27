@@ -9,7 +9,7 @@ const db = mysql.createPool({
   database: 'express_exercise_5',
 });
 
-// async function insertData() {
+// export async function insertData() {
 //   const data = JSON.parse(readFileSync(`${__root}/data/data.json`, 'utf8'));
 //
 //   const allTags = data.map(e => e['tags']).reduce(

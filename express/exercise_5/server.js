@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import 'dotenv/config';
 import { productRouter, testRouter } from './routes/index.js';
 
-
 const app = express();
 const port = 3000;
 

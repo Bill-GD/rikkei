@@ -29,6 +29,14 @@ export class ListingModel {
     return new ListingModel(json.description, json.price, json.rate);
   }
 
+  async add(productId) {
+    const [res] = await db.execute(
+      'insert into listing (description, price, rate, product_id) values (?,?,?,?)',
+      [this.description, this.price, this.rate, productId],
+    );
+    return res.insertId;
+  }
+
   /**
    * @returns {Promise<ListingModel[]>}
    */
@@ -46,5 +54,12 @@ export class ListingModel {
     );
 
     return data.map(ListingModel.fromTable);
+  }
+
+  static async delete(productId) {
+    await db.execute(
+      'delete from listing where product_id = ?',
+      [productId],
+    );
   }
 }

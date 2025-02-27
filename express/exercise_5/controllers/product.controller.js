@@ -31,4 +31,15 @@ export class ProductController {
     const reqProductId = req.params.id;
     res.json((await CommentModel.getAll(-1, reqProductId)).map(e => e.toJson()));
   }
+
+  static async addProduct(req, res) {
+    const { productName, listing, tags } = req.body;
+    const newId = await (new ProductModel(-1, productName, true, listing, tags || [], [])).add();
+    res.status(201).json({ message: 'Added new product', id: newId });
+  }
+
+  static async deleteProduct(req, res) {
+    await ProductModel.delete(req.params.id);
+    res.json({ message: 'Deleted product' });
+  }
 }

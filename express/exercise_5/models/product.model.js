@@ -12,7 +12,7 @@ export class ProductModel {
    * @param {TagModel[]} tags
    * @param {CommentModel[]} comments
    */
-  constructor(id, name, status, listing, tags, comments) {
+  constructor(id = -1, name, status, listing, tags, comments) {
     this.id = id;
     this.name = name;
     this.status = status;
@@ -26,7 +26,7 @@ export class ProductModel {
    *  id: number,
    *  productName: string,
    *  status: boolean,
-   *  listing: {rate: number, price: number, description: string},
+   *  listing: {rate: number, price: number, description: string}|{},
    *  comments: {commentId: number, content: string}[],
    *  tags: {tagId: number, tagName: string}[],
    * }}
@@ -36,7 +36,7 @@ export class ProductModel {
       id: this.id,
       productName: this.name,
       status: this.status,
-      listing: this.listing.toJson(),
+      listing: this.listing?.toJson() || {},
       comments: this.comments.map(e => e.toJson()),
       tags: this.tags.map(e => e.toJson()),
     };
@@ -53,19 +53,53 @@ export class ProductModel {
     );
   }
 
+  async add() {
+    const [res] = await db.execute(
+      'insert into product (product_name, status) values (?,?)',
+      [this.name, this.status],
+    );
+    this.id = res.insertId;
+    for (const e of this.tags) await e.add(this.id);
+    for (const e of this.comments) await e.add(this.id);
+    if (this.listing) await this.listing.add(this.id);
+    return this.id;
+  }
+
+  static async has(id = -1, name = null) {
+    let baseQuery = 'select count(*) count from product',
+      queries = [], values = [];
+    if (id >= 0) {
+      queries.push('product_id = ?');
+      values.push(id);
+    }
+    if (name) {
+      queries.push('product_name = ?');
+      values.push(name);
+    }
+    const [[res]] = await db.execute(
+      `${baseQuery} ${queries.length > 0
+        ? `where ${queries.join(' and ')}`
+        : ''}`,
+      values,
+    );
+    return res.count > 0;
+  }
+
   /**
    * @returns {Promise<ProductModel[]>}
    */
   static async getAll(productId = -1, rangeQuery = null, orderQuery = null, pageQuery = null) {
     // SELECT > FROM > WHERE > GROUP BY > HAVING > ORDER BY > LIMIT > OFFSET
-    let baseQuery = 'select p.* from product p inner join listing l on l.product_id = p.product_id',
+    let baseQuery = 'select * from product',
       whereQueries = [];
 
     if (productId >= 0) whereQueries.push('product_id = ?');
     if (rangeQuery) whereQueries.push(rangeQuery);
 
     const [data] = await db.execute(
-      `${baseQuery} ${whereQueries.length > 0 ? `where ${whereQueries.join(' and ')}` : ''} ${orderQuery || ''} ${pageQuery || ''}`,
+      `${baseQuery} ${whereQueries.length > 0
+        ? `where ${whereQueries.join(' and ')}`
+        : ''} ${orderQuery || ''} ${pageQuery || ''}`,
       [productId],
     );
 
@@ -78,5 +112,14 @@ export class ProductModel {
       result.push(ProductModel.fromTable(productData, listing, tags, comments));
     }
     return result;
+  }
+
+  static async delete(id) {
+    await ListingModel.delete(id);
+    await TagModel.deleteFor(id);
+    await db.execute(
+      'delete from product where product_id = ?',
+      [id],
+    );
   }
 }

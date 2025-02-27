@@ -24,6 +24,15 @@ export class CommentModel {
     return new CommentModel(json.comment_id, json.content);
   }
 
+  async add(productId) {
+    const [res] = await db.execute(
+      'insert into comment (content, product_id) values (?,?)',
+      [this.content, productId],
+    );
+    this.id = res.insertId;
+    return this.id;
+  }
+
   /**
    * @returns {Promise<CommentModel[]>}
    */
