@@ -117,7 +117,7 @@ export class ProductController {
 
       await db('listing').insert(listing);
 
-      res.json({ message: 'Added new product', product_id });
+      res.status(201).json({ message: 'Added new product', product_id });
     } catch (error) {
       res.status(500).json({ message: 'An error has occurred', error });
     }
@@ -126,7 +126,7 @@ export class ProductController {
   static async addCommentForProduct(req, res) {
     try {
       const [comment_id] = await db('comment').insert({ content: req.body.content, product_id: req.params.id });
-      res.json({ message: `Added new comment for product of id ${req.params.id}`, comment_id });
+      res.status(201).json({ message: `Added new comment for product of id ${req.params.id}`, comment_id });
     } catch (error) {
       res.status(500).json({ message: 'An error has occurred', error });
     }

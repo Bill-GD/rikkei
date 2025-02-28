@@ -22,8 +22,8 @@ export function checkProductGetQueries(req, res, next) {
   if (page && limit && (isNaN(+page) || isNaN(+limit) || +page <= 0 || +limit <= 0)) {
     return res.status(400).json({
       message: 'Invalid pagination queries',
-      page: +page,
-      limit: +limit,
+      page: page,
+      limit: limit,
     });
   }
 
