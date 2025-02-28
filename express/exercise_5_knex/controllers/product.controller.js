@@ -113,9 +113,21 @@ export class ProductController {
       const product = { product_name };
 
       const [product_id] = await db('product').insert(product);
-      const listing = { description, price, rate, product_id };
 
+      const listing = { description, price, rate, product_id };
       await db('listing').insert(listing);
+
+      const product_tags = [];
+      for (const name of tags) {
+        const [tag] = await db('tag').select('tag_id').where({ name });
+        if (tag) product_tags.push({ tag_id: tag.tag_id, product_id });
+        else {
+          const [newId] = await db('tag').insert({ name });
+          product_tags.push({ tag_id: newId, product_id });
+        }
+      }
+
+      await db('product_tag').insert(product_tags);
 
       res.status(201).json({ message: 'Added new product', product_id });
     } catch (error) {
