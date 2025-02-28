@@ -4,7 +4,7 @@ import knexConfig from './knex-config.js';
 
 const db = knex(knexConfig.development);
 
-// async function insertData() {
+// export async function insertData() {
 //   const data = JSON.parse(readFileSync(`${process.cwd()}/data/data.json`, 'utf8'));
 //
 //   const allTags = data.map(e => e['tags']).reduce(
