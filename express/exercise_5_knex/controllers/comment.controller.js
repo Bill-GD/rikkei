@@ -5,9 +5,12 @@ export class CommentController {
     try {
       let { product_id, page, limit, sort, order } = req.query;
       const query = db('comment')
-        .orderBy(sort || 'comment_id', order)
+        .orderBy(sort || 'comment_id', order);
+
+      if (limit && page) query
         .limit(limit)
         .offset((page - 1) * limit);
+
       if (product_id) query.where({ product_id: product_id });
 
       const comments = await query;
@@ -39,7 +42,7 @@ export class CommentController {
     try {
       await db('comment').where({ comment_id: req.params.id }).del();
       await db.raw('call reset_auto_increment(?,?)', ['comment', 'comment_id']);
-      res.json({ message: 'Deleted comment of id' });
+      res.json({ message: 'Deleted comment successfully' });
     } catch (error) {
       res.status(500).json({ message: 'An error has occurred', error });
     }

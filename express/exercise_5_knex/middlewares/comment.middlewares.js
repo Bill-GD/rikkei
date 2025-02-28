@@ -5,7 +5,7 @@ export function checkCommentGetQueries(req, res, next) {
   const commentSortFields = ['comment_id', 'content'];
 
   if (productId) {
-    if (isNaN(+productId) || +productId < 0) {
+    if (isNaN(+productId) || +productId <= 0) {
       return res.status(400).json({
         message: 'Invalid product id',
         product_id: productId,
@@ -24,9 +24,6 @@ export function checkCommentGetQueries(req, res, next) {
     }
     req.query.page = +page;
     req.query.limit = +limit;
-  } else {
-    req.query.page = 1;
-    req.query.limit = 10;
   }
 
   if (sort && order) {
