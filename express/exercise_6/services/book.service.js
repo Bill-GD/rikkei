@@ -72,8 +72,9 @@ export class BookService {
 
   /**
    * @param {{
-   *   book_id: number,
    *   title: string,
+   *   author_id: number,
+   *   category_id: number,
    *   price: number,
    *   rate: number,
    * }} params
@@ -83,5 +84,26 @@ export class BookService {
     const book_id = await BookService.getNextId();
     await db(BookService.#tableName).insert({ book_id, ...params });
     return book_id;
+  }
+
+  /**
+   * @param {number} bookId
+   * @param {{
+   *   title: string,
+   *   author_id: number,
+   *   category_id: number,
+   *   price: number,
+   *   rate: number,
+   * }} params
+   */
+  static updateBook(bookId, params) {
+    return db(BookService.#tableName).where({ book_id: bookId }).update(params);
+  }
+
+  /**
+   * @param {number} bookId
+   */
+  static async deleteBook(bookId) {
+    return db(BookService.#tableName).where({ book_id: bookId }).del();
   }
 }

@@ -60,12 +60,13 @@ export async function handleQuery(req, res, next) {
   next();
 }
 
-export async function checkPost(req, res, next) {
+export async function checkBody(req, res, next) {
   let { title, authorName, categoryId, price, rate } = req.body;
   if (!req.postParams) req.postParams = {};
 
   req.postParams.price = 0;
   req.postParams.rate = 0;
+  req.postParams.title = title;
 
   if (authorName) {
     const hasAuthor = await AuthorService.hasAuthor({ name: authorName });
@@ -99,12 +100,10 @@ export async function checkPost(req, res, next) {
     req.postParams.rate = +rate;
   }
 
-  req.postParams.title = title;
-
   next();
 }
 
-export async function checkNewReviewPost(req, res, next) {
+export async function checkNewReviewBody(req, res, next) {
   const { content } = req.body;
   if (!content || content.length <= 0) {
     return invalidRequest(res, 400, `Content can't be empty`);

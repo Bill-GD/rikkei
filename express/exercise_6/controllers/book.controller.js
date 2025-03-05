@@ -45,9 +45,27 @@ export class BookController {
     try {
       const newId = await ReviewService.addReview(req.params.id, req.body.content);
       res.status(201).json({
-        message: 'Book added successfully',
+        message: 'Review added successfully',
         id: newId,
       });
+    } catch (error) {
+      internalServerError(res, error);
+    }
+  }
+
+  static async updateBook(req, res) {
+    try {
+      await BookService.updateBook(req.params.id, req.postParams);
+      res.json({ message: 'Book updated successfully' });
+    } catch (error) {
+      internalServerError(res, error);
+    }
+  }
+
+  static async deleteBook(req, res) {
+    try {
+      await BookService.deleteBook(req.params.id);
+      res.json({ message: 'Book deleted successfully' });
     } catch (error) {
       internalServerError(res, error);
     }
