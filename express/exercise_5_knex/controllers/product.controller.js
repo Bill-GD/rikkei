@@ -1,39 +1,17 @@
 import db from '../config/database.js';
+import { getAllProduct } from '../services/product.service.js';
 
 export class ProductController {
   static async getAll(req, res) {
     try {
-      const data = await db('product as p')
-        .select('*')
-        .join('listing as l', 'l.product_id', 'p.product_id')
-        .whereBetween('l.rate', [req.query.minRate || 0, req.query.maxRate || 5])
-        .orderBy(req.query.sort || 'p.product_id', req.query.order)
-        .limit(req.query.limit)
-        .offset((req.query.page - 1) * req.query.limit);
-
-      const result = [];
-      for (const prod of data) {
-        const comments = await db('comment')
-            .select('comment_id', 'content')
-            .where({ product_id: prod.product_id }),
-          tags = await db('tag as t')
-            .select('t.*')
-            .join('product_tag as pt', 't.tag_id', 'pt.tag_id')
-            .where({ product_id: prod.product_id });
-
-        result.push({
-          product_id: prod.product_id,
-          product_name: prod.product_name,
-          status: prod.status,
-          listing: {
-            description: prod.description,
-            price: prod.price,
-            rate: prod.rate,
-          },
-          comments,
-          tags,
-        });
-      }
+      const result = await getAllProduct({
+        minRate: req.query.minRate,
+        maxRate: req.query.maxRate,
+        sort: req.query.sort,
+        order: req.query.order,
+        page: req.query.page,
+        limit: req.query.limit,
+      });
 
       res.json(result);
     } catch (error) {

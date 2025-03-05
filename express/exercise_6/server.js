@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import 'dotenv/config';
-import { commentRouter, productRouter, tagRouter, testRouter } from './routes/index.js';
+import { bookRouter } from './routes/index.js';
 
 const app = express();
 
@@ -9,12 +9,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.set('view engine', 'ejs');
-
-app.use('/test', testRouter);
-app.use('/products', productRouter);
-app.use('/comments', commentRouter);
-app.use('/tags', tagRouter);
+app.use('/books', bookRouter);
 
 app.use((req, res) => {
   res.status(404).send('<h1>PAGE NOT FOUND</h1>');
