@@ -1,5 +1,5 @@
 import { BookService, ReviewService } from '../services/index.js';
-import { internalServerError, invalidRequest } from '../utils/helper.utils.js';
+import { internalServerError } from '../utils/helper.utils.js';
 
 export class BookController {
   static async getAll(req, res) {

@@ -1,5 +1,4 @@
-import { AuthorService } from '../services/author.service.js';
-import { CategoryService } from '../services/category.service.js';
+import { AuthorService, CategoryService } from '../services/index.js';
 import { BookService } from '../services/index.js';
 import { invalidRequest } from '../utils/helper.utils.js';
 
