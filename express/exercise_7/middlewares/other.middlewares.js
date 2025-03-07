@@ -1,5 +1,10 @@
-import { CategoryService, LocationService, SkillService } from '../services';
+import { CategoryService, LocationService, SkillService } from '../services/index.js';
+import { invalidRequest } from '../utils/helper.js';
 
+/**
+ * Will handle the pagination and sorting.
+ * If sorting, a list of sortable fields must be provided through `req.sorting.fields`.
+ */
 export async function handlePageAndSort(req, res, next) {
   let { page, limit, sort, order } = req.query;
 
@@ -37,20 +42,29 @@ export async function handlePageAndSort(req, res, next) {
 
 export async function hasLocation(req, res, next) {
   const { location } = req.query;
+  if (!location) return next();
+
   const has = await LocationService.hasLocation(location);
   if (has) return next();
   invalidRequest(res, 404, 'Location not found', { location });
 }
 
-export async function hasSkill(req, res, next) {
+export async function checkSkills(req, res, next) {
   const { skill } = req.query;
-  const has = await SkillService.hasSkill(skill);
-  if (has) return next();
-  invalidRequest(res, 404, 'Skill not found', { skill });
+  if (!skill) return next();
+
+  for (const s of skill) {
+    if (!(await SkillService.hasSkill(s))) {
+      return invalidRequest(res, 404, 'Skill not found', { skill: s });
+    }
+  }
+  next();
 }
 
 export async function hasCategory(req, res, next) {
   const { category } = req.query;
+  if (!category) return next();
+
   const has = await CategoryService.hasCategory(category);
   if (has) return next();
   invalidRequest(res, 404, 'Category not found', { category });

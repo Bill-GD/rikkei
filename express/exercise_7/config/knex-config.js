@@ -5,7 +5,7 @@ const knexConfig = {
       host: 'localhost',
       user: 'root',
       password: process.env.DATABASE_PASSWORD,
-      database: '',
+      database: 'job_market',
     },
   },
 };
