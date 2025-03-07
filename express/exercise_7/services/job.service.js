@@ -42,4 +42,20 @@ export const JobService = {
 
     return result;
   },
+  hasJob: async (id, title) => {
+    const query = db('job').count('* as count');
+    if (id) query.where({ job_id: id });
+    if (title) query.where({ job_title: title });
+
+    const [result] = await query;
+    return result.count > 0;
+  },
+  get: async (id) => {
+    return (await JobService.getAll()).find(e => `${e.job_id}` === id);
+  },
+  getSkills: async (id) => {
+    return (await JobService.get(id)).skills;
+  },
+  add: async (title, desc, requirement, salaryRange, category, location, skills, company, benefits) => {
+  },
 };

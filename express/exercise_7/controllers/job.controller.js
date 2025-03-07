@@ -1,11 +1,4 @@
-import {
-  BenefitService,
-  CategoryService,
-  CompanyService,
-  JobService,
-  LocationService,
-  SkillService,
-} from '../services/index.js';
+import { JobService } from '../services/index.js';
 import { internalServerError } from '../utils/helper.js';
 
 export class JobController {
@@ -17,5 +10,27 @@ export class JobController {
     } catch (error) {
       internalServerError(res, error);
     }
+  }
+
+  static async getById(req, res) {
+    try {
+      const result = await JobService.get(req.params.id);
+      res.json(result);
+    } catch (error) {
+      internalServerError(res, error);
+    }
+  }
+
+  static async getSkillsOfId(req, res) {
+    try {
+      const result = await JobService.getSkills(req.params.id);
+      res.json(result);
+    } catch (error) {
+      internalServerError(res, error);
+    }
+  }
+
+  static async addJob(req, res) {
+
   }
 }

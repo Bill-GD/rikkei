@@ -1,3 +1,4 @@
+import { JobService } from '../services/index.js';
 import { invalidRequest } from '../utils/helper.js';
 
 export function getJobSortFields(req, res, next) {
@@ -9,13 +10,16 @@ export function getJobSortFields(req, res, next) {
 }
 
 export async function checkJobId(req, res, next) {
-  const reqId = req.params.id;
-  next();
+  const has = await JobService.hasJob(req.params.id);
+  if (has) return next();
+  invalidRequest(res, 404, 'Job not found');
 }
 
 export async function checkJobTitle(req, res, next) {
   let { jobTitle } = req.body;
-  next();
+  const has = await JobService.hasJob(undefined, jobTitle);
+  if (!has) return next();
+  invalidRequest(res, 403, 'Job with the same title already exists');
 }
 
 export function handleJobFilters(req, res, next) {
