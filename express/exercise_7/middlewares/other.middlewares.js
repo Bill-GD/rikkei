@@ -71,15 +71,6 @@ export async function checkSkills(req, res, next) {
   next();
 }
 
-export async function hasCategory(req, res, next) {
-  const { category } = req.query;
-  if (!category) return next();
-
-  const has = await CategoryService.hasCategory(category);
-  if (has) return next();
-  invalidRequest(res, 404, 'Category not found', { category });
-}
-
 export async function checkLocation(req, res, next) {
   const { location } = req.body;
   if (!location) return next();
