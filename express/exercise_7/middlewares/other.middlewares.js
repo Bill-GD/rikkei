@@ -1,4 +1,4 @@
-import { CategoryService, LocationService, SkillService } from '../services/index.js';
+import { CategoryService, CompanyService, LocationService, SkillService } from '../services/index.js';
 import { invalidRequest } from '../utils/helper.js';
 
 /**
@@ -49,6 +49,16 @@ export async function hasLocation(req, res, next) {
   invalidRequest(res, 404, 'Location not found', { location });
 }
 
+export async function checkSkill(req, res, next) {
+  const { skillName } = req.body;
+  if (!skillName) return next();
+
+  if (!(await SkillService.hasSkill(skillName))) {
+    return invalidRequest(res, 404, 'Skill not found', { skillName });
+  }
+  next();
+}
+
 export async function checkSkills(req, res, next) {
   const { skill } = req.query;
   if (!skill) return next();
@@ -68,4 +78,22 @@ export async function hasCategory(req, res, next) {
   const has = await CategoryService.hasCategory(category);
   if (has) return next();
   invalidRequest(res, 404, 'Category not found', { category });
+}
+
+export async function checkLocation(req, res, next) {
+  const { location } = req.body;
+  if (!location) return next();
+
+  const has = await LocationService.hasLocation(location);
+  if (has) return next();
+  invalidRequest(res, 404, 'Location not found', { location });
+}
+
+export async function checkCompany(req, res, next) {
+  const { companyName } = req.body;
+  if (!companyName) return next();
+
+  const has = await CompanyService.hasCompany(companyName);
+  if (has) return next();
+  invalidRequest(res, 404, 'Company not found', { companyName });
 }

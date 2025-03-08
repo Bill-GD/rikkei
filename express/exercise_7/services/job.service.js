@@ -33,7 +33,7 @@ export const JobService = {
     for (const job of result) {
       job.skills = (await SkillService.getSkillsOf(job.job_id)).map(e => e.skill_name);
       job.categories = (await CategoryService.getCategoriesOf(job.job_id)).map(e => e.category_name);
-      job.locations = (await LocationService.getLocation(job.location_id)).map(e => e.location_name);
+      job.locations = (await LocationService.get(job.location_id)).map(e => e.location_name);
       job.company = (await CompanyService.get(job.company_id));
       job.benefits = await BenefitService.getBenefitsOf(job.job_id);
       delete job.company_id;
@@ -56,6 +56,38 @@ export const JobService = {
   getSkills: async (id) => {
     return (await JobService.get(id)).skills;
   },
-  add: async (title, desc, requirement, salaryRange, category, location, skills, company, benefits) => {
+  /**
+   * @returns {Promise<number>}
+   */
+  getNextId: async () => {
+    return (await db('job').max('job_id as max'))[0].max + 1;
+  },
+  add: async (title, description, requirement, minSalary, maxSalary, locationId, companyId) => {
+    const nextId = await JobService.getNextId();
+    await db('job').insert({
+      job_id: nextId,
+      job_title: title,
+      job_description: description,
+      job_requirement: requirement,
+      salary_min: minSalary,
+      salary_max: maxSalary,
+      location_id: locationId,
+      company_id: companyId,
+    });
+    return nextId;
+  },
+  update: async (jobId, title, description, requirement, minSalary, maxSalary, locationId, companyId) => {
+    await db('job').where({ job_id: jobId }).update({
+      job_title: title,
+      job_description: description,
+      job_requirement: requirement,
+      salary_min: minSalary,
+      salary_max: maxSalary,
+      location_id: locationId,
+      company_id: companyId,
+    });
+  },
+  delete: async (id) => {
+    await db('job').where({ job_id: id }).del();
   },
 };

@@ -7,8 +7,11 @@ export const LocationService = {
   //     .join('job_locations', 'job_locations.location_id', 'location.location_id')
   //     .where({ 'job_locations.job_id': jobId });
   // },
-  getLocation: (id) => {
+  get: (id) => {
     return db('location').where({ 'location_id': id });
+  },
+  getId: async (name) => {
+    return (await db('location').where({ 'location_name': name }))[0].location_id;
   },
   hasLocation: async (name) => {
     const [result] = await db('location').count('* as count').where({ location_name: name });
