@@ -1,4 +1,4 @@
-import { CategoryService, CompanyService, LocationService, SkillService } from '../services/index.js';
+import { CompanyService, LocationService, SkillService } from '../services/index.js';
 import { invalidRequest } from '../utils/helper.js';
 
 /**
@@ -40,23 +40,13 @@ export async function handlePageAndSort(req, res, next) {
   next();
 }
 
-export async function hasLocation(req, res, next) {
+export async function checkLocation(req, res, next) {
   const { location } = req.query;
   if (!location) return next();
 
   const has = await LocationService.hasLocation(location);
   if (has) return next();
   invalidRequest(res, 404, 'Location not found', { location });
-}
-
-export async function checkSkill(req, res, next) {
-  const { skillName } = req.body;
-  if (!skillName) return next();
-
-  if (!(await SkillService.hasSkill(skillName))) {
-    return invalidRequest(res, 404, 'Skill not found', { skillName });
-  }
-  next();
 }
 
 export async function checkSkills(req, res, next) {
@@ -69,15 +59,6 @@ export async function checkSkills(req, res, next) {
     }
   }
   next();
-}
-
-export async function checkLocation(req, res, next) {
-  const { location } = req.body;
-  if (!location) return next();
-
-  const has = await LocationService.hasLocation(location);
-  if (has) return next();
-  invalidRequest(res, 404, 'Location not found', { location });
 }
 
 export async function checkCompany(req, res, next) {
