@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import { userRegistrationSchema } from '../config/validate-schema.js';
 
 export async function validateBody(req, res, next) {
@@ -23,4 +24,32 @@ export async function validateBody(req, res, next) {
   const { error } = userRegistrationSchema.validate({ email, password });
   if (error) return res.status(400).json(error);
   next();
+}
+
+export async function authenticate(req, res, next) {
+  const { authorization } = req.headers;
+  // const bearer = req.headers.cookie.split(';').map(e => e.trim()).filter(e => e.startsWith('Bearer'));
+
+  if (!authorization) {
+    return res.status(401).json({ message: 'No authorization token provided' });
+  }
+  const token = authorization.split(' ')[1];
+  // console.log(token);
+  try {
+    req.authenticatedUser = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(req.authenticatedUser);
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: 'Got error verifying authorization', error });
+  }
+}
+
+export function authorize(allowedRoles = []) {
+  return async (req, res, next) => {
+    const { role } = req.authenticatedUser;
+    if (!allowedRoles.includes(role)) {
+      return res.status(403).json({ message: 'You don\'t have permission to access this content' });
+    }
+    next();
+  };
 }

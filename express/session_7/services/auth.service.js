@@ -1,5 +1,6 @@
 import db from '../config/database.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import UserService from './user.service.js';
 
 export default class AuthService {
@@ -20,5 +21,10 @@ export default class AuthService {
     if (!bcrypt.compareSync(password, user.password)) {
       throw Error('Wrong password');
     }
+    return jwt.sign(
+      { id: user.id, email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: 60 },
+    );
   }
 }
