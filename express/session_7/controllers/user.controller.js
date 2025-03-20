@@ -14,6 +14,7 @@ export default class UserController {
   }
 
   static createOne(req, res) {
+    console.log(req.body);
     res.json({
       message: 'POST ONE SUCCESSFULLY',
     });
