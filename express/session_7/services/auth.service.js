@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken';
 import UserService from './user.service.js';
 
 export default class AuthService {
-  static async register(email, password) {
+  static async register(email, password, avatar) {
     const salt = bcrypt.genSaltSync(10),
       hash = bcrypt.hashSync(password, salt);
     console.log(hash);
-    return await UserService.createOne(email, hash);
+    return await UserService.createOne(email, hash, avatar);
   }
 
   static async signIn(email, password) {

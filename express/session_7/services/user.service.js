@@ -5,9 +5,9 @@ export default class UserService {
 
   static getOne() {}
 
-  static async createOne(email, hash) {
+  static async createOne(email, hash, avatar) {
     const nextId = await UserService.getNextId();
-    await db('user').insert({ id: nextId, email, password: hash });
+    await db('user').insert({ id: nextId, email, password: hash, avatar });
     return nextId;
   }
 
