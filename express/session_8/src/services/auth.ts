@@ -17,4 +17,12 @@ export default class AuthService {
     }
     return jwt.sign(user, process.env.JWT_SECRET as string, { expiresIn: 60 });
   }
+  
+  static async resetPassword(userId: number): Promise<string> {
+    const newPassword = 'abcxyz123',
+      salt: string = bcrypt.genSaltSync(10),
+      hashedPassword: string = bcrypt.hashSync(newPassword, salt);
+    await UserService.updatePassword(userId, hashedPassword);
+    return newPassword;
+  }
 }

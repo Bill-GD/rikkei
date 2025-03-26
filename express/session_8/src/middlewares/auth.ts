@@ -37,8 +37,9 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
   }
   const token = authorization!.split(' ')[1];
   try {
-    const result = jwt.verify(token, process.env.JWT_SECRET as string);
-    // console.log(result);
+    const user = jwt.verify(token, process.env.JWT_SECRET as string);
+    // console.log(user);
+    req.user = user;
     next();
   } catch (error) {
     res.status(500).json({ message: 'An error has occurred while verifying token', error: (error as Error).message });
@@ -50,7 +51,7 @@ export async function getTokenFromCookie(req: Request, res: Response, next: Next
   if (cookies) {
     const token = cookies.split(';').map(e => e.trim()).find(e => e.startsWith('token='))?.split('=')[1];
     if (token) {
-      console.log(token);
+      // console.log(token);
       req.headers.authorization = `Bearer ${token}`;
     }
   }

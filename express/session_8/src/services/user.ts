@@ -12,6 +12,10 @@ export default class UserService {
     return !!result; // om...
   }
   
+  static async updatePassword(userId: number, newHashedPassword: string) {
+    await db('user').where({ userId }).update({ password: newHashedPassword });
+  }
+  
   static async getNextId(): Promise<number> {
     return (await db('user').max('userId as max'))[0].max + 1;
   }
