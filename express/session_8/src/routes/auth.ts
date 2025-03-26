@@ -1,11 +1,12 @@
 import express from 'express';
 import AuthController from '../controllers/auth.js';
-import { authenticate, validateBody } from '../middlewares/auth.js';
-import upload from '../utils/multer-uploader.js';
+import { authenticate, shouldEmailExists, validateBody } from '../middlewares/auth.js';
+import uploader from '../utils/multer-uploader.js';
 
 const router: express.Router = express.Router();
 
 // multer helps putting form-data text fields into `req.body`
-router.post('/register', upload.single('avatar'), validateBody, AuthController.register);
+router.post('/register', uploader.single('avatar'), shouldEmailExists(false), validateBody, AuthController.register);
+router.post('/login', shouldEmailExists(true), AuthController.login);
 
 export default router;
