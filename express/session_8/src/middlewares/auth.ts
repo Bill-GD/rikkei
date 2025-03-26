@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ValidationResult } from 'joi';
+import jwt from 'jsonwebtoken';
 import { userSchema } from '../config/validation-schemas.js';
 import UserService from '../services/user.js';
 
@@ -30,5 +31,28 @@ export function shouldEmailExists(shouldUserExists: boolean) {
 }
 
 export async function authenticate(req: Request, res: Response, next: NextFunction) {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    res.status(401).json({ message: 'No authorization provided' });
+  }
+  const token = authorization!.split(' ')[1];
+  try {
+    const result = jwt.verify(token, process.env.JWT_SECRET as string);
+    // console.log(result);
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'An error has occurred while verifying token', error: (error as Error).message });
+  }
+}
 
+export async function getTokenFromCookie(req: Request, res: Response, next: NextFunction) {
+  const cookies = req.headers.cookie;
+  if (cookies) {
+    const token = cookies.split(';').map(e => e.trim()).find(e => e.startsWith('token='))?.split('=')[1];
+    if (token) {
+      console.log(token);
+      req.headers.authorization = `Bearer ${token}`;
+    }
+  }
+  next();
 }
