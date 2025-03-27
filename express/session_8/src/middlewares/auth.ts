@@ -16,6 +16,7 @@ export async function validateBody(req: Request, res: Response, next: NextFuncti
 export function shouldEmailExists(shouldUserExists: boolean) {
   return async function hasUserByEmail(req: Request, res: Response, next: NextFunction) {
     const { email } = req.body;
+    console.log(req.file);
     const userExists = await UserService.hasUserByEmail(email);
     
     if ((userExists && shouldUserExists) || (!userExists && !shouldUserExists)) {
@@ -34,12 +35,14 @@ export async function authenticate(req: Request, res: Response, next: NextFuncti
   const { authorization } = req.headers;
   if (!authorization) {
     res.status(401).json({ message: 'No authorization provided' });
+    return;
   }
+  
   const token = authorization!.split(' ')[1];
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET as string);
     // console.log(user);
-    req.user = user;
+    req.body.user = user;
     next();
   } catch (error) {
     res.status(500).json({ message: 'An error has occurred while verifying token', error: (error as Error).message });

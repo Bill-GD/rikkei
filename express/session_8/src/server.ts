@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import 'dotenv/config';
 
 import authRouter from './routes/auth.js';
+import userRouter from './routes/user.js';
 
 const app: Express = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${process.cwd()}/public`));
 
 app.use('/auth', authRouter);
+app.use('/users', userRouter);
 
 app.use((req: Request, res: Response) => {
   res.status(404).send('<h1>PAGE NOT FOUND</h1>');

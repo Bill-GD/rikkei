@@ -16,7 +16,7 @@ export default class AuthController {
     try {
       const { email, password } = req.body;
       const token: string = await AuthService.login(email, password);
-      res.cookie('token', token, { maxAge: 60 * 1e3 });
+      res.cookie('token', token, { maxAge: 1e3 * 60 * 5 }); // 5 mins
       // res.cookie('dummy', 'dummy_value', { maxAge: 60 * 1e3 });
       res.status(200).json({ message: 'Signed in successfully', token });
     } catch (error) {
@@ -35,8 +35,8 @@ export default class AuthController {
   
   static async resetPassword(req: Request, res: Response) {
     try {
-      console.log(req.user.userId);
-      const newPassword = await AuthService.resetPassword(req.user.userId);
+      console.log(req.body.user.userId);
+      const newPassword = await AuthService.resetPassword(req.body.user.userId);
       res.status(200).json({ message: 'New password sent', newPassword });
     } catch (error) {
       res.status(500).json({ message: 'An error has occurred', error: (error as Error).message });
