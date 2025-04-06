@@ -1,0 +1,19 @@
+{
+  "name": "microservice-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently --prefix \"[{name}]\" --names \"auth,user,gateway\" --prefix-colors \"red,yellow,green\" \"npm run start:auth\" \"npm run start:user\" \"npm run start:gateway\"",
+    "start:gateway": "cd gateway && npm start",
+    "start:auth": "cd auth-service && npm start",
+    "start:user": "cd user-service && npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

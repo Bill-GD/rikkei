@@ -1,0 +1,26 @@
+http:
+  port: 3000
+apiEndpoints:
+  register:
+    path: /auth/register
+    method: post
+  login:
+    path: /auth/sign-in
+    method: post
+serviceEndpoints:
+  auth-service:
+    url: http://localhost:3001
+policies:
+  - proxy
+  # - rate-limit
+pipelines:
+  default:
+    apiEndpoints: # name of the api endpoints listed above
+      - register
+      - login
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: auth-service
