@@ -1,0 +1,678 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Michelle Clark",
+      "email": "andrewjefferson@yahoo.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-01-21T09:39:45.736359"
+    },
+    {
+      "id": 2,
+      "name": "Joshua Walker",
+      "email": "ian09@gmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "admin",
+      "created_at": "2025-01-08T09:39:45.737001"
+    },
+    {
+      "id": 3,
+      "name": "Jeremy Newton",
+      "email": "williamsonkristina@andrews-cruz.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-02-10T09:39:45.737955"
+    },
+    {
+      "id": 4,
+      "name": "Lucas Hoffman",
+      "email": "vlong@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-03-28T09:39:45.738427"
+    },
+    {
+      "id": 5,
+      "name": "John Hale",
+      "email": "xgray@yahoo.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-02-25T09:39:45.738875"
+    },
+    {
+      "id": 6,
+      "name": "Elizabeth Juarez",
+      "email": "ingramcarl@yahoo.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-03-01T09:39:45.739444"
+    },
+    {
+      "id": 7,
+      "name": "Derek Baker",
+      "email": "sarah75@porter.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-01-06T09:39:45.741707"
+    },
+    {
+      "id": 8,
+      "name": "Rachel Kelly",
+      "email": "vnelson@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-04-02T09:39:45.742126"
+    },
+    {
+      "id": 9,
+      "name": "Charles Calderon",
+      "email": "tgeorge@brown-knapp.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-01-23T09:39:45.742775"
+    },
+    {
+      "id": 10,
+      "name": "Mrs. Amanda Jackson",
+      "email": "aprilharris@yahoo.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-01-31T09:39:45.743262"
+    },
+    {
+      "id": 11,
+      "name": "Shannon Hernandez",
+      "email": "jeremy21@nicholson.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-03-05T09:39:45.743883"
+    },
+    {
+      "id": 12,
+      "name": "Johnathan Combs",
+      "email": "johnwhite@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-04-02T09:39:45.744421"
+    },
+    {
+      "id": 13,
+      "name": "Larry Sanchez",
+      "email": "johnanderson@moreno-ortiz.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-01-18T09:39:45.745340"
+    },
+    {
+      "id": 14,
+      "name": "Jean Huang",
+      "email": "jared15@gmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "publisher",
+      "created_at": "2025-03-29T09:39:45.745721"
+    },
+    {
+      "id": 15,
+      "name": "Charles Thompson",
+      "email": "tiffanyscott@gmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-02-27T09:39:45.746237"
+    },
+    {
+      "id": 16,
+      "name": "Devin Mills",
+      "email": "bdunn@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-01-29T09:39:45.746616"
+    },
+    {
+      "id": 17,
+      "name": "Christopher Horne",
+      "email": "jade53@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-01-26T09:39:45.747050"
+    },
+    {
+      "id": 18,
+      "name": "James Moore",
+      "email": "smithcorey@rogers-reilly.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-02-18T09:39:45.747914"
+    },
+    {
+      "id": 19,
+      "name": "Scott Wright",
+      "email": "brendagutierrez@spencer.info",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-02-04T09:39:45.748618"
+    },
+    {
+      "id": 20,
+      "name": "Nichole Brown",
+      "email": "pcollins@hotmail.com",
+      "password": "$2a$10$hashedpasswordexample",
+      "role": "user",
+      "created_at": "2025-01-29T09:39:45.749043"
+    }
+  ],
+  "bootcamps": [
+    {
+      "id": 1,
+      "name": "Lawrence, Castillo and Rogers Bootcamp",
+      "description": "Describe why grow sure. Economic scene protect explain money consider.",
+      "address": "9663 Grant Light Suite 659\nLake Julie, MS 62869",
+      "zipcode": "61269",
+      "user_id": 14,
+      "average_cost": 14616220,
+      "average_rating": 4.7,
+      "photo": "bootcamp1.jpg",
+      "created_at": "2025-02-22T09:39:45.750607",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -80.196369,
+          44.8851245
+        ],
+        "formattedAddress": "3399 James Ports\nSouth Marybury, CA 82553"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Schneider LLC Bootcamp",
+      "description": "Teacher push reason question. Friend most no professional. War week might decide protect last.",
+      "address": "055 Heather Pine Suite 242\nReneefurt, FL 83390",
+      "zipcode": "93702",
+      "user_id": 4,
+      "average_cost": 8455081,
+      "average_rating": 4.5,
+      "photo": "bootcamp2.jpg",
+      "created_at": "2025-03-04T09:39:45.751128",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -24.369619,
+          -69.7232295
+        ],
+        "formattedAddress": "30268 Miller Corners\nHamptonborough, RI 26516"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Robinson and Sons Bootcamp",
+      "description": "Suddenly these measure effect indeed significant modern.",
+      "address": "23719 James Ford\nJohnsonbury, NJ 09898",
+      "zipcode": "86076",
+      "user_id": 4,
+      "average_cost": 8485561,
+      "average_rating": 3.8,
+      "photo": "bootcamp3.jpg",
+      "created_at": "2025-03-11T09:39:45.751970",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -38.680626,
+          -60.347292
+        ],
+        "formattedAddress": "501 Joanna Route Apt. 236\nRussellview, CT 19894"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Lamb-Harper Bootcamp",
+      "description": "Floor purpose season gun. Middle door road team beat continue.\nPrevent eye voice family.",
+      "address": "78721 Jamie Loop Apt. 601\nSouth Carlosbury, IA 94065",
+      "zipcode": "36457",
+      "user_id": 11,
+      "average_cost": 8666126,
+      "average_rating": 3.2,
+      "photo": "bootcamp4.jpg",
+      "created_at": "2025-03-13T09:39:45.752756",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -48.675586,
+          -22.6848075
+        ],
+        "formattedAddress": "81038 Williams Expressway\nBallardfurt, ME 37026"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Rodriguez-Cochran Bootcamp",
+      "description": "Around also two similar someone traditional number. Capital end discover miss.",
+      "address": "69729 Cuevas Roads\nWest Stephanie, IA 72667",
+      "zipcode": "92627",
+      "user_id": 6,
+      "average_cost": 14281938,
+      "average_rating": 3.8,
+      "photo": "bootcamp5.jpg",
+      "created_at": "2025-03-22T09:39:45.753528",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -104.825473,
+          30.96483
+        ],
+        "formattedAddress": "3397 Calvin Haven Apt. 323\nSouth Samanthaville, ND 66243"
+      }
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "title": "Re-intermediate compelling synergies",
+      "description": "Nor fish some oil thought. Term include from firm step treat listen peace.",
+      "weeks": 13,
+      "tuition": 3211945,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 1,
+      "user_id": 14,
+      "created_at": "2025-01-31T09:39:45.753919"
+    },
+    {
+      "id": 2,
+      "title": "Enable mission-critical mindshare",
+      "description": "Why have part she pick. Among rock minute science spend draw.",
+      "weeks": 13,
+      "tuition": 5931171,
+      "minimum_skill": "intermediate",
+      "bootcamp_id": 2,
+      "user_id": 4,
+      "created_at": "2025-02-20T09:39:45.753973"
+    },
+    {
+      "id": 3,
+      "title": "Matrix holistic architectures",
+      "description": "Huge nation hand pattern become however yes growth.",
+      "weeks": 11,
+      "tuition": 5539551,
+      "minimum_skill": "intermediate",
+      "bootcamp_id": 3,
+      "user_id": 4,
+      "created_at": "2025-01-08T09:39:45.754030"
+    },
+    {
+      "id": 4,
+      "title": "Leverage integrated solutions",
+      "description": "Attention few drop film call rich. Test determine high together rather close.",
+      "weeks": 14,
+      "tuition": 6888156,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 2,
+      "user_id": 4,
+      "created_at": "2025-02-01T09:39:45.754095"
+    },
+    {
+      "id": 5,
+      "title": "Incubate global relationships",
+      "description": "Floor prove camera need. Physical southern hospital finish oil.",
+      "weeks": 11,
+      "tuition": 8521360,
+      "minimum_skill": "intermediate",
+      "bootcamp_id": 5,
+      "user_id": 6,
+      "created_at": "2025-01-15T09:39:45.754147"
+    },
+    {
+      "id": 6,
+      "title": "Transform revolutionary solutions",
+      "description": "Job main part why key current surface. Interesting too resource movie so.",
+      "weeks": 13,
+      "tuition": 3694635,
+      "minimum_skill": "advanced",
+      "bootcamp_id": 5,
+      "user_id": 6,
+      "created_at": "2025-02-06T09:39:45.754190"
+    },
+    {
+      "id": 7,
+      "title": "Scale out-of-the-box channels",
+      "description": "Treatment democratic arm people PM amount.",
+      "weeks": 15,
+      "tuition": 3341289,
+      "minimum_skill": "advanced",
+      "bootcamp_id": 5,
+      "user_id": 6,
+      "created_at": "2025-01-30T09:39:45.754236"
+    },
+    {
+      "id": 8,
+      "title": "Generate holistic e-tailers",
+      "description": "Far sit provide we same development. Law forget line.",
+      "weeks": 5,
+      "tuition": 3711037,
+      "minimum_skill": "intermediate",
+      "bootcamp_id": 1,
+      "user_id": 14,
+      "created_at": "2025-03-08T09:39:45.754280"
+    },
+    {
+      "id": 9,
+      "title": "Utilize ubiquitous roi",
+      "description": "Wear way strategy occur green lead. Them others many. Answer stop page unit.",
+      "weeks": 16,
+      "tuition": 4961238,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 2,
+      "user_id": 4,
+      "created_at": "2025-03-30T09:39:45.754327"
+    },
+    {
+      "id": 10,
+      "title": "Unleash holistic platforms",
+      "description": "Fear though common born condition me give.",
+      "weeks": 12,
+      "tuition": 3713985,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 1,
+      "user_id": 14,
+      "created_at": "2025-02-25T09:39:45.754373"
+    },
+    {
+      "id": 11,
+      "title": "Enhance one-to-one architectures",
+      "description": "Learn expect lay analysis. Compare young and forget my.",
+      "weeks": 5,
+      "tuition": 9368185,
+      "minimum_skill": "advanced",
+      "bootcamp_id": 2,
+      "user_id": 4,
+      "created_at": "2025-01-17T09:39:45.754413"
+    },
+    {
+      "id": 12,
+      "title": "Synergize end-to-end methodologies",
+      "description": "Beat reality participant military opportunity provide game.",
+      "weeks": 5,
+      "tuition": 9476432,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 1,
+      "user_id": 14,
+      "created_at": "2025-02-01T09:39:45.754460"
+    },
+    {
+      "id": 13,
+      "title": "Unleash ubiquitous users",
+      "description": "Capital wife yet choose. Significant building remember woman a air.",
+      "weeks": 15,
+      "tuition": 3053506,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 2,
+      "user_id": 4,
+      "created_at": "2025-01-18T09:39:45.754508"
+    },
+    {
+      "id": 14,
+      "title": "Incentivize transparent paradigms",
+      "description": "Remember professional of save. Sell second discover court where.",
+      "weeks": 13,
+      "tuition": 4998386,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 4,
+      "user_id": 11,
+      "created_at": "2025-01-13T09:39:45.754545"
+    },
+    {
+      "id": 15,
+      "title": "Aggregate strategic communities",
+      "description": "Town most question will hot. Such event hit tough improve.",
+      "weeks": 6,
+      "tuition": 8563840,
+      "minimum_skill": "beginner",
+      "bootcamp_id": 3,
+      "user_id": 4,
+      "created_at": "2025-01-18T09:39:45.754588"
+    }
+  ],
+  "reviews": [
+    {
+      "id": 2,
+      "title": "Need write.",
+      "text": "Determine explain instead I low.",
+      "rating": 4,
+      "bootcamp_id": 4,
+      "user_id": 12,
+      "created_at": "2025-02-20T09:39:45.754884"
+    },
+    {
+      "id": 5,
+      "title": "Wall night long believe.",
+      "text": "Detail family white bring.",
+      "rating": 2,
+      "bootcamp_id": 2,
+      "user_id": 19,
+      "created_at": "2025-03-29T09:39:45.754922"
+    },
+    {
+      "id": 6,
+      "title": "Poor race.",
+      "text": "Call film medical others western officer chance quality. Operation carry wide decision trip few maybe.",
+      "rating": 3,
+      "bootcamp_id": 3,
+      "user_id": 19,
+      "created_at": "2025-03-26T09:39:45.754958"
+    },
+    {
+      "id": 7,
+      "title": "Series law protect view read.",
+      "text": "Investment dark mouth eight cut particular number.",
+      "rating": 1,
+      "bootcamp_id": 4,
+      "user_id": 1,
+      "created_at": "2025-02-07T09:39:45.755001"
+    },
+    {
+      "id": 9,
+      "title": "Put foreign way.",
+      "text": "Hear later charge body.",
+      "rating": 5,
+      "bootcamp_id": 5,
+      "user_id": 12,
+      "created_at": "2025-03-06T09:39:45.755032"
+    },
+    {
+      "id": 10,
+      "title": "Sure apply serious kind.",
+      "text": "Yourself production course moment candidate strategy against.",
+      "rating": 3,
+      "bootcamp_id": 1,
+      "user_id": 1,
+      "created_at": "2025-01-26T09:39:45.755065"
+    },
+    {
+      "id": 11,
+      "title": "Seven star card.",
+      "text": "Tend meeting standard agreement behavior most.",
+      "rating": 1,
+      "bootcamp_id": 5,
+      "user_id": 2,
+      "created_at": "2025-03-08T09:39:45.755106"
+    },
+    {
+      "id": 12,
+      "title": "Enter new amount whether.",
+      "text": "Side bring brother bit. Especially southern law drug notice.",
+      "rating": 1,
+      "bootcamp_id": 2,
+      "user_id": 18,
+      "created_at": "2025-03-21T09:39:45.755139"
+    },
+    {
+      "id": 14,
+      "title": "Fill will turn.",
+      "text": "Work care during. Throw commercial series term.",
+      "rating": 5,
+      "bootcamp_id": 5,
+      "user_id": 19,
+      "created_at": "2025-03-24T09:39:45.755177"
+    },
+    {
+      "id": 15,
+      "title": "Dark project effort power her.",
+      "text": "Quality along truth effect station board.",
+      "rating": 3,
+      "bootcamp_id": 3,
+      "user_id": 12,
+      "created_at": "2025-02-28T09:39:45.755222"
+    },
+    {
+      "id": 16,
+      "title": "Believe accept even.",
+      "text": "Development physical suggest way run between need. Middle family worry type easy wall.",
+      "rating": 1,
+      "bootcamp_id": 3,
+      "user_id": 5,
+      "created_at": "2025-02-09T09:39:45.755276"
+    },
+    {
+      "id": 17,
+      "title": "Happen kind stage strong understand.",
+      "text": "Officer worry daughter specific.",
+      "rating": 1,
+      "bootcamp_id": 2,
+      "user_id": 5,
+      "created_at": "2025-02-09T09:39:45.755309"
+    },
+    {
+      "id": 20,
+      "title": "Trip reflect international.",
+      "text": "Property statement challenge. Occur buy space structure.",
+      "rating": 4,
+      "bootcamp_id": 3,
+      "user_id": 18,
+      "created_at": "2025-03-07T09:39:45.755354"
+    },
+    {
+      "id": 21,
+      "title": "Development away something work.",
+      "text": "Bank maybe soldier miss crime star. Discussion while huge at during mother.",
+      "rating": 2,
+      "bootcamp_id": 2,
+      "user_id": 9,
+      "created_at": "2025-01-17T09:39:45.755413"
+    },
+    {
+      "id": 22,
+      "title": "Yes in.",
+      "text": "Factor heart sure full eat never human.",
+      "rating": 2,
+      "bootcamp_id": 3,
+      "user_id": 8,
+      "created_at": "2025-04-02T09:39:45.755457"
+    },
+    {
+      "id": 25,
+      "title": "Doctor task economic beautiful.",
+      "text": "Pay without policy position involve reflect majority. Lay understand assume throughout fly exactly.",
+      "rating": 5,
+      "bootcamp_id": 3,
+      "user_id": 2,
+      "created_at": "2025-01-03T09:39:45.755502"
+    },
+    {
+      "id": 26,
+      "title": "Stock standard class ability.",
+      "text": "Work ball drop store operation national. Usually teach story care.",
+      "rating": 1,
+      "bootcamp_id": 4,
+      "user_id": 18,
+      "created_at": "2025-03-24T09:39:45.755545"
+    },
+    {
+      "id": 28,
+      "title": "President action body.",
+      "text": "Yard deep kid discover tree church teacher. Spring state bit.",
+      "rating": 1,
+      "bootcamp_id": 4,
+      "user_id": 16,
+      "created_at": "2025-03-30T09:39:45.755596"
+    },
+    {
+      "id": 29,
+      "title": "Cup debate.",
+      "text": "Light support north recent.",
+      "rating": 5,
+      "bootcamp_id": 3,
+      "user_id": 20,
+      "created_at": "2025-01-18T09:39:45.755623"
+    },
+    {
+      "id": 30,
+      "title": "Far program nature role every.",
+      "text": "Couple member care town. Social good major fly.",
+      "rating": 5,
+      "bootcamp_id": 1,
+      "user_id": 9,
+      "created_at": "2025-02-22T09:39:45.755654"
+    },
+    {
+      "id": 31,
+      "title": "Mind mind.",
+      "text": "Local save instead draw nice pay.",
+      "rating": 1,
+      "bootcamp_id": 3,
+      "user_id": 1,
+      "created_at": "2025-03-28T09:39:45.755681"
+    },
+    {
+      "id": 33,
+      "title": "Here look room.",
+      "text": "Every worker generation the sometimes benefit. Go summer enough style.",
+      "rating": 5,
+      "bootcamp_id": 1,
+      "user_id": 1,
+      "created_at": "2025-03-25T09:39:45.755747"
+    },
+    {
+      "id": 36,
+      "title": "National key friend ahead.",
+      "text": "Tend start want offer team hour finally.",
+      "rating": 2,
+      "bootcamp_id": 5,
+      "user_id": 18,
+      "created_at": "2025-02-23T09:39:45.755799"
+    },
+    {
+      "id": 37,
+      "title": "Sell media citizen.",
+      "text": "Say water station hard become sister. South last organization clear.",
+      "rating": 1,
+      "bootcamp_id": 5,
+      "user_id": 5,
+      "created_at": "2025-01-16T09:39:45.755836"
+    },
+    {
+      "id": 38,
+      "title": "To once lay message.",
+      "text": "Unit brother receive. Better article not within fly number artist.",
+      "rating": 1,
+      "bootcamp_id": 4,
+      "user_id": 19,
+      "created_at": "2025-01-09T09:39:45.755875"
+    },
+    {
+      "id": 39,
+      "title": "Water detail.",
+      "text": "Structure year laugh third fill.",
+      "rating": 1,
+      "bootcamp_id": 1,
+      "user_id": 18,
+      "created_at": "2025-03-11T09:39:45.755916"
+    },
+    {
+      "id": 40,
+      "title": "Product onto full.",
+      "text": "Prepare range authority still family hand.",
+      "rating": 4,
+      "bootcamp_id": 1,
+      "user_id": 15,
+      "created_at": "2025-01-25T09:39:45.755954"
+    }
+  ]
+}
