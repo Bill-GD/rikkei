@@ -1,0 +1,25 @@
+paths:
+  /api/auth/register:
+    post:
+      description: Register new user. Requires username, email and password.
+      tags: [Authentication]
+      requestBody:
+        $ref: '#/components/requestBodies/register'
+      responses:
+        201:
+          description: Successfully registered new user. Returns user ID.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  id:
+                    type: integer
+                    description: The new ID of the registered user.
+        400:
+          $ref: '#/responses/400'
+        500:
+          $ref: '#/responses/500'

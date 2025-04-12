@@ -18,11 +18,11 @@ export default class UserModel {
   }
 
   static async getAllUsers() {
-    return await db('user').select('user_id', 'username', 'email', 'role');
+    return db('user').select('user_id', 'username', 'email', 'role');
   }
 
   static async addUser(id, username, email, hashedPassword, role) {
-    return await db('user').insert({
+    return db('user').insert({
       user_id: id,
       username,
       email,

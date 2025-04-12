@@ -1,0 +1,31 @@
+components:
+  requestBodies:
+    register:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            required:
+              - username
+              - email
+              - password
+            properties:
+              username:
+                description: Should have at least 4 characters.
+                type: string
+              email:
+                description: Accepts 'com' and 'net' domains.
+                type: string
+              password:
+                description: 5-30 alphanumeric characters.
+                type: string
+    login:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string

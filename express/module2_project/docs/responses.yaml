@@ -1,0 +1,27 @@
+responses:
+  400:
+    description: Invalid request error.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              description: The response message.
+              type: string
+            error:
+              description: The error.
+              type: object
+  500:
+    description: Internal server error.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              description: The response message.
+              type: string
+            error:
+              description: The error message.
+              type: string
