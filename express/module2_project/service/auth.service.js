@@ -1,17 +1,17 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import UserModel from '../models/user.model.js';
+import UserService from './user.service.js';
 
 export default class AuthService {
   static async register(id, username, email, password, role = 'user') {
     const salt = bcrypt.genSaltSync(),
       hashed = bcrypt.hashSync(password, salt);
 
-    return await UserModel.addUser(id, username, email, hashed, role);
+    return await UserService.addUser(id, username, email, hashed, role);
   }
 
   static async login(email, password) {
-    const user = await UserModel.getUser(email);
+    const user = await UserService.getUser(email);
     if (!bcrypt.compareSync(password, user.password)) {
       throw Error('Wrong password');
     }

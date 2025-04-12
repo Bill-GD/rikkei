@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { userSchema } from '../config/validate-schema.js';
-import UserModel from '../models/user.model.js';
+import UserService from '../service/user.service.js';
 import { requestError } from '../utils/responses.js';
 
 export async function validateBody(req, res, next) {
@@ -14,7 +14,7 @@ export async function validateBody(req, res, next) {
 export function shouldEmailExists(shouldExists) {
   return async function (req, res, next) {
     const { email } = req.body;
-    const userExists = await UserModel.hasUserByEmail(email);
+    const userExists = await UserService.hasUserByEmail(email);
 
     if ((userExists && shouldExists) || (!userExists && !shouldExists)) {
       next();
