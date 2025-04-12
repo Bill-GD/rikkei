@@ -13,7 +13,7 @@ responses:
               description: The error.
               type: object
   401:
-    description: No authentication token provided. Likely expired.
+    description: No authentication token provided. Likely expired, and must login again.
   403:
     description: User not authorized to access or change the content.
   404:

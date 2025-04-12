@@ -11,6 +11,12 @@ export default class UserController {
     res.status(200).json(user.toJson());
   }
 
+  static async updateUser(req, res) {
+    const { id } = req.params, { username } = req.body;
+    await UserService.updateUser(id, username);
+    res.status(200).json({ message: `User's username updated successfully` });
+  }
+
   static async deleteUser(req, res) {
     const { id } = req.params;
     await UserService.deleteUser(id);

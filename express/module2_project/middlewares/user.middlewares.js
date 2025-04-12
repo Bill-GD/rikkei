@@ -34,6 +34,22 @@ export function shouldUserIdExists(shouldExists) {
   };
 }
 
+export async function checkUpdateUserPermission(req, res, next) {
+  const idToUpdate = +req.params.id, currentUser = req.authenticatedUser;
+
+  if (!currentUser.isAdmin && currentUser.userId === idToUpdate) {
+    next();
+    return;
+  }
+
+  res.status(403)
+     .json({
+       message: currentUser.isAdmin
+         ? `Admin's username can't be modified`
+         : 'User is not authorized to perform this action.',
+     });
+}
+
 export async function checkDeleteUserPermission(req, res, next) {
   const idToDelete = +req.params.id, currentUser = req.authenticatedUser;
 

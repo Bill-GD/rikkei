@@ -57,6 +57,10 @@ export default class UserService {
     });
   }
 
+  static async updateUser(id, username) {
+    await db('user').where({ user_id: id }).update({ username });
+  }
+
   static async deleteUser(id) {
     await db('user').where({ user_id: id }).del();
   }

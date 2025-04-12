@@ -39,6 +39,22 @@ paths:
           $ref: '#/responses/404'
         500:
           $ref: '#/responses/500'
+    put:
+      description: Update the username of the specified user. Admin's username can't be modified.
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/parameters/userId'
+      requestBody:
+        $ref: '#/components/requestBodies/updateUsername'
+      responses:
+        200:
+          description: Successfully updates the user's username.
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
     delete:
       description: Delete the specified user. Only possible if the current user is admin or has same user ID. Can't delete admin account.
       tags: [ Users ]

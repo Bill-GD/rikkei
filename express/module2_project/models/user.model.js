@@ -23,7 +23,7 @@ export default class UserModel {
   }
 
   static fromJson(json) {
-    if (!json.userId) throw new Error('UserModel is being created without user ID');
+    if (json.userId === undefined) throw new Error('UserModel is being created without user ID');
 
     return new UserModel(
       json.userId,
