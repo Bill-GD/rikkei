@@ -5,5 +5,6 @@ import { shouldEmailExists, validateBody } from '../middlewares/auth.middlewares
 const router = express.Router();
 
 router.post('/register', validateBody, shouldEmailExists(false), AuthController.register);
+router.post('/login', shouldEmailExists(true), AuthController.login);
 
 export default router;
