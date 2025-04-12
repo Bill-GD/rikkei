@@ -11,23 +11,31 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    user_id:
-                      type: integer
-                      description: The ID of the user.
-                    username:
-                      type: string
-                      description: The username.
-                    email:
-                      type: string
-                      description: The email.
-                    role:
-                      type: string
-                      description: The role of the user. Role is either 'user' or 'admin'.
+                  $ref: '#/components/userSchema'
         401:
           $ref: '#/responses/401'
         403:
           $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
+  /api/users/{id}:
+    get:
+      description: Get the info of the user that has the specified ID.
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/parameters/userId'
+      responses:
+        200:
+          description: Successfully returns the requested user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/userSchema'
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        404:
+          $ref: '#/responses/404'
         500:
           $ref: '#/responses/500'

@@ -21,6 +21,8 @@ paths:
                     description: The new ID of the registered user.
         400:
           $ref: '#/responses/400'
+        403:
+          $ref: '#/responses/403'
         500:
           $ref: '#/responses/500'
   /api/auth/login:

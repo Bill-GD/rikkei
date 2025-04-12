@@ -11,7 +11,7 @@ export default class AuthService {
   }
 
   static async login(email, password) {
-    const user = await UserService.getUser(email);
+    const user = await UserService.getUser({ email });
     if (!bcrypt.compareSync(password, user.password)) {
       throw Error('Wrong password');
     }
@@ -23,7 +23,7 @@ export default class AuthService {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: 60 }, // 60s
+      { expiresIn: process.env.TOKEN_LIFETIME_SEC },
     );
   }
 }

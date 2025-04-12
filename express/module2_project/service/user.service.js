@@ -6,8 +6,19 @@ export default class UserService {
     return (await db('user').max('user_id as max'))[0].max + 1;
   }
 
-  static async hasUserByEmail(email) {
-    const [{ count }] = await db('user').count('* as count').where({ email });
+  /**
+   * Get the user and returns as a UserModel object.
+   * This middleware should only be used after verifying that the user exists.
+   * @param {{id?: number, email?: string}} params
+   * @returns {bool}
+   */
+  static async hasUser(params) {
+    const query = db('user');
+
+    if (params.id) query.where({ user_id: params.id });
+    if (params.email) query.where({ email: params.email });
+
+    const [{ count }] = await query.count('* as count');
     return count > 0;
   }
 
@@ -22,11 +33,18 @@ export default class UserService {
 
   /**
    * Get the user and returns as a UserModel object.
-   * @param {string} email Should be a valid, existing email. Should be used after checking using a middleware.
+   * This middleware should only be used after verifying that the user exists.
+   * @param {{id?: number, email?: string}} params
    * @returns {Promise<UserModel>}
    */
-  static async getUser(email) {
-    const user = await db('user').where({ email }).first();
+  static async getUser(params) {
+    const query = db('user');
+
+    if (params.id) query.where({ user_id: params.id });
+    if (params.email) query.where({ email: params.email });
+
+    const user = await query.first();
+    console.log(user);
     return new UserModel(user.user_id, user.username, user.email, user.password, user.role);
   }
 

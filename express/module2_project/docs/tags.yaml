@@ -2,4 +2,4 @@ tags:
   - name: Authentication
     description: User registration and login.
   - name: Users
-    description: Users CRUD.
+    description: User management. Can show all users, specific user, update or delete users.

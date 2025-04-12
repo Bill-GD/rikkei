@@ -1,14 +1,12 @@
 components:
   requestBodies:
     register:
+      description: The user info to register
       content:
         application/x-www-form-urlencoded:
           schema:
             type: object
-            required:
-              - username
-              - email
-              - password
+            required: [ username, email, password ]
             properties:
               username:
                 description: Should have at least 4 characters.
@@ -24,9 +22,7 @@ components:
         application/x-www-form-urlencoded:
           schema:
             type: object
-            required:
-              - email
-              - password
+            required: [ email, password ]
             properties:
               email:
                 type: string

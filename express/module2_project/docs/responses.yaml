@@ -15,7 +15,7 @@ responses:
   401:
     description: No authentication token provided. Likely expired.
   403:
-    description: User not authorized.
+    description: User not authorized to access or change the content.
   404:
     description: Content or user not found.
   500:

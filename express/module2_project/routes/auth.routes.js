@@ -1,6 +1,7 @@
 import express from 'express';
 import AuthController from '../controllers/auth.controller.js';
-import { shouldEmailExists, validateBody } from '../middlewares/auth.middlewares.js';
+import { validateBody } from '../middlewares/auth.middlewares.js';
+import { shouldEmailExists } from '../middlewares/user.middlwares.js';
 
 const router = express.Router();
 

@@ -11,23 +11,6 @@ export async function validateBody(req, res, next) {
   next();
 }
 
-export function shouldEmailExists(shouldExists) {
-  return async function (req, res, next) {
-    const { email } = req.body;
-    const userExists = await UserService.hasUserByEmail(email);
-
-    if ((userExists && shouldExists) || (!userExists && !shouldExists)) {
-      next();
-    } else {
-      res.status(shouldExists ? 404 : 403).json({
-        message: `User ${shouldExists
-          ? 'doesn\'t exist'
-          : 'already exists'}`,
-      });
-    }
-  };
-}
-
 export async function getTokenFromCookie(req, res, next) {
   const cookies = req.headers.cookie;
   const token = cookies.split(';').map(e => e.trim()).find(e => e.startsWith('token='))?.split('=')[1];
