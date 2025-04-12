@@ -1,3 +1,5 @@
 tags:
   - name: Authentication
-    description: User registration and login
+    description: User registration and login.
+  - name: Users
+    description: Users CRUD.

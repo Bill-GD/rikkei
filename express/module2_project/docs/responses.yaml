@@ -12,6 +12,12 @@ responses:
             error:
               description: The error.
               type: object
+  401:
+    description: No authentication token provided. Likely expired.
+  403:
+    description: User not authorized.
+  404:
+    description: Content or user not found.
   500:
     description: Internal server error.
     content:

@@ -2,8 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import 'dotenv/config';
-import authRoutes from './routes/auth.routes.js';
 
+import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import swaggerConfig from './config/swagger-config.js';
 import { internalError } from './utils/responses.js';

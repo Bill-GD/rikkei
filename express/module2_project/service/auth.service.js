@@ -20,6 +20,7 @@ export default class AuthService {
         userId: user.userId,
         username: user.username,
         email: user.email,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: 60 }, // 60s

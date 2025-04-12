@@ -1,0 +1,33 @@
+paths:
+  /api/users:
+    get:
+      description: Get all users in JSON format.
+      tags: [ Users ]
+      responses:
+        200:
+          description: Successfully returns all users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                      description: The ID of the user.
+                    username:
+                      type: string
+                      description: The username.
+                    email:
+                      type: string
+                      description: The email.
+                    role:
+                      type: string
+                      description: The role of the user. Role is either 'user' or 'admin'.
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        500:
+          $ref: '#/responses/500'
