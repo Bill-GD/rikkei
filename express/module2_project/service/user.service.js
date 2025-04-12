@@ -56,4 +56,8 @@ export default class UserService {
       role,
     });
   }
+
+  static async deleteUser(id) {
+    await db('user').where({ user_id: id }).del();
+  }
 }

@@ -39,3 +39,19 @@ paths:
           $ref: '#/responses/404'
         500:
           $ref: '#/responses/500'
+    delete:
+      description: Delete the specified user. Only possible if the current user is admin or has same user ID. Can't delete admin account.
+      tags: [ Users ]
+      parameters:
+        - $ref: '#/parameters/userId'
+      responses:
+        200:
+          description: Successfully deletes the user.
+        401:
+          $ref: '#/responses/401'
+        403:
+          $ref: '#/responses/403'
+        404:
+          $ref: '#/responses/404'
+        500:
+          $ref: '#/responses/500'

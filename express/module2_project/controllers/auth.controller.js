@@ -15,7 +15,7 @@ export default class AuthController {
   static async login(req, res) {
     const { email, password } = req.body;
     const token = await AuthService.login(email, password);
-    res.cookie('token', token, { maxAge: 1000 * parseInt(process.env.TOKEN_LIFETIME_SEC) });
+    res.cookie('token', token, { maxAge: 1e3 * parseInt(process.env.TOKEN_LIFETIME_SEC) });
     res.status(200).json({
       message: 'Login successfully',
       token,

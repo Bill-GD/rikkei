@@ -10,4 +10,12 @@ export default class UserController {
     const user = await UserService.getUser({ id });
     res.status(200).json(user.toJson());
   }
+
+  static async deleteUser(req, res) {
+    const { id } = req.params;
+    await UserService.deleteUser(id);
+    if (!req.authenticatedUser.isAdmin) res.cookie('token', '');
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  }
 }

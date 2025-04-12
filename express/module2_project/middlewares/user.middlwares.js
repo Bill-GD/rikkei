@@ -33,3 +33,14 @@ export function shouldUserIdExists(shouldExists) {
     }
   };
 }
+
+export async function checkDeleteUserPermission(req, res, next) {
+  const idToDelete = +req.params.id, currentUser = req.authenticatedUser;
+
+  if ((currentUser.isAdmin || currentUser.userId === idToDelete) && idToDelete !== 0) {
+    next();
+    return;
+  }
+
+  res.status(403).json({ message: 'User is not authorized to perform this action.' });
+}
