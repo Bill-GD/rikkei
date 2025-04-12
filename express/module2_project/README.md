@@ -20,4 +20,4 @@
 - [knex](https://www.npmjs.com/package/knex) with [mysql2](https://www.npmjs.com/package/mysql2)
 - [morgan](https://www.npmjs.com/package/morgan)
 - Swagger: [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc), [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
-([spec](https://swagger.io/specification/))
+([spec](https://swagger.io/specification/v3))

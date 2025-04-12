@@ -27,7 +27,7 @@ paths:
           $ref: '#/responses/500'
   /api/auth/login:
     post:
-      description: Login using email and password. Saves access token to cookie that lasts for 1 minute on success.
+      description: Login using email and password. Saves access token to cookie that lasts for 5 minutes on success.
       tags: [ Authentication ]
       requestBody:
         $ref: '#/components/requestBodies/login'
@@ -45,8 +45,8 @@ paths:
                   token:
                     type: string
                     description: The access token.
-        403:
-          $ref: '#/responses/403'
+        400:
+          $ref: '#/responses/400'
         404:
           $ref: '#/responses/404'
         500:

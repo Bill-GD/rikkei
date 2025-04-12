@@ -1,6 +1,6 @@
 responses:
   400:
-    description: Invalid request error.
+    description: Invalid request.
     content:
       application/json:
         schema:

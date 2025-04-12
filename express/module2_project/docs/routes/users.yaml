@@ -33,14 +33,12 @@ paths:
                 $ref: '#/components/userSchema'
         401:
           $ref: '#/responses/401'
-        403:
-          $ref: '#/responses/403'
         404:
           $ref: '#/responses/404'
         500:
           $ref: '#/responses/500'
     put:
-      description: Update the username of the specified user. Admin's username can't be modified.
+      description: Update the username of the current user only. Admin's username can't be modified.
       tags: [ Users ]
       parameters:
         - $ref: '#/parameters/userId'
@@ -49,6 +47,8 @@ paths:
       responses:
         200:
           description: Successfully updates the user's username.
+        400:
+          $ref: '#/responses/400'
         401:
           $ref: '#/responses/401'
         403:
@@ -56,7 +56,7 @@ paths:
         500:
           $ref: '#/responses/500'
     delete:
-      description: Delete the specified user. Only possible if the current user is admin or has same user ID. Can't delete admin account.
+      description: Delete the specified user. Only possible if the requester is an admin or the same user. Admin accounts can't be deleted.
       tags: [ Users ]
       parameters:
         - $ref: '#/parameters/userId'

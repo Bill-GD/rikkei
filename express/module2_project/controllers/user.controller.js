@@ -12,7 +12,11 @@ export default class UserController {
   }
 
   static async updateUser(req, res) {
-    const { id } = req.params, { username } = req.body;
+    const { id } = req.params, username = req.body?.username;
+    if (username === undefined) {
+      res.status(400).json({ message: `New username not provided` });
+      return;
+    }
     await UserService.updateUser(id, username);
     res.status(200).json({ message: `User's username updated successfully` });
   }

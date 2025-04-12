@@ -1,8 +1,15 @@
 import UserService from '../service/user.service.js';
+import { requestError } from '../utils/responses.js';
 
 export function shouldEmailExists(shouldExists) {
   return async function (req, res, next) {
-    const { email } = req.body;
+    const email = req.body?.email;
+
+    if (email === undefined) {
+      requestError(res, 'Email not provided');
+      return;
+    }
+
     const userExists = await UserService.hasUser({ email });
 
     if ((userExists && shouldExists) || (!userExists && !shouldExists)) {
