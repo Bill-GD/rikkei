@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { userSchema } from '../config/validate-schema.js';
-import UserService from '../service/user.service.js';
+import UserModel from '../models/user.model.js';
 import { requestError } from '../utils/responses.js';
 
 export async function validateBody(req, res, next) {
@@ -26,14 +26,14 @@ export async function authenticate(req, res, next) {
   }
 
   const token = authorization.split(' ')[1];
-  req.authenicatedUser = jwt.verify(token, process.env.JWT_SECRET);
+  req.authenticatedUser = UserModel.fromJson(jwt.verify(token, process.env.JWT_SECRET));
   next();
 }
 
 export function authorize(roles) {
   return async function (req, res, next) {
-    const { authenicatedUser } = req;
-    if (!roles.includes(authenicatedUser.role)) {
+    const { authenticatedUser } = req;
+    if (!roles.includes(authenticatedUser.role)) {
       res.status(403).json({ message: 'User is not authorized to view this content.' });
       return;
     }

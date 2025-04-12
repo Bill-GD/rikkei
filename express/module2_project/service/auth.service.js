@@ -23,7 +23,7 @@ export default class AuthService {
         role: user.role,
       },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.TOKEN_LIFETIME_SEC },
+      { expiresIn: parseInt(process.env.TOKEN_LIFETIME_SEC) },
     );
   }
 }

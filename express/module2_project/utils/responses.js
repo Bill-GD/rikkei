@@ -3,6 +3,7 @@ export function internalError(res, error) {
     message: 'An error occurred',
     error: error.message,
   });
+  console.log(error.stack);
 }
 
 export function requestError(res, error) {

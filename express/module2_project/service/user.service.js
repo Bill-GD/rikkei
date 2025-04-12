@@ -44,7 +44,6 @@ export default class UserService {
     if (params.email) query.where({ email: params.email });
 
     const user = await query.first();
-    console.log(user);
     return new UserModel(user.user_id, user.username, user.email, user.password, user.role);
   }
 
