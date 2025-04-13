@@ -7,7 +7,8 @@
 - Manages user (CRUD): register, login, get all/one, update, delete
 - Authentication & Authorization
 - Uses Swagger for API documentation
-- Must manage at least 1 more entity (product, job, course...)
+- Must manage at least 1 more entity (product, job, course...).  
+  Must have extra queries for GET all (paging, sorting, searching...).
 
 ### Libraries
 
@@ -19,5 +20,6 @@
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [knex](https://www.npmjs.com/package/knex) with [mysql2](https://www.npmjs.com/package/mysql2)
 - [morgan](https://www.npmjs.com/package/morgan)
+- [multer](https://www.npmjs.com/package/multer)
 - Swagger: [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc), [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
-([spec](https://swagger.io/specification/v3))
+  ([spec](https://swagger.io/specification/v3))

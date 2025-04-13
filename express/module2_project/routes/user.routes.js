@@ -1,9 +1,9 @@
 import express from 'express';
 import UserController from '../controllers/user.controller.js';
-import { authenticate, authorize, getTokenFromCookie } from '../middlewares/auth.middlewares.js';
+import { authenticate, authorize, getTokenFromCookie } from '../middlewares/auth.middleware.js';
 import {
   checkDeleteUserPermission, checkUpdateUserPermission, shouldUserIdExists,
-} from '../middlewares/user.middlewares.js';
+} from '../middlewares/user.middleware.js';
 
 const router = express.Router();
 

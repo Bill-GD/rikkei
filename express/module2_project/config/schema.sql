@@ -9,3 +9,18 @@ create table if not exists user (
   role     enum ('user', 'admin')
 );
 
+create table if not exists post (
+  post_id     int primary key,
+  uploader_id int  not null,
+  content     text not null,
+  image_path  text default null,
+  like_count  int default 0,
+  foreign key (uploader_id) references user (user_id)
+);
+
+create table if not exists comment (
+  comment_id int primary key,
+  post_id    int  not null,
+  content    text not null,
+  foreign key (post_id) references post (post_id)
+);

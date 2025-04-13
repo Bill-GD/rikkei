@@ -1,0 +1,4 @@
+paths:
+  /api/posts:
+    post:
+      tags: [ Posts ]

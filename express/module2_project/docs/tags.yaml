@@ -3,3 +3,7 @@ tags:
     description: User registration and login.
   - name: Users
     description: User management. Can show all users, specific user, update or delete users.
+  - name: Posts
+    description: Post management. Upload, view, update, delete posts.
+  - name: Comments
+    description: Comment management. Create, view, delete comments.
