@@ -22,10 +22,21 @@ export default class PostService {
 
   /**
    * Get all posts and returns as a list of PostModel objects.
+   * @param {{
+   *
+   *  sort: string,
+   *  order: 'asc'|'desc'
+   * }} params The query configurations.
    * @returns {Promise<PostModel[]>}
    */
-  static async getAllPosts() {
-    return (await db('post').select('*')).map(PostModel.fromJson);
+  static async getAllPosts(params = {}) {
+    const query = db('post').select('*');
+
+    if (params.sort && params.order) {
+      query.orderBy(params.sort, params.order);
+    }
+
+    return (await query).map(PostModel.fromJson);
   }
 
   static async getPost(id) {

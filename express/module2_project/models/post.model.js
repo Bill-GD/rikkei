@@ -1,3 +1,5 @@
+import e, { json } from 'express';
+
 export default class PostModel {
   #postId;
   #uploaderId;
@@ -5,16 +7,21 @@ export default class PostModel {
   #imagePath;
   #likeCount;
   /**
+   * @type {Date}
+   */
+  #dateCreated;
+  /**
    * @type {CommentModel[]}
    */
   #comments = [];
 
-  constructor(postId, uploaderId, content, imagePath, likeCount) {
+  constructor(postId, uploaderId, content, imagePath, likeCount, dateCreated) {
     this.#postId = postId;
     this.#uploaderId = uploaderId;
     this.#content = content;
     this.#imagePath = imagePath;
     this.#likeCount = likeCount;
+    this.#dateCreated = dateCreated;
   }
 
   toJson(includeComments = false) {
@@ -24,6 +31,7 @@ export default class PostModel {
       content: this.#content,
       imagePath: this.#imagePath,
       likeCount: this.#likeCount,
+      dateCreated: this.#dateCreated,
       comments: includeComments ? this.#comments.map(e => e.toJson()) : undefined,
     };
   }
@@ -37,6 +45,7 @@ export default class PostModel {
       json.content,
       json.image_path,
       json.like_count,
+      json.date_created,
     );
   }
 
@@ -45,10 +54,6 @@ export default class PostModel {
    */
   addComments(comments) {
     this.#comments.push(...comments);
-  }
-
-  get comments() {
-    return this.#comments;
   }
 
   get postId() {
@@ -70,4 +75,13 @@ export default class PostModel {
   get likeCount() {
     return this.#likeCount;
   }
+
+  get dateCreated() {
+    return this.#dateCreated;
+  }
+
+  get comments() {
+    return this.#comments;
+  }
+
 }

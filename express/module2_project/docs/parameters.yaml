@@ -18,3 +18,15 @@ components:
       required: true
       type: string
       description: The name of the uploaded image.
+    sortField:
+      name: sort
+      in: query
+      type: string
+      description: The property of the posts to sort.
+    sortOrder:
+      name: order
+      in: query
+      description: The order to sort the property of posts. Must be either `asc` or `desc`
+      schema:
+        type: string
+        enum: [ asc, desc ]

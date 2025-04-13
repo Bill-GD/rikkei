@@ -5,7 +5,10 @@ import { requestError } from '../utils/responses.js';
 
 export default class PostController {
   static async getPosts(req, res) {
-    const posts = await PostService.getAllPosts();
+    const posts = await PostService.getAllPosts({
+      sort: req.sorting?.sort,
+      order: req.sorting?.order,
+    });
     res.status(200).json(posts.map(e => e.toJson()));
   }
 

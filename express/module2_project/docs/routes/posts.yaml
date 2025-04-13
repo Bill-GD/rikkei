@@ -3,6 +3,9 @@ paths:
     get:
       description: Get all posts.
       tags: [ Posts ]
+      parameters:
+        - $ref: '#/components/parameters/sortField'
+        - $ref: '#/components/parameters/sortOrder'
       responses:
         200:
           description: Successfully returned all posts. Comments excluded.
@@ -10,6 +13,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/posts'
+        400:
+          $ref: '#/components/responses/400'
         401:
           $ref: '#/components/responses/401'
         500:

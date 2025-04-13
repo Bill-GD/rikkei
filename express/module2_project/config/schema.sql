@@ -10,11 +10,12 @@ create table if not exists user (
 );
 
 create table if not exists post (
-  post_id     int primary key,
-  uploader_id int  not null,
-  content     text not null,
-  image_path  text default null,
-  like_count  int default 0,
+  post_id      int primary key,
+  uploader_id  int  not null,
+  content      text not null,
+  image_path   text     default null,
+  like_count   int      default 0,
+  date_created datetime default current_timestamp,
   foreign key (uploader_id) references user (user_id)
 );
 
