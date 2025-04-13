@@ -23,7 +23,8 @@ export default class PostService {
   /**
    * Get all posts and returns as a list of PostModel objects.
    * @param {{
-   *
+   *  offset: number,
+   *  limit: number,
    *  sort: string,
    *  order: 'asc'|'desc'
    * }} params The query configurations.
@@ -32,9 +33,14 @@ export default class PostService {
   static async getAllPosts(params = {}) {
     const query = db('post').select('*');
 
+    if (params.offset !== undefined && params.limit !== undefined) {
+      query.offset(params.offset).limit(params.limit);
+    }
+
     if (params.sort && params.order) {
       query.orderBy(params.sort, params.order);
     }
+    console.log(query.toQuery())
 
     return (await query).map(PostModel.fromJson);
   }

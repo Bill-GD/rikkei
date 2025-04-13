@@ -6,6 +6,8 @@ import { requestError } from '../utils/responses.js';
 export default class PostController {
   static async getPosts(req, res) {
     const posts = await PostService.getAllPosts({
+      offset: req.paging?.offset,
+      limit: req.paging?.limit,
       sort: req.sorting?.sort,
       order: req.sorting?.order,
     });

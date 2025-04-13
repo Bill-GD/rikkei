@@ -1,7 +1,7 @@
 import express from 'express';
 import PostController from '../controllers/post.controller.js';
 import { authenticate, getTokenFromCookie } from '../middlewares/auth.middleware.js';
-import { handleSorting } from '../middlewares/other.middleware.js';
+import { handlePaging, handleSorting } from '../middlewares/other.middleware.js';
 import { checkDeletePostPermission, postExists, uploadSingleFile } from '../middlewares/post.middleware.js';
 
 const router = express.Router();
@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/',
   getTokenFromCookie,
   authenticate,
+  handlePaging,
   handleSorting(['post_id', 'like_count', 'date_created']),
   PostController.getPosts,
 );

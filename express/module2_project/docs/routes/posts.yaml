@@ -4,6 +4,8 @@ paths:
       description: Get all posts.
       tags: [ Posts ]
       parameters:
+        - $ref: '#/components/parameters/pageCount'
+        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/sortField'
         - $ref: '#/components/parameters/sortOrder'
       responses:
