@@ -5,4 +5,4 @@ dist
 
 *data.sql
 /express/exercise_3/dev-data
-**uploads/**
+**/uploads/**

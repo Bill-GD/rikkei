@@ -1,4 +1,31 @@
 paths:
   /api/posts:
     post:
+      description: Upload new post. Returns error if file uploaded is not an image.
       tags: [ Posts ]
+      requestBody:
+        $ref: '#/components/requestBodies/uploadPost'
+      responses:
+        201:
+          description: Successfully upload new post. Returns post ID and the optional image name.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+                  id:
+                    type: integer
+                    description: The new ID of the newly created post.
+                  imagePath:
+                    type: string
+                    format: uri
+                    description: The name of the image if an image is uploaded.
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'

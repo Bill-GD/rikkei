@@ -1,0 +1,15 @@
+paths:
+  /uploads/{file}:
+    get:
+      description: The publicly available uploaded image.
+      tags: [ Public ]
+      operationId: getImage
+      parameters:
+        - $ref: '#/components/parameters/imageName'
+      responses:
+        200:
+          description: Returns the image.
+        404:
+          $ref: '#/components/responses/404'
+        500:
+          $ref: '#/components/responses/500'

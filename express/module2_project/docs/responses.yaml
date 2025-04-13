@@ -1,33 +1,34 @@
-responses:
-  400:
-    description: Invalid request.
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            message:
-              description: The response message.
-              type: string
-            error:
-              description: The error.
-              type: object
-  401:
-    description: No authentication token provided. Likely expired, and must login again.
-  403:
-    description: User not authorized to access or change the content.
-  404:
-    description: Content or user not found.
-  500:
-    description: Internal server error.
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            message:
-              description: The response message.
-              type: string
-            error:
-              description: The error message.
-              type: string
+components:
+  responses:
+    400:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: The response message.
+                type: string
+              error:
+                description: The error.
+                type: object
+    401:
+      description: No authentication token provided. Likely expired, and must login again.
+    403:
+      description: User not authorized to access or change the content.
+    404:
+      description: Content or user not found.
+    500:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                description: The response message.
+                type: string
+              error:
+                description: The error message.
+                type: string

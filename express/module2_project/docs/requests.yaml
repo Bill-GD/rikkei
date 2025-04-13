@@ -38,3 +38,16 @@ components:
               username:
                 type: string
                 description: The new username.
+    uploadPost:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required: [ content ]
+            properties:
+              content:
+                type: string
+                description: The main content of the post.
+              image:
+                type: string
+                format: binary

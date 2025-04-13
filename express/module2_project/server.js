@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import fs from 'node:fs';
 import swaggerUi from 'swagger-ui-express';
 import 'dotenv/config';
 
@@ -14,6 +15,10 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+if (!fs.existsSync(`${process.cwd()}/public/uploads`)) {
+  fs.mkdirSync(`${process.cwd()}/public/uploads`, { recursive: true });
+}
+app.use(express.static(`${process.cwd()}/public`));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
@@ -21,7 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).sendFile(`${process.cwd()}/views/homepage.html`);
 });
 app.use((req, res) => {

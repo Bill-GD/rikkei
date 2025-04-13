@@ -11,63 +11,63 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/userSchema'
+                  $ref: '#/components/schemas/user'
         401:
-          $ref: '#/responses/401'
+          $ref: '#/components/responses/401'
         403:
-          $ref: '#/responses/403'
+          $ref: '#/components/responses/403'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'
   /api/users/{id}:
     get:
       description: Get the info of the user that has the specified ID.
       tags: [ Users ]
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/components/parameters/userId'
       responses:
         200:
           description: Successfully returns the requested user.
           content:
             application/json:
               schema:
-                $ref: '#/components/userSchema'
+                $ref: '#/components/schemas/user'
         401:
-          $ref: '#/responses/401'
+          $ref: '#/components/responses/401'
         404:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'
     put:
       description: Update the username of the current user only. Admin's username can't be modified.
       tags: [ Users ]
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/components/parameters/userId'
       requestBody:
         $ref: '#/components/requestBodies/updateUsername'
       responses:
         200:
           description: Successfully updates the user's username.
         400:
-          $ref: '#/responses/400'
+          $ref: '#/components/responses/400'
         401:
-          $ref: '#/responses/401'
+          $ref: '#/components/responses/401'
         403:
-          $ref: '#/responses/403'
+          $ref: '#/components/responses/403'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'
     delete:
       description: Delete the specified user. Only possible if the requester is an admin or the same user. Admin accounts can't be deleted.
       tags: [ Users ]
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/components/parameters/userId'
       responses:
         200:
           description: Successfully deletes the user.
         401:
-          $ref: '#/responses/401'
+          $ref: '#/components/responses/401'
         403:
-          $ref: '#/responses/403'
+          $ref: '#/components/responses/403'
         404:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'

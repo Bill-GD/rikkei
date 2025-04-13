@@ -20,11 +20,11 @@ paths:
                     type: integer
                     description: The new ID of the registered user.
         400:
-          $ref: '#/responses/400'
+          $ref: '#/components/responses/400'
         403:
-          $ref: '#/responses/403'
+          $ref: '#/components/responses/403'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'
   /api/auth/login:
     post:
       description: Login using email and password. Saves access token to cookie that lasts for 5 minutes on success.
@@ -46,8 +46,8 @@ paths:
                     type: string
                     description: The access token.
         400:
-          $ref: '#/responses/400'
+          $ref: '#/components/responses/400'
         404:
-          $ref: '#/responses/404'
+          $ref: '#/components/responses/404'
         500:
-          $ref: '#/responses/500'
+          $ref: '#/components/responses/500'

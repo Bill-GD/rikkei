@@ -1,7 +1,14 @@
-parameters:
-  userId:
-    name: id
-    in: path
-    required: true
-    type: integer
-    description: The user ID.
+components:
+  parameters:
+    userId:
+      name: id
+      in: path
+      required: true
+      type: integer
+      description: The user ID.
+    imageName:
+      name: file
+      in: path
+      required: true
+      type: string
+      description: The name of the uploaded image.
