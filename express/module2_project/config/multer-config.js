@@ -6,8 +6,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     if (!file.mimetype.includes('image/')) {
-      // throw new Error('File uploaded is not an image.');
-      callback(new Error('File uploaded is not an image.'), '');
+      // throw new Error('File uploaded is not an image');
+      callback(new Error('File uploaded is not an image'), '');
       return;
     }
 

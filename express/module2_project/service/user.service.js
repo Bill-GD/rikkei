@@ -18,8 +18,8 @@ export default class UserService {
     if (params.id) query.where({ user_id: params.id });
     if (params.email) query.where({ email: params.email });
 
-    const [{ count }] = await query.count('* as count');
-    return count > 0;
+    const result = await query.first();
+    return !!result;
   }
 
   /**

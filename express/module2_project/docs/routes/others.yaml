@@ -8,7 +8,7 @@ paths:
         - $ref: '#/components/parameters/imageName'
       responses:
         200:
-          description: Returns the image.
+          description: Returned the image.
         404:
           $ref: '#/components/responses/404'
         500:

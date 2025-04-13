@@ -14,7 +14,7 @@ export default class CommentModel {
     };
   }
 
-  fromJson(json) {
+  static fromJson(json) {
     if (!json.comment_id) throw new Error('CommentModel is being created without comment_id');
 
     return new CommentModel(

@@ -1,4 +1,5 @@
 import PostService from '../service/post.service.js';
+import { deleteUploadedImage } from '../utils/helpers.js';
 import { requestError } from '../utils/responses.js';
 
 export default class PostController {
@@ -17,5 +18,12 @@ export default class PostController {
       id: nextId,
       imagePath,
     });
+  }
+
+  static async deletePost(req, res) {
+    deleteUploadedImage(req.postToDelete.imagePath);
+    await PostService.deletePost(req.postToDelete.postId);
+    delete req.postToDelete;
+    res.status(200).json({ message: 'Post and its comments deleted successfully' });
   }
 }

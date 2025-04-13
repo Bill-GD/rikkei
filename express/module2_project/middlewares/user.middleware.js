@@ -53,7 +53,7 @@ export async function checkUpdateUserPermission(req, res, next) {
      .json({
        message: currentUser.isAdmin
          ? `Admin's username can't be modified`
-         : 'User is not authorized to perform this action.',
+         : 'User is not authorized to perform this action',
      });
 }
 
@@ -65,5 +65,5 @@ export async function checkDeleteUserPermission(req, res, next) {
     return;
   }
 
-  res.status(403).json({ message: 'User is not authorized to perform this action.' });
+  res.status(403).json({ message: 'User is not authorized to perform this action' });
 }

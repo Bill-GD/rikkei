@@ -7,7 +7,7 @@ paths:
         $ref: '#/components/requestBodies/uploadPost'
       responses:
         201:
-          description: Successfully upload new post. Returns post ID and the optional image name.
+          description: Successfully uploaded new post. Returns post ID and the optional image name.
           content:
             application/json:
               schema:
@@ -27,5 +27,20 @@ paths:
           $ref: '#/components/responses/400'
         401:
           $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
+  /api/posts/{id}:
+    delete:
+      description: Delete the post, its comments and uploaded image.
+      tags: [ Posts ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        200:
+          description: Successfully deleted the post.
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'

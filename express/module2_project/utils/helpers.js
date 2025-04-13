@@ -1,5 +1,11 @@
+import fs from 'node:fs';
 import AuthService from '../service/auth.service.js';
 
 export async function addDefaultAdmin() {
   await AuthService.register(0, 'admin', 'admin@gmail.com', 'adminpassword', 'admin');
+}
+
+export function deleteUploadedImage(imagePath) {
+  const path = `${process.cwd()}/public${imagePath}`;
+  if (fs.existsSync(path)) fs.rmSync(path);
 }

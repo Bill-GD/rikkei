@@ -6,6 +6,12 @@ components:
       required: true
       type: integer
       description: The user ID.
+    postId:
+      name: id
+      in: path
+      required: true
+      type: integer
+      description: The post ID.
     imageName:
       name: file
       in: path

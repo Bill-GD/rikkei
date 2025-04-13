@@ -28,7 +28,7 @@ export default class PostModel {
     };
   }
 
-  fromJson(json) {
+  static fromJson(json) {
     if (!json.post_id) throw new Error('PostModel is being created without post_id');
 
     return new PostModel(

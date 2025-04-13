@@ -34,7 +34,7 @@ export function authorize(roles) {
   return async function (req, res, next) {
     const { authenticatedUser } = req;
     if (!roles.includes(authenticatedUser.role)) {
-      res.status(403).json({ message: 'User is not authorized to view this content.' });
+      res.status(403).json({ message: 'User is not authorized to view this content' });
       return;
     }
     next();
