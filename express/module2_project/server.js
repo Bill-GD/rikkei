@@ -8,16 +8,19 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import postRoutes from './routes/post.routes.js';
 import swaggerConfig from './config/swagger-config.js';
+import { addDefaultAdmin } from './utils/helpers.js';
 import { internalError } from './utils/responses.js';
+
+await addDefaultAdmin();
+if (!fs.existsSync(`${process.cwd()}/public/uploads`)) {
+  fs.mkdirSync(`${process.cwd()}/public/uploads`, { recursive: true });
+}
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-if (!fs.existsSync(`${process.cwd()}/public/uploads`)) {
-  fs.mkdirSync(`${process.cwd()}/public/uploads`, { recursive: true });
-}
 app.use(express.static(`${process.cwd()}/public`));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));

@@ -20,7 +20,15 @@ export default class PostService {
     });
   }
 
-  static async getPost(id){
+  /**
+   * Get all posts and returns as a list of PostModel objects.
+   * @returns {Promise<PostModel[]>}
+   */
+  static async getAllPosts() {
+    return (await db('post').select('*')).map(PostModel.fromJson);
+  }
+
+  static async getPost(id) {
     return PostModel.fromJson(await db('post').where({ post_id: id }).first());
   }
 

@@ -1,5 +1,19 @@
 paths:
   /api/posts:
+    get:
+      description: Get all posts.
+      tags: [ Posts ]
+      responses:
+        200:
+          description: Successfully returned all posts. Comments excluded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/posts'
+        401:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
     post:
       description: Upload new post. Returns error if file uploaded is not an image.
       tags: [ Posts ]

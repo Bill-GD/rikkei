@@ -3,6 +3,11 @@ import { deleteUploadedImage } from '../utils/helpers.js';
 import { requestError } from '../utils/responses.js';
 
 export default class PostController {
+  static async getPosts(req, res) {
+    const posts = await PostService.getAllPosts();
+    res.status(200).json(posts.map(e => e.toJson()));
+  }
+
   static async createPost(req, res) {
     const nextId = await PostService.getNextId();
 

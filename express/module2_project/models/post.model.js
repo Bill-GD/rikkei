@@ -17,14 +17,14 @@ export default class PostModel {
     this.#likeCount = likeCount;
   }
 
-  toJson() {
+  toJson(includeComments = false) {
     return {
       postId: this.#postId,
       uploaderId: this.#uploaderId,
       content: this.#content,
       imagePath: this.#imagePath,
       likeCount: this.#likeCount,
-      comments: this.#comments.map(e => e.toJson()),
+      comments: includeComments ? this.#comments.map(e => e.toJson()) : undefined,
     };
   }
 

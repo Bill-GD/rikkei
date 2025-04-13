@@ -3,7 +3,7 @@ components:
     user:
       type: object
       properties:
-        user_id:
+        userId:
           type: integer
           description: The ID of the user.
         username:
@@ -15,3 +15,55 @@ components:
         role:
           type: string
           description: The role of the user. Role is either 'user' or 'admin'.
+    posts:
+      type: array
+      items:
+        type: object
+        properties:
+          postId:
+            type: integer
+            description: The ID of the post.
+          uploaderId:
+            type: integer
+            description: The Id of the uploader
+          content:
+            type: string
+            description: The content of the post.
+          imagePath:
+            type: string
+            description: The path of the image if one was uploaded.
+          likeCount:
+            type: string
+            description: The like count of the post.
+    post:
+      type: object
+      properties:
+        postId:
+          type: integer
+          description: The ID of the post.
+        uploaderId:
+          type: integer
+          description: The Id of the uploader
+        content:
+          type: string
+          description: The content of the post.
+        imagePath:
+          type: string
+          description: The path of the image if one was uploaded.
+        likeCount:
+          type: string
+          description: The like count of the post.
+        comments:
+          type: array
+          description: The like count of the post.
+          items:
+            $ref: '#/components/schemas/comment'
+    comment:
+      type: object
+      properties:
+        commentId:
+          type: integer
+          description: The ID of the comment.
+        content:
+          type: string
+          description: The content of the comment.
