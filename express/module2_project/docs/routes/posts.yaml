@@ -44,6 +44,22 @@ paths:
         500:
           $ref: '#/components/responses/500'
   /api/posts/{id}:
+    get:
+      description: Get all posts.
+      tags: [ Posts ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        200:
+          description: Successfully returned all posts. Comments included.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+        401:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
     delete:
       description: Delete the post, its comments and uploaded image.
       tags: [ Posts ]

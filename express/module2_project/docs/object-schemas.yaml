@@ -33,7 +33,7 @@ components:
             type: string
             description: The path of the image if one was uploaded.
           likeCount:
-            type: string
+            type: integer
             description: The like count of the post.
     post:
       type: object
@@ -51,7 +51,7 @@ components:
           type: string
           description: The path of the image if one was uploaded.
         likeCount:
-          type: string
+          type: integer
           description: The like count of the post.
         comments:
           type: array

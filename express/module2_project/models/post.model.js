@@ -41,10 +41,10 @@ export default class PostModel {
   }
 
   /**
-   * @param {CommentModel} comment
+   * @param {CommentModel[]} comments
    */
-  addComment(comment) {
-    this.#comments.push(comment);
+  addComments(comments) {
+    this.#comments.push(...comments);
   }
 
   get comments() {

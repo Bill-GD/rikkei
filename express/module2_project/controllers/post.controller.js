@@ -1,3 +1,4 @@
+import CommentService from '../service/comment.service.js';
 import PostService from '../service/post.service.js';
 import { deleteUploadedImage } from '../utils/helpers.js';
 import { requestError } from '../utils/responses.js';
@@ -6,6 +7,12 @@ export default class PostController {
   static async getPosts(req, res) {
     const posts = await PostService.getAllPosts();
     res.status(200).json(posts.map(e => e.toJson()));
+  }
+
+  static async getPost(req, res) {
+    const { id } = req.params, post = await PostService.getPost(id);
+    post.addComments(await CommentService.getCommentsOf(id));
+    res.status(200).json(post.toJson(true));
   }
 
   static async createPost(req, res) {

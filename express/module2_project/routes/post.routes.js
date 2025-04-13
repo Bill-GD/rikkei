@@ -6,6 +6,7 @@ import { checkDeletePostPermission, postExists, uploadSingleFile } from '../midd
 const router = express.Router();
 
 router.get('/', getTokenFromCookie, authenticate, PostController.getPosts);
+router.get('/:id', getTokenFromCookie, authenticate, postExists, PostController.getPost);
 router.post('/', getTokenFromCookie, authenticate, uploadSingleFile('image'), PostController.createPost);
 router.delete('/:id', getTokenFromCookie, authenticate, postExists, checkDeletePostPermission, PostController.deletePost);
 
