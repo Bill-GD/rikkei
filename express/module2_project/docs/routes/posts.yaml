@@ -4,6 +4,11 @@ paths:
       description: Get all posts.
       tags: [ Posts ]
       parameters:
+        - $ref: '#/components/parameters/likeCountMin'
+        - $ref: '#/components/parameters/likeCountMax'
+        - $ref: '#/components/parameters/dateFrom'
+        - $ref: '#/components/parameters/dateTo'
+        - $ref: '#/components/parameters/uploaderId'
         - $ref: '#/components/parameters/pageCount'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/sortField'

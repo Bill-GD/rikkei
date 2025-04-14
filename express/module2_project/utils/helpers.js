@@ -12,3 +12,11 @@ export function deleteUploadedImage(imagePath) {
   const path = `${process.cwd()}/public${imagePath}`;
   if (fs.existsSync(path)) fs.rmSync(path);
 }
+
+export function isValidDate(dateString) {
+  if (!dateString.match(/\d{4}-\d{2}-\d{2}/)) return false;
+
+  const dateObj = new Date(Date.parse(dateString));
+
+  return dateObj instanceof Date && !isNaN(dateObj.getDate());
+}

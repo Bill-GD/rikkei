@@ -18,14 +18,43 @@ components:
       required: true
       type: string
       description: The name of the uploaded image.
+    uploaderId:
+      name: uploader
+      in: query
+      type: integer
+      description: The ID of the uploader.
+    dateFrom:
+      name: from
+      in: query
+      type: string
+      format: date
+      description: The start of the date range.
+    dateTo:
+      name: to
+      in: query
+      type: string
+      format: date
+      description: The end of the date range.
+    likeCountMin:
+      name: minLike
+      in: query
+      type: integer
+      description: The lower bound of the like count. Must be positive and lower than the upper bound.
+    likeCountMax:
+      name: maxLike
+      in: query
+      type: integer
+      description: The upper bound of the like count. Must be positive and higher than the lower bound.
     pageCount:
       name: page
       in: query
       type: integer
+      description: The current page count. Must be at least 1.
     pageSize:
       name: limit
       in: query
       type: integer
+      description: The item count of each page. Must be at least 1.
     sortField:
       name: sort
       in: query

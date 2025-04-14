@@ -5,7 +5,11 @@ import { requestError } from '../utils/responses.js';
 
 export default class PostController {
   static async getPosts(req, res) {
-    const posts = await PostService.getAllPosts({
+    console.log(req.query);
+    const posts = await PostService.getPosts({
+      dateRange: req.dateRange,
+      likeRange: req.likeRange,
+      uploaderId: req.query?.uploader,
       offset: req.paging?.offset,
       limit: req.paging?.limit,
       sort: req.sorting?.sort,
@@ -16,6 +20,7 @@ export default class PostController {
 
   static async getPost(req, res) {
     const { id } = req.params, post = await PostService.getPost(id);
+    console.log(post.dateCreated.toISOString().split('T')[0]);
     post.addComments(await CommentService.getCommentsOf(id));
     res.status(200).json(post.toJson(true));
   }

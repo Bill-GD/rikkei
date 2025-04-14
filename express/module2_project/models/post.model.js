@@ -21,6 +21,7 @@ export default class PostModel {
     this.#content = content;
     this.#imagePath = imagePath;
     this.#likeCount = likeCount;
+    // this.#dateCreated = new Date(Date.parse(dateCreated));
     this.#dateCreated = dateCreated;
   }
 

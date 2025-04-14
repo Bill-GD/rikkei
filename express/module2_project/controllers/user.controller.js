@@ -24,7 +24,7 @@ export default class UserController {
   static async deleteUser(req, res) {
     const { id } = req.params;
     await UserService.deleteUser(id);
-    if (!req.authenticatedUser.isAdmin) res.cookie('token', '');
+    if (!req.authenticatedUser.isAdmin) res.clearCookie('token');
 
     res.status(200).json({ message: 'User deleted successfully' });
   }
