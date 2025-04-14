@@ -12,6 +12,12 @@ components:
       required: true
       type: integer
       description: The post ID.
+    commentId:
+      name: id
+      in: path
+      required: true
+      type: integer
+      description: The comment ID.
     imageName:
       name: file
       in: path

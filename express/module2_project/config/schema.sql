@@ -20,10 +20,12 @@ create table if not exists post (
 );
 
 create table if not exists comment (
-  comment_id int primary key,
-  post_id    int  not null,
-  content    text not null,
-  foreign key (post_id) references post (post_id)
+  comment_id  int primary key,
+  post_id     int  not null,
+  uploader_id int  not null,
+  content     text not null,
+  foreign key (post_id) references post (post_id),
+  foreign key (uploader_id) references user (user_id)
 );
 
 delimiter $$

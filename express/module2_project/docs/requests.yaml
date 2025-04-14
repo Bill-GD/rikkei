@@ -62,3 +62,13 @@ components:
               content:
                 type: string
                 description: The new content of the post.
+    newComment:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            required: [ content ]
+            properties:
+              content:
+                type: string
+                description: The content of the comment.

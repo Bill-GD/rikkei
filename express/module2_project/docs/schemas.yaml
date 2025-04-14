@@ -64,6 +64,9 @@ components:
         commentId:
           type: integer
           description: The ID of the comment.
+        uploaderId:
+          type: integer
+          description: The ID of the poster.
         content:
           type: string
           description: The content of the comment.

@@ -1,7 +1,7 @@
 paths:
   /api/posts:
     get:
-      description: Gets all posts in JSON format.
+      description: Gets all posts in JSON format. Comments excluded.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/likeCountMin'
@@ -15,7 +15,7 @@ paths:
         - $ref: '#/components/parameters/sortOrder'
       responses:
         200:
-          description: Successfully returned all posts. Comments excluded.
+          description: Successfully returned all posts.
           content:
             application/json:
               schema:
@@ -72,13 +72,13 @@ paths:
           $ref: '#/components/responses/500'
   /api/posts/{id}:
     get:
-      description: Gets post by its ID.
+      description: Gets post by its ID. Comments included.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
         200:
-          description: Successfully returned the requested posts. Comments included.
+          description: Successfully returned the requested posts.
           content:
             application/json:
               schema:

@@ -7,15 +7,10 @@ import {
 
 const router = express.Router();
 
-router.get('/', getTokenFromCookie, authenticate, authorize(['admin']), UserController.getUsers);
-router.get('/:id', getTokenFromCookie, authenticate, shouldUserIdExists(true), UserController.getUser);
-router.put('/:id', getTokenFromCookie, authenticate, checkUpdateUserPermission, UserController.updateUser);
-router.delete('/:id',
-  getTokenFromCookie,
-  authenticate,
-  checkDeleteUserPermission,
-  shouldUserIdExists(true),
-  UserController.deleteUser,
-);
+router.use(getTokenFromCookie, authenticate);
+router.get('/', authorize(['admin']), UserController.getUsers);
+router.get('/:id', shouldUserIdExists(true), UserController.getUser);
+router.put('/:id', checkUpdateUserPermission, UserController.updateUser);
+router.delete('/:id', checkDeleteUserPermission, shouldUserIdExists(true), UserController.deleteUser);
 
 export default router;

@@ -1,0 +1,67 @@
+paths:
+  /api/posts/{id}/comments:
+    get:
+      description: Gets all the comments of the specified post.
+      tags: [ Comments ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        200:
+          description: Successfully returned all the post's comments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/comment'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
+    post:
+      description: Posts new comment on the specified post.
+      tags: [ Comments ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      requestBody:
+        $ref: '#/components/requestBodies/newComment'
+      responses:
+        201:
+          description: Successfully added new comment.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: The response message.
+                    type: string
+                  id:
+                    description: The ID of the comment.
+                    type: integer
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
+  /api/comments/{id}:
+    delete:
+      description: Deletes the specified comment.
+      tags: [ Comments ]
+      parameters:
+        - $ref: '#/components/parameters/commentId'
+      responses:
+        200:
+          description: Successfully deleted the comment.
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
+
