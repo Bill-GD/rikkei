@@ -25,3 +25,10 @@ create table if not exists comment (
   content    text not null,
   foreign key (post_id) references post (post_id)
 );
+
+delimiter $$
+create procedure if not exists likePost(in id int)
+begin
+  update post set like_count = like_count + 1 where post_id = id;
+end $$
+delimiter ;

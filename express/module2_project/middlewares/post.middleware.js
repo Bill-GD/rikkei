@@ -45,6 +45,17 @@ export async function checkDeletePostPermission(req, res, next) {
   res.status(403).json({ message: 'User is not authorized to perform this action' });
 }
 
+export async function checkUpdatePostPermission(req, res, next) {
+  const post = await PostService.getPost(req.params.id);
+  const currentUser = req.authenticatedUser;
+  if (currentUser.userId === post.uploaderId) {
+    req.postToUpdate = post;
+    next();
+    return;
+  }
+  res.status(403).json({ message: 'User is not authorized to perform this action' });
+}
+
 export async function handleQueries(req, res, next) {
   const uploaderId = +req.query?.uploader,
     minLike = +req.query?.minLike,

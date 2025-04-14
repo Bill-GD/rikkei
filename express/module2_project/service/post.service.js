@@ -66,6 +66,14 @@ export default class PostService {
     return PostModel.fromJson(await db('post').where({ post_id: id }).first());
   }
 
+  static async likePost(id) {
+    await db.raw('call likePost(?)', [id]);
+  }
+
+  static async updateContent(id, content) {
+    await db('post').where({ post_id: id }).update({ content });
+  }
+
   static async deletePost(id) {
     await db('comment').where({ post_id: id }).del();
     await db('post').where({ post_id: id }).del();

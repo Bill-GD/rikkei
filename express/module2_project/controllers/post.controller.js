@@ -5,7 +5,6 @@ import { requestError } from '../utils/responses.js';
 
 export default class PostController {
   static async getPosts(req, res) {
-    console.log(req.query);
     const posts = await PostService.getPosts({
       dateRange: req.dateRange,
       likeRange: req.likeRange,
@@ -20,7 +19,6 @@ export default class PostController {
 
   static async getPost(req, res) {
     const { id } = req.params, post = await PostService.getPost(id);
-    console.log(post.dateCreated.toISOString().split('T')[0]);
     post.addComments(await CommentService.getCommentsOf(id));
     res.status(200).json(post.toJson(true));
   }
@@ -40,6 +38,21 @@ export default class PostController {
       id: nextId,
       imagePath,
     });
+  }
+
+  static async likePost(req, res) {
+    const { id } = req.params;
+    await PostService.likePost(id);
+    res.status(200).json({ message: 'Post liked successfully' });
+  }
+
+  static async updatePostContent(req, res) {
+    const content = req.body?.content?.trim();
+    if (!content) return requestError(res, `Post content wasn't provided`);
+
+    await PostService.updateContent(req.postToUpdate.postId, content);
+    delete req.postToUpdate;
+    res.status(200).json({ message: 'Post content updated successfully' });
   }
 
   static async deletePost(req, res) {

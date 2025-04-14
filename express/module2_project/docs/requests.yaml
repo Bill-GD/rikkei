@@ -51,3 +51,13 @@ components:
               image:
                 type: string
                 format: binary
+    updatePost:
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            required: [ content ]
+            properties:
+              content:
+                type: string
+                description: The new content of the post.

@@ -55,21 +55,58 @@ paths:
           $ref: '#/components/responses/401'
         500:
           $ref: '#/components/responses/500'
-  /api/posts/{id}:
-    get:
-      description: Get all posts.
+  /api/posts/{id}/like:
+    put:
+      description: Like the specified post.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/postId'
       responses:
         200:
-          description: Successfully returned all posts. Comments included.
+          description: Successfully liked the post.
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  /api/posts/{id}:
+    get:
+      description: Get post by its ID.
+      tags: [ Posts ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      responses:
+        200:
+          description: Successfully returned the requested posts. Comments included.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/post'
         401:
           $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+    put:
+      description: Update the content of the post.
+      tags: [ Posts ]
+      parameters:
+        - $ref: '#/components/parameters/postId'
+      requestBody:
+        $ref: '#/components/requestBodies/updatePost'
+      responses:
+        200:
+          description: Successfully updated the content of the requested posts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/post'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
     delete:
