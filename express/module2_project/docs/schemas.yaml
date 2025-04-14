@@ -8,13 +8,13 @@ components:
           description: The ID of the user.
         username:
           type: string
-          description: The username.
+          description: The username of the user.
         email:
           type: string
-          description: The email.
+          description: The email of the user.
         role:
           type: string
-          description: The role of the user. Role is either 'user' or 'admin'.
+          description: The role of the user. Role is either `user` or `admin`.
     posts:
       type: array
       items:
@@ -25,7 +25,7 @@ components:
             description: The ID of the post.
           uploaderId:
             type: integer
-            description: The Id of the uploader
+            description: The Id of the uploader.
           content:
             type: string
             description: The content of the post.
@@ -55,7 +55,7 @@ components:
           description: The like count of the post.
         comments:
           type: array
-          description: The like count of the post.
+          description: The comments of the post.
           items:
             $ref: '#/components/schemas/comment'
     comment:

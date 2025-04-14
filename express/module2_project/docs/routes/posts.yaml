@@ -1,7 +1,7 @@
 paths:
   /api/posts:
     get:
-      description: Get all posts.
+      description: Gets all posts in JSON format.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/likeCountMin'
@@ -27,7 +27,7 @@ paths:
         500:
           $ref: '#/components/responses/500'
     post:
-      description: Upload new post. Returns error if file uploaded is not an image.
+      description: Uploads new post. Returns error if file uploaded is not an image.
       tags: [ Posts ]
       requestBody:
         $ref: '#/components/requestBodies/uploadPost'
@@ -57,7 +57,7 @@ paths:
           $ref: '#/components/responses/500'
   /api/posts/{id}/like:
     put:
-      description: Like the specified post.
+      description: Likes the specified post.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/postId'
@@ -72,7 +72,7 @@ paths:
           $ref: '#/components/responses/500'
   /api/posts/{id}:
     get:
-      description: Get post by its ID.
+      description: Gets post by its ID.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/postId'

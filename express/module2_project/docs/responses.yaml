@@ -11,7 +11,7 @@ components:
                 description: The response message.
                 type: string
               error:
-                description: The error.
+                description: The error, can be a message or an error object.
                 type: object
     401:
       description: No authentication token provided. Likely expired, and must login again.

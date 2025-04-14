@@ -1,7 +1,7 @@
 components:
   requestBodies:
     register:
-      description: The user info to register
+      description: The user info to register.
       content:
         application/x-www-form-urlencoded:
           schema:
@@ -9,13 +9,13 @@ components:
             required: [ username, email, password ]
             properties:
               username:
-                description: Should have at least 4 characters.
+                description: Must have at least 4 characters.
                 type: string
               email:
-                description: Accepts 'com' and 'net' domains.
+                description: Only accepts 'com' and 'net' domains.
                 type: string
               password:
-                description: 5-30 alphanumeric characters.
+                description: Must have 5-30 alphanumeric characters.
                 type: string
     login:
       content:
@@ -51,6 +51,7 @@ components:
               image:
                 type: string
                 format: binary
+                description: The optional image of the post.
     updatePost:
       content:
         application/x-www-form-urlencoded:

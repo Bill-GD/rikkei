@@ -1,7 +1,7 @@
 paths:
   /uploads/{file}:
     get:
-      description: The publicly available uploaded image.
+      description: Views the publicly available uploaded image.
       tags: [ Public ]
       operationId: getImage
       parameters:

@@ -1,7 +1,7 @@
 paths:
   /api/auth/register:
     post:
-      description: Register new user. Requires username, email and password.
+      description: Registers a new user. Requires username, email and password.
       tags: [ Authentication ]
       requestBody:
         $ref: '#/components/requestBodies/register'
@@ -27,7 +27,7 @@ paths:
           $ref: '#/components/responses/500'
   /api/auth/login:
     post:
-      description: Login using email and password. Saves access token to cookie that lasts for 5 minutes on success.
+      description: Login using email and password. Saves access token to cookie that lasts for 1 hour on success.
       tags: [ Authentication ]
       requestBody:
         $ref: '#/components/requestBodies/login'
