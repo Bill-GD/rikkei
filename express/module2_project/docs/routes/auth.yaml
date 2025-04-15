@@ -1,6 +1,7 @@
 paths:
   /api/auth/register:
     post:
+      summary: Registers a new user. Requires username, email and password.
       description: Registers a new user. Requires username, email and password.
       tags: [ Authentication ]
       requestBody:
@@ -18,7 +19,7 @@ paths:
                     description: The response message.
                   id:
                     type: integer
-                    description: The new ID of the registered user.
+                    description: The ID of the newly registered user.
         400:
           $ref: '#/components/responses/400'
         403:

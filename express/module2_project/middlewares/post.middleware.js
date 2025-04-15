@@ -2,7 +2,7 @@ import multer from 'multer';
 import upload from '../config/multer-config.js';
 import PostService from '../service/post.service.js';
 import { isValidDate } from '../utils/helpers.js';
-import { internalError, requestError } from '../utils/responses.js';
+import { requestError } from '../utils/responses.js';
 
 export function uploadSingleFile(field) {
   return async function (req, res, next) {
@@ -15,11 +15,10 @@ export function uploadSingleFile(field) {
       }
       if (err instanceof multer.MulterError) {
         console.log('multer err', err);
-        requestError(res, err.message);
-      } else if (err) {
+      } else {
         console.log('other err', err);
-        internalError(res, err);
       }
+      requestError(res, err.message);
     });
   };
 }

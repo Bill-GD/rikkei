@@ -12,7 +12,7 @@ components:
                 type: string
               error:
                 description: The error, can be a message or an error object.
-                type: object
+                type: string
     401:
       description: No authentication token provided. Likely expired, and must login again.
     403:

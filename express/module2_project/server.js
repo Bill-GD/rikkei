@@ -32,7 +32,8 @@ app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 
 app.get('/', (req, res) => {
-  res.status(200).sendFile(`${process.cwd()}/views/homepage.html`);
+  // res.status(200).sendFile(`${process.cwd()}/views/homepage.html`);
+  res.redirect('/api-docs');
 });
 app.use((req, res) => {
   res.status(404).send('<h1>PAGE NOT FOUND</h1>');
