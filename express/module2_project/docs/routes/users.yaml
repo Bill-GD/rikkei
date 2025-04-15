@@ -40,6 +40,8 @@ paths:
     put:
       description: Updates the username of the current user only. Admin's username can't be modified.
       tags: [ Users ]
+      # security:
+      #   - BearerAuth: []
       parameters:
         - $ref: '#/components/parameters/userId'
       requestBody:

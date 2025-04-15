@@ -51,3 +51,22 @@ paths:
           $ref: '#/components/responses/404'
         500:
           $ref: '#/components/responses/500'
+  /api/auth/logout:
+    post:
+      description: Logout of the current account (only if signed in).
+      tags: [ Authentication ]
+      responses:
+        200:
+          description: Logout successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: The response message.
+        401:
+          $ref: '#/components/responses/401'
+        500:
+          $ref: '#/components/responses/500'
