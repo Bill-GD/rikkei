@@ -62,6 +62,7 @@ export default class UserService {
   }
 
   static async deleteUser(id) {
-    await db('user').where({ user_id: id }).del();
+    await db.raw('call deleteUser(?)', [id]);
+    // await db('user').where({ user_id: id }).del();
   }
 }

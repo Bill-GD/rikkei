@@ -34,3 +34,12 @@ begin
   update post set like_count = like_count + 1 where post_id = id;
 end $$
 delimiter ;
+
+delimiter $$
+create procedure if not exists deleteUser(in userId int)
+begin
+  delete from comment where uploader_id = userId;
+  delete from post where uploader_id = userId;
+  delete from user where user_id = userId;
+end $$
+delimiter ;

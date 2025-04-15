@@ -90,7 +90,7 @@ paths:
         500:
           $ref: '#/components/responses/500'
     put:
-      description: Update the content of the post.
+      description: Update the content of the post if the current user is the uploader.
       tags: [ Posts ]
       parameters:
         - $ref: '#/components/parameters/postId'
