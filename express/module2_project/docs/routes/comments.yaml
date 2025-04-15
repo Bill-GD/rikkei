@@ -1,4 +1,23 @@
 paths:
+  /api/comments:
+    get:
+      description: Gets all the comments. Only available for admins.
+      tags: [ Comments ]
+      responses:
+        200:
+          description: Successfully returned all the available comments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/comment'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /api/posts/{id}/comments:
     get:
       description: Gets all the comments of the specified post.
@@ -17,7 +36,9 @@ paths:
         401:
           $ref: '#/components/responses/401'
         403:
-          $ref: '#/components/responses/401'
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
         500:
           $ref: '#/components/responses/500'
     post:
@@ -46,7 +67,9 @@ paths:
         401:
           $ref: '#/components/responses/401'
         403:
-          $ref: '#/components/responses/401'
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
         500:
           $ref: '#/components/responses/500'
   /api/comments/{id}:
@@ -61,7 +84,9 @@ paths:
         401:
           $ref: '#/components/responses/401'
         403:
-          $ref: '#/components/responses/401'
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
         500:
           $ref: '#/components/responses/500'
 

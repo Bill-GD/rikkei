@@ -12,6 +12,13 @@ export default class CommentService {
   }
 
   /**
+   * @returns {Promise<CommentModel[]>}
+   */
+  static async getComments() {
+    return (await db('comment').select('*')).map(CommentModel.fromJson);
+  }
+
+  /**
    * @param postId
    * @returns {Promise<CommentModel[]>}
    */

@@ -6,6 +6,10 @@ export default class CommentController {
     res.status(200).json((await CommentService.getCommentsOf(req.params.id)).map(e => e.toJson()));
   }
 
+  static async getAllComments(req, res) {
+    res.status(200).json((await CommentService.getComments()).map(e => e.toJson()));
+  }
+
   static async postComment(req, res) {
     const nextId = await CommentService.getNextId(),
       content = req.body?.content?.trim();
