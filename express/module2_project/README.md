@@ -23,3 +23,9 @@
 - [multer](https://www.npmjs.com/package/multer)
 - Swagger: [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc), [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
   ([spec](https://swagger.io/specification/v3))
+
+### Download
+
+- Clone all
+- Sparse checkout
+- Use [DownGit](https://downgit.evecalm.com) or this [download URL](https://downgit.evecalm.com/#/home?url=https://github.com/Bill-GD/rikkei/tree/main/express/module2_project)
